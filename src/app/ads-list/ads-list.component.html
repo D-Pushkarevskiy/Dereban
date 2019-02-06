@@ -1,0 +1,236 @@
+<div align="center" class="marg-top" [class.loader-hidden]="!this.getAds.show" *ngIf="this.getAds.show">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div *ngIf="!this.getAds.tmp && !this.getAds.show">
+    <span class="color-gray">
+        Не найдено ни одного объявления
+    </span>
+</div>
+
+<div *ngIf="this.getAds.tmp">
+    <div *ngFor="let item of this.getAds.tmp" style="overflow: auto;" class="showcase-wrapper" id="showcase_{{item.id}}" [ngClass]="{'ad-detail':this.getAds.detailClass}">
+        <div>
+            <div class="inl_blck case-rating" [ngClass]="{'ad-detail':this.getAds.detailClass}">
+                <div class="color-green opacity-arrow cursor-pointer" *ngIf="isAuth" (click)="this.getAds.ChangeRating(1, item.id)" [ngClass]="this.getAds.isActive(item.id, 1)">
+                     <i class="material-icons">keyboard_arrow_up</i>
+                </div>
+                <div class="color-gray cursor-default" *ngIf="!isAuth" matTooltip="Рейтинг доступен только авторизованным пользователям" matTooltipPosition="below">
+                    <i class="material-icons">keyboard_arrow_up</i>
+                </div>
+
+                <div [ngClass]="this.getAds.GetShowClass(item.case_rating)">
+                    {{item.case_rating}}
+                    <span *ngIf="!item.case_rating">0</span>
+                </div>
+
+                <div class="color-red opacity-arrow cursor-pointer" *ngIf="isAuth" (click)="this.getAds.ChangeRating(-1, item.id)" [ngClass]="this.getAds.isActive(item.id, -1)">
+                     <i class="material-icons">keyboard_arrow_down</i>
+                </div>
+                <div class="color-gray cursor-default" *ngIf="!isAuth">
+                    <i class="material-icons" matTooltip="Рейтинг доступен только авторизованным пользователям" matTooltipPosition="below">keyboard_arrow_down</i>
+                </div>
+
+                <div class="selected opacity-arrow" title="Добавить в избранные" *ngIf="isAuth" (click)="this.getAds.ToggleFavorite(item.id)" [ngClass]="{'active':this.getAds.isFavorite(item.id)}">
+                    <i class="material-icons color-red" *ngIf="!this.getAds.isFavorite(item.id)">
+                        favorite_border
+                    </i>
+                    <i class="material-icons color-red" *ngIf="this.getAds.isFavorite(item.id)">
+                        favorite
+                    </i>
+                </div>
+                <div class="selected" matTooltip="Добавление в избранное доступно только авторизованным пользователям" *ngIf="!isAuth">
+                    <i class="material-icons color-gray">
+                        favorite_border
+                    </i>
+                </div>
+
+            </div>
+            <div class="inl_blck marg-right showcase-photo-wrapper">
+                <img src="{{item.photo_url}}" class="showcase_photo" (click)="ZoomImage($event)">
+            </div>
+            <div class="inl_blck marg-right" style="width: 47%;">
+                <div class="case-name-wrapper">
+                    <div class="case-name">
+                        <a routerLink="/ad/{{item.id}}" class='color-blue'>{{item.case_name}}</a>
+                    </div>
+                </div>
+
+                <div class="case-area-date color-orange">
+                    <span title="Дата добавления">
+                        <i class="material-icons">calendar_today</i>
+                        {{item.adding_time}}
+                    </span>
+                    <span title="Область" class="fl-right" *ngIf="item.user_area">
+                        <i class="material-icons">place</i>
+                        {{item.user_area}}
+                    </span>
+                </div>
+
+                <pre class="case_descr" [ngClass]="{'ad-detail':this.getAds.detailClass}">{{item.description}}</pre>
+
+                <div *ngIf="item.additionalPhotos">
+                    <a href="{{item.additionalPhotos}}" class="additional_photos" target="_blank">
+                        <mat-icon>link</mat-icon> 
+                        <span>Ссылка на доп. фотографии</span>
+                    </a>
+                </div>
+            </div>
+            <div class="inl_blck" style="width: 9%;">
+                <div class="case-price-wrapper color-green">
+                    <span class="case-price">{{item.price|number}} грн.</span>
+                </div>
+                <div>
+                    <mat-chip-list>
+                        <mat-chip [ngSwitch]="item.type" *ngIf="item.type != 0">
+                            <span *ngSwitchCase="1">В сборе</span>
+                            <span *ngSwitchCase="2">Деребан</span>
+                            <span *ngSwitchCase="3">Деталь</span>
+                        </mat-chip>
+                        <mat-chip [ngSwitch]="item.full_type" *ngIf="item.full_type != 0">
+                            <span *ngSwitchCase="1">Комплит</span>
+                            <span *ngSwitchCase="2">Кастом</span>
+                        </mat-chip>
+                        <mat-chip [ngSwitch]="item.detail_type" *ngIf="item.detail_type != 0">
+                            <span *ngSwitchCase="1">Рама</span>
+                            <span *ngSwitchCase="2">Вилка</span>
+                            <span *ngSwitchCase="3">Амортизатор</span>
+                            <span *ngSwitchCase="4">Тормоза</span>
+                            <span *ngSwitchCase="5">Руль</span>
+                            <span *ngSwitchCase="6">Вынос</span>
+                            <span *ngSwitchCase="7">Педали</span>
+                            <span *ngSwitchCase="8">Втулка</span>
+                            <span *ngSwitchCase="9">Грипсы</span>
+                            <span *ngSwitchCase="10">Камера</span>
+                            <span *ngSwitchCase="11">Каретка</span>
+                            <span *ngSwitchCase="12">Кассета</span>
+                            <span *ngSwitchCase="13">Колесо</span>
+                            <span *ngSwitchCase="14">Колодки</span>
+                            <span *ngSwitchCase="15">Манетка</span>
+                            <span *ngSwitchCase="16">Обод</span>
+                            <span *ngSwitchCase="17">Переключатель</span>
+                            <span *ngSwitchCase="18">Подседельный</span>
+                            <span *ngSwitchCase="19">Покрышка</span>
+                            <span *ngSwitchCase="20">Ротор</span>
+                            <span *ngSwitchCase="21">Рулевая</span>
+                            <span *ngSwitchCase="22">Седло</span>
+                            <span *ngSwitchCase="23">Спицы</span>
+                            <span *ngSwitchCase="24">Цепь</span>
+                            <span *ngSwitchCase="25">Шатуны</span>
+                            <span *ngSwitchCase="26">Другое</span>
+                        </mat-chip>
+                        <mat-chip [ngSwitch]="item.state" *ngIf="item.state != 0">
+                            <span *ngSwitchCase="1">Новое</span>
+                            <span *ngSwitchCase="2">Б\У</span>
+                        </mat-chip>
+                        <mat-chip *ngIf="item.wheel_size != 0 && item.wheel_size != 27">
+                            {{item.wheel_size}}"
+                    </mat-chip>
+                    <mat-chip *ngIf="item.wheel_size == 27">
+                        {{item.wheel_size}}.5"
+                    </mat-chip>
+                    <mat-chip [ngSwitch]="item.velo_type" *ngIf="item.velo_type != 0">
+                        <span *ngSwitchCase="1">Дорожный</span>
+                        <span *ngSwitchCase="2">Городской</span>
+                        <span *ngSwitchCase="3">Горный</span>
+                        <span *ngSwitchCase="4">Шоссе</span>
+                        <span *ngSwitchCase="5">Туринговый</span>
+                        <span *ngSwitchCase="6">Гибрид</span>
+                        <span *ngSwitchCase="7">БМХ</span>
+                        <span *ngSwitchCase="8">Уницикл</span>
+                    </mat-chip>
+                    <mat-chip [ngSwitch]="item.direction" *ngIf="item.direction != 0">
+                        <span *ngSwitchCase="1">XC</span>
+                        <span *ngSwitchCase="2">Trial</span>
+                        <span *ngSwitchCase="3">DH</span>
+                        <span *ngSwitchCase="4">Freeride</span>
+                        <span *ngSwitchCase="5">Enduro</span>
+                        <span *ngSwitchCase="6">Trail</span>
+                        <span *ngSwitchCase="7">Track</span>
+                        <span *ngSwitchCase="8">Fix</span>
+                        <span *ngSwitchCase="9">Street</span>
+                        <span *ngSwitchCase="10">Park</span>
+                        <span *ngSwitchCase="11">Dirt</span>
+                        <span *ngSwitchCase="12">4X</span>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+        </div>
+    </div>
+    <div class="case-user-info" [ngClass]="{'ad-detail':this.getAds.detailClass}">
+        <div class="inl_blck rating_wrapper">
+            <span class="cursor-default" title="Рейтинг" [ngClass]="this.getAds.GetShowClass(item.user_rating)">
+                <span *ngIf="item.user_rating > 0">+</span>{{item.user_rating}}
+            </span>
+            <span *ngIf="!item.user_rating" class="color-gray cursor-default">0</span>
+        </div>
+        <div class="inl_blck marg-right">
+            <div class="img_wrapper img_contacts">
+                <img src="../assets/users_images/user_id-{{item.user_id}}.jpg" class="user_contacts_img">
+            </div>
+        </div>
+        <div class="inl_blck marg-right" style="text-align: center;">
+            <div style="padding-bottom: 5px;">
+                {{item.user_name}}
+                {{item.user_surname}}
+            </div>
+            <button mat-flat-button color="primary" style="line-height: 25px;" routerLink="/allads/{{item.user_id}}">
+                <mat-icon aria-hidden="true" class="mat-icon material-icons" role="img" style="font-size: 16px;line-height: 24px;">view_day</mat-icon>
+                объявления
+            </button>
+        </div>
+        <div class="inl_blck user_contacts">
+            <span *ngIf="item.user_phone" title="Телефон">
+                <i class="material-icons">phone</i>
+                <span>+380 {{item.user_phone}}</span>
+            </span>
+            <span *ngIf="item.user_phone2" title="Второй телефон">
+                <i class="material-icons">phone</i>
+                <span>+380 {{item.user_phone2}}</span>
+            </span>
+            <span *ngIf="item.user_telegram" title="TelegramID" class="telegramId">
+                <i class="svg-icons">
+                    <svg viewBox="0 0 24 24">
+                    <path fill="#36ace1" d="M9.78,18.65L10.06,14.42L17.74,7.5C18.08,7.19 17.67,7.04 17.22,7.31L7.74,13.3L3.64,12C2.76,11.75 2.75,11.14 3.84,10.7L19.81,4.54C20.54,4.21 21.24,4.72 20.96,5.84L18.24,18.65C18.05,19.56 17.5,19.78 16.74,19.36L12.6,16.3L10.61,18.23C10.38,18.46 10.19,18.65 9.78,18.65Z" />
+                    </svg>
+                </i>
+                <span>@{{item.user_telegram}}</span>
+            </span>
+            <span *ngIf="item.user_vk" title="https://vk.com/{{item.user_vk}}" class="vkId">
+                <a href="https://vk.com/{{item.user_vk}}" target="_blank">
+                    <i class="svg-icons">
+                        <svg viewBox="0 0 24 24">
+                        <path fill="#4a76a8" d="M20.8,7.74C20.93,7.32 20.8,7 20.18,7H18.16C17.64,7 17.41,7.27 17.28,7.57C17.28,7.57 16.25,10.08 14.79,11.72C14.31,12.19 14.1,12.34 13.84,12.34C13.71,12.34 13.5,12.19 13.5,11.76V7.74C13.5,7.23 13.38,7 12.95,7H9.76C9.44,7 9.25,7.24 9.25,7.47C9.25,7.95 10,8.07 10.05,9.44V12.42C10.05,13.08 9.93,13.2 9.68,13.2C9,13.2 7.32,10.67 6.33,7.79C6.13,7.23 5.94,7 5.42,7H3.39C2.82,7 2.7,7.27 2.7,7.57C2.7,8.11 3.39,10.77 5.9,14.29C7.57,16.7 9.93,18 12.08,18C13.37,18 13.53,17.71 13.53,17.21V15.39C13.53,14.82 13.65,14.7 14.06,14.7C14.36,14.7 14.87,14.85 16.07,16C17.45,17.38 17.67,18 18.45,18H20.47C21.05,18 21.34,17.71 21.18,17.14C21,16.57 20.34,15.74 19.47,14.76C19,14.21 18.29,13.61 18.07,13.3C17.77,12.92 17.86,12.75 18.07,12.4C18.07,12.4 20.54,8.93 20.8,7.74Z" />
+                        </svg>
+                    </i>
+                </a>
+            </span>
+            <span *ngIf="item.user_facebook" title="https://www.facebook.com/profile.php?id={{item.user_facebook}}" class="facebookId">
+                <a href="https://www.facebook.com/profile.php?id={{item.user_facebook}}" target="_blank">
+                    <i class="svg-icons">
+                        <svg viewBox="0 0 24 24">
+                        <path fill="#3b5998" d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M18,5H15.5A3.5,3.5 0 0,0 12,8.5V11H10V14H12V21H15V14H18V11H15V9A1,1 0 0,1 16,8H18V5Z" />
+                        </svg>
+                    </i>
+                </a>
+            </span>
+            <span *ngIf="item.user_instagram" title="InstagramID" class="instagramId">
+                <i class="svg-icons">
+                    <svg viewBox="0 0 24 24">
+                    <path fill="#d10869" d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
+                    </svg>
+                </i>
+                <span>{{item.user_instagram}}</span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="paginator-wrapper" *ngIf="this.getAds.tmp.length > 20">
+    <mat-paginator [length]="this.getAds.tmp.length"
+        [pageSize]="20"
+        [pageSizeOptions]="[20, 50, 100]">
+    </mat-paginator>
+</div>
+
+</div>

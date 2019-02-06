@@ -1,0 +1,14 @@
+<div class="app">
+    <div class="overlay-all" *ngIf="overlay">
+        &nbsp;
+    </div>
+    <header>
+        <app-header></app-header>
+    </header>
+    <div class="content-header">
+        <h1>{{contentHeader}}</h1>
+    </div>
+    <div class="content-inner">
+        <router-outlet></router-outlet>
+    </div>
+</div>

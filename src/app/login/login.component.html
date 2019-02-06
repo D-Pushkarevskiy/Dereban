@@ -1,0 +1,39 @@
+<div class="login-component">
+    <form class="example-form" [formGroup]="form" (ngSubmit)="Auth()">
+        <h2 mat-dialog-title>Авторизация</h2>
+        <mat-card class="marg-bott color-blue"><i class="material-icons">info</i>Если у Вас нет аккаунта, заполненные поля зарегистрируются автоматически.</mat-card>
+        <mat-dialog-content formGroupName="user">
+            <mat-form-field class="example-full-width full-width-form">
+                <input type="text" matInput placeholder="E-mail" value="" name="email" formControlName="email" required maxlength="60">
+                <mat-error *ngIf="form.get('user.email').invalid && form.get('user.email').touched">
+                    <span *ngIf="form.get('user.email').errors['emailIsUsed']">
+                        Введенный e-mail уже зарегистрирован
+                    </span>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width full-width-form">
+                <input type="password" matInput placeholder="Пароль" value="" name="password" formControlName="password" required (ngModelChange)='Clear_text_errors()' maxlength="26">
+                       <mat-error *ngIf="form.get('user.password').invalid && form.get('user.password').touched">
+                       <span *ngIf="form.get('user.password').errors && form.get('user.password').errors.minlength">
+                        Пароль должен быть не менее <b>{{charsCount}}</b>-ми символов
+                    </span>
+                    <span *ngIf="form.get('user.password').errors && form.get('user.password').errors.pattern">
+                        Допустимые символы (a-z, A-Z, 0-9)
+                    </span>
+                </mat-error>
+                <mat-hint class="error-message" *ngIf="!form.get('user.password').invalid && form.get('user.password').touched">
+                          <span *ngIf="!form.get('user.password').errors">
+                        {{password_error}}
+                    </span>
+                </mat-hint>
+            </mat-form-field>
+        </mat-dialog-content>
+        <mat-dialog-actions align="center">
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Вход</button>
+            <button mat-raised-button mat-dialog-close>Отмена</button>
+        </mat-dialog-actions>
+        <mat-dialog-actions align="center" class="marg-top" [class.loader-hidden]="!show" *ngIf="show">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-dialog-actions>
+    </form>
+</div>
