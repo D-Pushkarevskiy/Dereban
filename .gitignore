@@ -39,6 +39,4 @@ testem.log
 Thumbs.db
 
 #NB
-.nbproject
-/nbproject/project.properties
-/nbproject/project.xml
+nbproject/
