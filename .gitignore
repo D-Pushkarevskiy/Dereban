@@ -16,7 +16,6 @@
 *.launch
 .settings/
 *.sublime-workspace
-.nbproject
 
 # IDE - VSCode
 .vscode/*
@@ -38,3 +37,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#NB
+.nbproject
+/nbproject/project.properties
+/nbproject/project.xml
