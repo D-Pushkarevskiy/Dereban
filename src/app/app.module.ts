@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatButtonModule , MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -25,24 +25,30 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { AppRoutingModule } from 'src/app/app-routing/app-routing.module';
+
+import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { AdInfoService } from 'src/app/services/adInfo.service';
+import { GetAdsService } from 'src/app/services/getAds.service';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { LoginComponent } from './login/login.component';
-import { ConfirmRegistrationComponent } from './confirm-registration/confirm-registration.component';
-import { AppRoutingModule } from 'src/app/app-routing/app-routing.module';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { AuthService } from 'src/app/shared/auth.service';
-import { ProfileComponent } from './profile/profile.component';
-import { AddingAdComponent } from './adding-ad/adding-ad.component';
-import { ProfileService } from 'src/app/shared/profile.service';
-import { AdDetailComponent } from './ad-detail/ad-detail.component';
-import { adInfoService } from 'src/app/shared/adInfo.service';
-import { UserAdsComponent } from './user-ads/user-ads.component';
-import {getAdsService} from 'src/app/shared/getAds.service';
-import { FavoritesAdsComponent } from './favorites-ads/favorites-ads.component';
-import { AdsListComponent } from './ads-list/ads-list.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { LoginComponent } from './components/login/login.component';
+import { ConfirmRegistrationComponent } from './components/confirm-registration/confirm-registration.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { AddingAdComponent } from './components/adding-ad/adding-ad.component';
+import { AdDetailComponent } from './components/ad-detail/ad-detail.component';
+import { UserAdsComponent } from './components/user-ads/user-ads.component';
+import { FavoritesAdsComponent } from './components/favorites-ads/favorites-ads.component';
+import { AdsListComponent } from './components/ads-list/ads-list.component';
+import { LoaderComponent } from './components/loader/loader.component';
+
+import { LoaderInterceptor } from './interceptors/loader-interceptor';
 
 @NgModule({
   declarations: [
@@ -57,7 +63,8 @@ import { AdsListComponent } from './ads-list/ads-list.component';
     AdDetailComponent,
     UserAdsComponent,
     FavoritesAdsComponent,
-    AdsListComponent
+    AdsListComponent,
+    LoaderComponent
   ],
   entryComponents: [LoginComponent],
   imports: [
@@ -90,7 +97,11 @@ import { AdsListComponent } from './ads-list/ads-list.component';
     MatSlideToggleModule,
     MatPaginatorModule
   ],
-  providers: [AuthService, ProfileService, adInfoService, getAdsService, AppComponent, AdsListComponent],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoaderInterceptor,
+    multi: true
+  }, AuthService, ProfileService, AdInfoService, GetAdsService, AppComponent, AdsListComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

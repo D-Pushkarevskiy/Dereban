@@ -18,6 +18,15 @@ pre {
     font-family: unset;
 }
 
+.ads-not-found {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.ads-not-found .color-gray {
+    color: #bfbfbf;
+}
+
 .color-gray {
     color: #e0e0e0;
 }
@@ -600,7 +609,8 @@ img.showcase_photo.zoomed-img {
     border-top: 1px solid #f9f9f9;
     background-color: white;
     border-radius: 5px;
-    padding: 20px 60px 5px;
+    padding: 10px 25px;
+    margin: 10px 10px 25px;
     width: -webkit-fill-available;
 }
 

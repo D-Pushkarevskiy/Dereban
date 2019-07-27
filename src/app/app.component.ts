@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {OnInit} from '@angular/core';
-import {AuthService} from 'src/app/shared/auth.service';
-import {Subscription} from 'rxjs';
+import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
+
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -12,8 +12,8 @@ export class AppComponent implements OnInit {
     contentHeader = '';
     overlay = false;
     public authToken = localStorage.getItem('authToken');
-    public API_URL = 'http://localhost/Dereban_api/';
-    
+    public API_URL = 'http://derebanapi/';
+
     constructor(
         private authService: AuthService,
     ) {
