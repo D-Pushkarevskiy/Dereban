@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from '@angular/router';
-import { Http } from "@angular/http";
+import { HttpClient } from '@angular/common/http';
 
 import { Observable, Subject } from 'rxjs';
 
@@ -12,7 +12,7 @@ export class AuthService {
 
     constructor(
         private router: Router,
-        private http: Http,
+        private http: HttpClient,
     ) { }
 
     private subject = new Subject<any>();
@@ -45,7 +45,7 @@ export class AuthService {
         };
         this.http.get(this.API_URL + '?func=remove_auth_token&authToken=' + this.authToken).subscribe(response => {
             var tmp;
-            tmp = response.json();
+            tmp = response;
 
             if (tmp['code'] == 0) {
                 //Все ок

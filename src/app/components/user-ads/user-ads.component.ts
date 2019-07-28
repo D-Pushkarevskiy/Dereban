@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -26,7 +26,7 @@ export class UserAdsComponent implements OnInit {
 
     constructor(
         private activateRoute: ActivatedRoute,
-        private http: Http,
+        private http: HttpClient,
         private app: AppComponent,
         private titleService: Title,
         private router: Router,
@@ -46,7 +46,7 @@ export class UserAdsComponent implements OnInit {
         this.http.get(this.API_URL + '?func=get_title_for_user_ads_component&id=' + this.id + '&authToken=' + this.authToken
         ).subscribe(response => {
             var tmp;
-            tmp = response.json();
+            tmp = response;
             if (tmp['code'] == 0) {
                 this.contentHeader = tmp['text'];
                 this.app.contentHeader = this.contentHeader;

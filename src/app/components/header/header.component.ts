@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Subscription } from 'rxjs';
 
@@ -28,7 +28,6 @@ export class HeaderComponent implements OnInit {
     user_rating;
     allads = 'allads/';
     favorites = 'favorites/';
-    show = false;
     error_text = '';
     API_URL = this.app.API_URL;
     authToken;
@@ -39,7 +38,7 @@ export class HeaderComponent implements OnInit {
         public dialogRef: MatDialog,
         private authService: AuthService,
         private profileService: ProfileService,
-        private http: Http,
+        private http: HttpClient,
         public snackBar: MatSnackBar,
         public getAds: GetAdsService,
     ) {
@@ -85,12 +84,10 @@ export class HeaderComponent implements OnInit {
     }
 
     GetUserId() {
-        this.show = true;
         this.http.get(this.API_URL + '?func=get_user_id&authToken=' + this.authToken
         ).subscribe(response => {
-            this.show = false;
             var tmp;
-            tmp = response.json();
+            tmp = response;
 
             if (tmp['code'] === 0) {
                 //Все ок, записываем имя пользователя
@@ -103,12 +100,10 @@ export class HeaderComponent implements OnInit {
     }
 
     GetUserName() {
-        this.show = true;
         this.http.get(this.API_URL + '?func=get_user_name&authToken=' + this.authToken
         ).subscribe(response => {
-            this.show = false;
             var tmp;
-            tmp = response.json();
+            tmp = response;
 
             if (tmp['code'] === 0) {
                 //Все ок, записываем имя пользователя
@@ -121,12 +116,10 @@ export class HeaderComponent implements OnInit {
     }
 
     GetUserRating() {
-        this.show = true;
         this.http.get(this.API_URL + '?func=get_user_rating&authToken=' + this.authToken
         ).subscribe(response => {
-            this.show = false;
             var tmp;
-            tmp = response.json();
+            tmp = response;
 
             if (tmp['code'] === 0) {
                 //Все ок, записываем рейтинг пользователя
@@ -151,12 +144,10 @@ export class HeaderComponent implements OnInit {
     }
 
     GetUserPhoto() {
-        this.show = true;
         this.http.get(this.API_URL + '?func=get_user_photo&authToken=' + this.authToken
         ).subscribe(response => {
-            this.show = false;
             var tmp;
-            tmp = response.json();
+            tmp = response;
 
             if (tmp['code'] == 0) {
                 //Все ок, записываем урл фотографии

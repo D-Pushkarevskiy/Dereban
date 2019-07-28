@@ -1,16 +1,15 @@
-import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
-import { MatSnackBar } from "@angular/material";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
 
-import { AdInfoService } from "src/app/services/adInfo.service";
+import { AdInfoService } from 'src/app/services/adInfo.service';
 
-import { AppComponent } from "src/app/app.component";
+import { AppComponent } from 'src/app/app.component';
 
 @Injectable()
 
 export class GetAdsService {
 
-    public show = false;
     public tmp;
     public detailClass = false;
     response_text = '';
@@ -19,7 +18,7 @@ export class GetAdsService {
 
     constructor(
         private app: AppComponent,
-        private http: Http,
+        private http: HttpClient,
         public snackBar: MatSnackBar,
         private adInfoService: AdInfoService,
     ) {
@@ -28,12 +27,10 @@ export class GetAdsService {
 
     GetShowCases(params, case_name) {
         this.authToken = localStorage.getItem('authToken');
-        this.show = true;
         this.http.get(this.API_URL + '?func=get_show_cases' + params
         ).subscribe(response => {
-            this.show = false;
             var tmp;
-            tmp = response.json();
+            tmp = response;
             if (tmp['code'] == 0) {
                 this.tmp = tmp['text'];
                 if (case_name) {
@@ -53,7 +50,7 @@ export class GetAdsService {
         this.http.get(this.API_URL + '?func=showcase_change_rating&authToken=' + this.authToken + '&case_id=' + case_id + '&type=' + type
         ).subscribe(response => {
             var tmp;
-            tmp = response.json();
+            tmp = response;
             if (tmp['code'] == 2) {
                 this.GetShowCaseRating(case_id);
                 this.GetUserRating(case_id);
@@ -68,7 +65,7 @@ export class GetAdsService {
         this.http.get(this.API_URL + '?func=showcase_get_rating&case_id=' + case_id
         ).subscribe(response => {
             var tmp;
-            tmp = response.json();
+            tmp = response;
 
             var cur_arr = this.tmp.filter(x => x.id === case_id);
             cur_arr[0]['case_rating'] = tmp['text'];
@@ -79,7 +76,7 @@ export class GetAdsService {
         this.http.get(this.API_URL + '?func=get_user_rating&case_id=' + case_id
         ).subscribe(response => {
             var tmp;
-            tmp = response.json();
+            tmp = response;
 
             if (tmp['code'] === 0) {
                 //Все ок, записываем рейтинг пользователя
@@ -98,7 +95,7 @@ export class GetAdsService {
         this.http.get(this.API_URL + '?func=showcase_toggle_favorite&case_id=' + case_id + '&authToken=' + this.authToken
         ).subscribe(response => {
             var tmp;
-            tmp = response.json();
+            tmp = response;
 
             if (tmp['code'] === 0) {
                 this.response_text = tmp['text'];
@@ -114,7 +111,7 @@ export class GetAdsService {
             this.http.get(this.API_URL + '?func=get_active_favorite&authToken=' + this.authToken
             ).subscribe(response => {
                 var tmp;
-                tmp = response.json();
+                tmp = response;
 
                 if (tmp['code'] === 0) {
                     // Сбрасываем все активные избранные объявы

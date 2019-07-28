@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { RequestOptions } from '@angular/http';
@@ -49,7 +49,6 @@ export class ProfileComponent implements OnInit {
     ];
     API_URL = this.app.API_URL;
     authToken = localStorage.getItem('authToken');
-    show = false;
     numCount = 9;
     code_one_errors = '';
     success_saving = '';
@@ -69,7 +68,7 @@ export class ProfileComponent implements OnInit {
 
     constructor(
         private app: AppComponent,
-        private http: Http,
+        private http: HttpClient,
         public snackBar: MatSnackBar,
         private profileService: ProfileService,
         private titleService: Title
@@ -127,7 +126,7 @@ export class ProfileComponent implements OnInit {
         this.http.post(this.API_URL + '?func=set_user_photo&authToken=' + this.authToken, finalData
         ).subscribe(response => {
             var tmp;
-            tmp = response.json();
+            tmp = response;
             this.code_one_errors = '';
             this.success_saving_photo = '';
 
@@ -145,14 +144,12 @@ export class ProfileComponent implements OnInit {
 
     SaveUserInfo() {
 
-        this.show = true;
         const options = new RequestOptions({ params: this.form.getRawValue() });
 
         this.http.get(this.API_URL + '?func=add_user_info&authToken=' + this.authToken, options
         ).subscribe(response => {
-            this.show = false;
             var tmp;
-            tmp = response.json();
+            tmp = response;
             this.code_one_errors = '';
             this.success_saving = '';
 
@@ -171,12 +168,10 @@ export class ProfileComponent implements OnInit {
     }
 
     GetUserInfo() {
-        this.show = true;
         this.http.get(this.API_URL + '?func=get_user_info&authToken=' + this.authToken
         ).subscribe(response => {
-            this.show = false;
             var tmp;
-            tmp = response.json();
+            tmp = response;
 
             this.form.controls.user.setValue({ 'name': tmp['name'], 'surname': tmp['surname'] });
             this.form.controls.contacts.setValue({ 'phone': tmp['phone'], 'phone2': tmp['phone2'], 'area': tmp['area'] });
@@ -185,12 +180,10 @@ export class ProfileComponent implements OnInit {
     }
 
     GetUserPhoto() {
-        this.show = true;
         this.http.get(this.API_URL + '?func=get_user_photo&authToken=' + this.authToken
         ).subscribe(response => {
-            this.show = false;
             var tmp;
-            tmp = response.json();
+            tmp = response;
 
             if (tmp['code'] == 0) {
                 //Все ок, принимаем урл фотографии

@@ -32,8 +32,5 @@
             <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Вход</button>
             <button mat-raised-button mat-dialog-close>Отмена</button>
         </mat-dialog-actions>
-        <mat-dialog-actions align="center" class="marg-top" [class.loader-hidden]="!show" *ngIf="show">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </mat-dialog-actions>
     </form>
 </div>

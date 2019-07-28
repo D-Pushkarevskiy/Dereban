@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { MatSnackBar, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -24,11 +24,10 @@ export class LoginComponent implements OnInit {
     password_error = '';
     code_one_errors = '';
     success_register = '';
-    show = false;
 
     constructor(
         public app: AppComponent,
-        private http: Http,
+        private http: HttpClient,
         public snackBar: MatSnackBar,
         private dialogRef: MatDialogRef<HeaderComponent>,
         private authService: AuthService,
@@ -46,14 +45,12 @@ export class LoginComponent implements OnInit {
     }
 
     Auth() {
-        this.show = true;
         this.http.get(this.API_URL + '?func=auth&login=' + this.form.get('user.email').value + '&password=' + this.form.get('user.password').value).subscribe(response => {
-            this.show = false;
             var tmp;
             this.password_error = '';
             this.code_one_errors = '';
             this.success_register = '';
-            tmp = response.json();
+            tmp = response;
 
             if (tmp['code'] === 0) {
                 //Все хорошо, авторизировать пользователя, закрыть модалку

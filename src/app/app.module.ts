@@ -10,7 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -25,7 +25,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from 'src/app/app-routing/app-routing.module';
 
@@ -48,7 +47,7 @@ import { FavoritesAdsComponent } from './components/favorites-ads/favorites-ads.
 import { AdsListComponent } from './components/ads-list/ads-list.component';
 import { LoaderComponent } from './components/loader/loader.component';
 
-import { LoaderInterceptor } from './interceptors/loader-interceptor';
+import { httpInterceptorProviders } from './interceptors/index';
 
 @NgModule({
   declarations: [
@@ -70,7 +69,7 @@ import { LoaderInterceptor } from './interceptors/loader-interceptor';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    HttpModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatGridListModule,
     MatButtonModule,
@@ -97,11 +96,7 @@ import { LoaderInterceptor } from './interceptors/loader-interceptor';
     MatSlideToggleModule,
     MatPaginatorModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoaderInterceptor,
-    multi: true
-  }, AuthService, ProfileService, AdInfoService, GetAdsService, AppComponent, AdsListComponent],
+  providers: [httpInterceptorProviders, AuthService, ProfileService, AdInfoService, GetAdsService, AppComponent, AdsListComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

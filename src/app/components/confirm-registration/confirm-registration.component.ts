@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
@@ -24,11 +24,10 @@ export class ConfirmRegistrationComponent implements OnInit {
     code_one_errors = '';
     API_URL = 'http://derebanapi/';
     regToken = '';
-    show = false;
 
     constructor(
         private app: AppComponent,
-        private http: Http,
+        private http: HttpClient,
         private authService: AuthService,
         private activateRoute: ActivatedRoute,
         private router: Router,
@@ -49,11 +48,9 @@ export class ConfirmRegistrationComponent implements OnInit {
     }
 
     ConfirmRegistration() {
-        this.show = true;
         this.http.get(this.API_URL + '?func=conf_register&password=' + this.form.get('user.password').value + '&regToken=' + this.regToken).subscribe(response => {
-            this.show = false;
             var tmp;
-            tmp = response.json();
+            tmp = response;
             this.password_error = '';
             this.code_one_errors = '';
             if (tmp['code'] === 0) {

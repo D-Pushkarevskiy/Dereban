@@ -1,7 +1,3 @@
-<div align="center" class="marg-top" [class.loader-hidden]="!this.getAds.show" *ngIf="this.getAds.show">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-</div>
-
 <div *ngIf="!this.getAds.tmp && !this.getAds.show" class="ads-not-found">
     <span class="color-gray">
         Не найдено ни одного объявления
@@ -86,7 +82,7 @@
             </div>
             <div class="inl_blck" style="width: 9%;">
                 <div class="case-price-wrapper color-green">
-                    <span class="case-price">{{item.price|number}} грн.</span>
+                    <span class="case-price">{{item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
                 </div>
                 <div>
                     <mat-chip-list>

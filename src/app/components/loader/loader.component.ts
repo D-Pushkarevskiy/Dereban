@@ -13,14 +13,11 @@ import { LoaderState } from '../../loader/loader';
 export class LoaderComponent implements OnInit, OnDestroy {
   show = false;
   private subscription: Subscription;
-  constructor(private loaderService: LoaderService) {
-    console.log(this.show);
-  }
+  constructor(private loaderService: LoaderService) { }
   ngOnInit() {
     this.subscription = this.loaderService.loaderState
       .subscribe((state: LoaderState) => {
         this.show = state.show;
-        console.log(this.show);
       });
   }
   ngOnDestroy() {

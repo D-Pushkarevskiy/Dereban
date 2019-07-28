@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {AppComponent} from 'src/app/app.component';
-import {FormGroup} from '@angular/forms';
-import {FormControl} from '@angular/forms';
-import {Validators} from '@angular/forms';
-import {Title} from '@angular/platform-browser';
-import {Http} from '@angular/http';
-import {MatSnackBar} from '@angular/material';
-import {RequestOptions} from '@angular/http';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+import { RequestOptions } from '@angular/http';
+import { Router } from '@angular/router';
+
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
     selector: 'app-adding-ad',
@@ -22,7 +23,6 @@ export class AddingAdComponent implements OnInit {
     show_desc = false;
     desc_num;
     desc_full_num;
-    show = false;
     files: any;
     img_showcase_main = '../assets/users_images/user_ads_image_default.jpg';
     img_name = '';
@@ -45,7 +45,7 @@ export class AddingAdComponent implements OnInit {
     constructor(
         private app: AppComponent,
         private titleService: Title,
-        private http: Http,
+        private http: HttpClient,
         public snackBar: MatSnackBar,
         private router: Router
     ) {
@@ -99,7 +99,7 @@ export class AddingAdComponent implements OnInit {
                 formData.append('photo', files[i]);
             }
 
-            const options = new RequestOptions({params: this.form.getRawValue()});
+            const options = new RequestOptions({ params: this.form.getRawValue() });
             formData.append('data', JSON.stringify(options));
 
             finalData = formData;
@@ -110,9 +110,8 @@ export class AddingAdComponent implements OnInit {
 
         this.http.post(this.API_URL + '?func=save_showcase_photo&authToken=' + this.authToken, finalData
         ).subscribe(response => {
-            this.show = false;
             var tmp;
-            tmp = response.json();
+            tmp = response;
             this.code_one_errors = '';
             this.file_path = '';
 
@@ -123,14 +122,12 @@ export class AddingAdComponent implements OnInit {
                 } else {
                     this.file_path = tmp['text'];
 
-                    const options = new RequestOptions({params: this.form.getRawValue()});
+                    const options = new RequestOptions({ params: this.form.getRawValue() });
 
-                    this.show = true;
                     this.http.get(this.API_URL + '?func=save_showcase&authToken=' + this.authToken + '&file_path=' + this.file_path, options
                     ).subscribe(response => {
-                        this.show = false;
                         var tmp;
-                        tmp = response.json();
+                        tmp = response;
                         this.code_one_errors = '';
                         this.success_adding = '';
 
