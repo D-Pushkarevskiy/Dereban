@@ -11,14 +11,16 @@ import { AdDetailComponent } from 'src/app/components/ad-detail/ad-detail.compon
 import { UserAdsComponent } from 'src/app/components/user-ads/user-ads.component';
 import { FavoritesAdsComponent } from 'src/app/components/favorites-ads/favorites-ads.component';
 
+import { AuthGuard } from '../guards/auth.guard';
+
 const appRoutes: Routes = [
     { path: '', component: HomepageComponent },
     { path: 'confirm-registration/:regToken', component: ConfirmRegistrationComponent },
-    { path: 'profile', component: ProfileComponent },
-    { path: 'adding-ad', component: AddingAdComponent },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+    { path: 'adding-ad', component: AddingAdComponent, canActivate: [AuthGuard] },
     { path: 'ad/:id', component: AdDetailComponent },
     { path: 'allads/:id', component: UserAdsComponent },
-    { path: 'favorites/:id', component: FavoritesAdsComponent },
+    { path: 'favorites/:id', component: FavoritesAdsComponent, canActivate: [AuthGuard] },
     { path: '**', component: NotFoundComponent },
 ];
 

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 
 import { AdInfoService } from 'src/app/services/adInfo.service';
+import { AuthService } from './auth.service';
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -14,19 +15,19 @@ export class GetAdsService {
     public detailClass = false;
     response_text = '';
     API_URL = this.app.API_URL;
-    authToken = localStorage.getItem('authToken');
+    authToken = this.authService.getAuthorizationToken();
 
     constructor(
         private app: AppComponent,
         private http: HttpClient,
         public snackBar: MatSnackBar,
         private adInfoService: AdInfoService,
+        private authService: AuthService,
     ) {
 
     }
 
     GetShowCases(params, case_name) {
-        this.authToken = localStorage.getItem('authToken');
         this.http.get(this.API_URL + '?func=get_show_cases' + params
         ).subscribe(response => {
             var tmp;
@@ -46,8 +47,7 @@ export class GetAdsService {
     }
 
     ChangeRating(type, case_id) {
-        this.authToken = localStorage.getItem('authToken');
-        this.http.get(this.API_URL + '?func=showcase_change_rating&authToken=' + this.authToken + '&case_id=' + case_id + '&type=' + type
+        this.http.get(this.API_URL + '?func=showcase_change_rating&case_id=' + case_id + '&type=' + type
         ).subscribe(response => {
             var tmp;
             tmp = response;
@@ -91,8 +91,7 @@ export class GetAdsService {
     }
 
     ToggleFavorite(case_id) {
-        this.authToken = localStorage.getItem('authToken');
-        this.http.get(this.API_URL + '?func=showcase_toggle_favorite&case_id=' + case_id + '&authToken=' + this.authToken
+        this.http.get(this.API_URL + '?func=showcase_toggle_favorite&case_id=' + case_id
         ).subscribe(response => {
             var tmp;
             tmp = response;
@@ -106,9 +105,8 @@ export class GetAdsService {
     }
 
     GetActiveFavorite() {
-        this.authToken = localStorage.getItem('authToken');
         if (this.authToken && this.authToken != '') {
-            this.http.get(this.API_URL + '?func=get_active_favorite&authToken=' + this.authToken
+            this.http.get(this.API_URL + '?func=get_active_favorite'
             ).subscribe(response => {
                 var tmp;
                 tmp = response;

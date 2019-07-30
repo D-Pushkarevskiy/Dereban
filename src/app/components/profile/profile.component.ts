@@ -48,7 +48,6 @@ export class ProfileComponent implements OnInit {
         'Черновицкая область'
     ];
     API_URL = this.app.API_URL;
-    authToken = localStorage.getItem('authToken');
     numCount = 9;
     code_one_errors = '';
     success_saving = '';
@@ -123,7 +122,7 @@ export class ProfileComponent implements OnInit {
             finalData = this.form;
         }
 
-        this.http.post(this.API_URL + '?func=set_user_photo&authToken=' + this.authToken, finalData
+        this.http.post(this.API_URL + '?func=set_user_photo', finalData
         ).subscribe(response => {
             var tmp;
             tmp = response;
@@ -143,7 +142,7 @@ export class ProfileComponent implements OnInit {
     }
 
     SaveUserInfo() {
-        this.http.post(this.API_URL + '?func=add_user_info&authToken=' + this.authToken, this.form.getRawValue()
+        this.http.post(this.API_URL + '?func=add_user_info', this.form.getRawValue()
         ).subscribe(response => {
             var tmp;
             tmp = response;
@@ -165,7 +164,7 @@ export class ProfileComponent implements OnInit {
     }
 
     GetUserInfo() {
-        this.http.get(this.API_URL + '?func=get_user_info&authToken=' + this.authToken
+        this.http.get(this.API_URL + '?func=get_user_info'
         ).subscribe(response => {
             var tmp;
             tmp = response;
@@ -177,7 +176,7 @@ export class ProfileComponent implements OnInit {
     }
 
     GetUserPhoto() {
-        this.http.get(this.API_URL + '?func=get_user_photo&authToken=' + this.authToken
+        this.http.get(this.API_URL + '?func=get_user_photo'
         ).subscribe(response => {
             var tmp;
             tmp = response;

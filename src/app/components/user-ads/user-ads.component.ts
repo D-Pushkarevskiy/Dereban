@@ -22,7 +22,6 @@ export class UserAdsComponent implements OnInit {
     private subscription: Subscription;
     contentHeader = '';
     API_URL = this.app.API_URL;
-    authToken = localStorage.getItem('authToken');
 
     constructor(
         private activateRoute: ActivatedRoute,
@@ -43,7 +42,7 @@ export class UserAdsComponent implements OnInit {
     }
 
     getTitleForUserAdsComp() {
-        this.http.get(this.API_URL + '?func=get_title_for_user_ads_component&id=' + this.id + '&authToken=' + this.authToken
+        this.http.get(this.API_URL + '?func=get_title_for_user_ads_component&id=' + this.id
         ).subscribe(response => {
             var tmp;
             tmp = response;

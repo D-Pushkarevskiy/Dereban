@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AppComponent implements OnInit {
     contentHeader = '';
     overlay = false;
-    public authToken = localStorage.getItem('authToken');
+    authToken = this.authService.getAuthorizationToken();
     public API_URL = 'http://derebanapi/';
 
     constructor(

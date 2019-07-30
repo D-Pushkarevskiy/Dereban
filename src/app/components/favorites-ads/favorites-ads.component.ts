@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { GetAdsService } from 'src/app/services/getAds.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { AppComponent } from 'src/app/app.component';
 import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component';
@@ -13,7 +14,7 @@ import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component
 })
 export class FavoritesAdsComponent implements OnInit {
 
-    authToken = localStorage.getItem('authToken');
+    authToken = this.authService.getAuthorizationToken();
     contentHeader = 'Избранные объявления';
 
     constructor(
@@ -21,6 +22,7 @@ export class FavoritesAdsComponent implements OnInit {
         private titleService: Title,
         private adsList: AdsListComponent,
         public getAds: GetAdsService,
+        private authService: AuthService,
     ) { }
 
     ngOnInit() {

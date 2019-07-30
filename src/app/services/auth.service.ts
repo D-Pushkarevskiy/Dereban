@@ -17,13 +17,13 @@ export class AuthService {
 
     private subject = new Subject<any>();
 
-    logIn() {
+    public logIn() {
         if (this.authToken && this.authToken != '') {
             this.subject.next({ value: true });
         }
     }
 
-    logOut() {
+    public logOut() {
         this.subject.next({ value: false });
         //Удаление токена с базы данных
         this.removeAuthToken();
@@ -31,15 +31,15 @@ export class AuthService {
         // this.router.navigate(['/']);
     }
 
-    getState(): Observable<any> {
+    public getState(): Observable<any> {
         return this.subject.asObservable();
     }
 
-    getAuthorizationToken() {
+    public getAuthorizationToken() {
         return this.authToken;
     }
 
-    removeAuthToken() {
+    public removeAuthToken() {
         if (!this.authToken) {
             return;
         };

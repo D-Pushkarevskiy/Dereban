@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit {
     favorites = 'favorites/';
     error_text = '';
     API_URL = this.app.API_URL;
-    authToken;
     photoName = 'user_profile_image_default.jpg';
 
     constructor(
@@ -46,7 +45,6 @@ export class HeaderComponent implements OnInit {
             this.isAuth = state.value;
 
             if (this.isAuth == true) {
-                this.authToken = localStorage.getItem('authToken');
                 //Запрос на id пользователя
                 this.GetUserId();
                 //Запрос на имя пользователя
@@ -84,7 +82,7 @@ export class HeaderComponent implements OnInit {
     }
 
     GetUserId() {
-        this.http.get(this.API_URL + '?func=get_user_id&authToken=' + this.authToken
+        this.http.get(this.API_URL + '?func=get_user_id'
         ).subscribe(response => {
             var tmp;
             tmp = response;
@@ -100,7 +98,7 @@ export class HeaderComponent implements OnInit {
     }
 
     GetUserName() {
-        this.http.get(this.API_URL + '?func=get_user_name&authToken=' + this.authToken
+        this.http.get(this.API_URL + '?func=get_user_name'
         ).subscribe(response => {
             var tmp;
             tmp = response;
@@ -116,7 +114,7 @@ export class HeaderComponent implements OnInit {
     }
 
     GetUserRating() {
-        this.http.get(this.API_URL + '?func=get_user_rating&authToken=' + this.authToken
+        this.http.get(this.API_URL + '?func=get_user_rating'
         ).subscribe(response => {
             var tmp;
             tmp = response;
@@ -144,7 +142,7 @@ export class HeaderComponent implements OnInit {
     }
 
     GetUserPhoto() {
-        this.http.get(this.API_URL + '?func=get_user_photo&authToken=' + this.authToken
+        this.http.get(this.API_URL + '?func=get_user_photo'
         ).subscribe(response => {
             var tmp;
             tmp = response;

@@ -36,7 +36,6 @@ export class AddingAdComponent implements OnInit {
     isHiddenDetail = true;
 
     API_URL = this.app.API_URL;
-    authToken = localStorage.getItem('authToken');
     code_one_errors = '';
     success_adding = '';
     file_path = '';
@@ -105,7 +104,7 @@ export class AddingAdComponent implements OnInit {
             finalData = this.form;
         }
 
-        this.http.post(this.API_URL + '?func=save_showcase_photo&authToken=' + this.authToken, finalData
+        this.http.post(this.API_URL + '?func=save_showcase_photo', finalData
         ).subscribe(response => {
             var tmp;
             tmp = response;
@@ -119,7 +118,7 @@ export class AddingAdComponent implements OnInit {
                 } else {
                     this.file_path = tmp['text'];
 
-                    this.http.post(this.API_URL + '?func=save_showcase&authToken=' + this.authToken + '&file_path=' + this.file_path, this.form.getRawValue()
+                    this.http.post(this.API_URL + '?func=save_showcase&file_path=' + this.file_path, this.form.getRawValue()
                     ).subscribe(response => {
                         var tmp;
                         tmp = response;
