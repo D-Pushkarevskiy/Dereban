@@ -143,10 +143,7 @@ export class ProfileComponent implements OnInit {
     }
 
     SaveUserInfo() {
-
-        const options = new RequestOptions({ params: this.form.getRawValue() });
-
-        this.http.get(this.API_URL + '?func=add_user_info&authToken=' + this.authToken, options
+        this.http.post(this.API_URL + '?func=add_user_info&authToken=' + this.authToken, this.form.getRawValue()
         ).subscribe(response => {
             var tmp;
             tmp = response;

@@ -5,7 +5,6 @@ import { Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
-import { RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { AppComponent } from 'src/app/app.component';
@@ -99,11 +98,9 @@ export class AddingAdComponent implements OnInit {
                 formData.append('photo', files[i]);
             }
 
-            const options = new RequestOptions({ params: this.form.getRawValue() });
-            formData.append('data', JSON.stringify(options));
+            formData.append('data', JSON.stringify(this.form.getRawValue()));
 
             finalData = formData;
-
         } else {
             finalData = this.form;
         }
@@ -122,9 +119,7 @@ export class AddingAdComponent implements OnInit {
                 } else {
                     this.file_path = tmp['text'];
 
-                    const options = new RequestOptions({ params: this.form.getRawValue() });
-
-                    this.http.get(this.API_URL + '?func=save_showcase&authToken=' + this.authToken + '&file_path=' + this.file_path, options
+                    this.http.post(this.API_URL + '?func=save_showcase&authToken=' + this.authToken + '&file_path=' + this.file_path, this.form.getRawValue()
                     ).subscribe(response => {
                         var tmp;
                         tmp = response;

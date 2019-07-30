@@ -12,7 +12,6 @@ import { LoaderService } from '../services/loader.service';
 export class LoaderInterceptor implements HttpInterceptor {
   constructor(private loaderService: LoaderService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('show loader intercept');
     this.showLoader();
     return next.handle(req).pipe(tap((event: HttpEvent<any>) => { 
       if (event instanceof HttpResponse) {
