@@ -3,11 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { MatSnackBar, MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { GetAdsService } from 'src/app/services/getAds.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { AppComponent } from 'src/app/app.component';
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
     constructor(
         public app: AppComponent,
         private http: HttpClient,
-        public snackBar: MatSnackBar,
+        private snackbar: SnackbarService,
         private dialogRef: MatDialogRef<HeaderComponent>,
         private authService: AuthService,
         private router: Router,
@@ -65,12 +66,12 @@ export class LoginComponent implements OnInit {
             } else if (tmp['code'] === 1) {
                 //Вывести текст ошибки
                 this.code_one_errors = tmp['text'];
-                this.Snackbar_message(this.code_one_errors);
+                this.snackbar.show_message(this.code_one_errors);
             } else if (tmp['code'] === 2) {
                 //Все хорошо, уведомить пользователя о удачной регистрации и письме, закрыть модалку
                 this.success_register = tmp['text'];
                 this.dialogRef.close();
-                this.Snackbar_message(this.success_register);
+                this.snackbar.show_message(this.success_register);
             }
             else if (tmp['code'] === 3) {
                 //Вывести текст с ошибкой корректности пароля
@@ -82,14 +83,6 @@ export class LoginComponent implements OnInit {
     Clear_text_errors() {
         this.password_error = '';
         this.code_one_errors = '';
-    }
-
-    Snackbar_message(msg_text) {
-        if (msg_text != '') {
-            let snackBarRef = this.snackBar.open(msg_text, '', {
-                duration: 3000,
-            });
-        }
     }
 
 }

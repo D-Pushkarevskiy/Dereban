@@ -28,7 +28,7 @@ export class AuthService {
         //Удаление токена с базы данных
         this.removeAuthToken();
         localStorage.removeItem('authToken');
-        // this.router.navigate(['/']);
+        this.router.navigate(['/']);
     }
 
     public getState(): Observable<any> {
@@ -43,7 +43,7 @@ export class AuthService {
         if (!this.authToken) {
             return;
         };
-        this.http.get(this.API_URL + '?func=remove_auth_token&authToken=' + this.authToken).subscribe(response => {
+        this.http.get(this.API_URL + '?func=remove_auth_token').subscribe(response => {
             var tmp;
             tmp = response;
 

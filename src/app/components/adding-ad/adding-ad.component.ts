@@ -4,8 +4,9 @@ import { FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+
+import { SnackbarService } from 'src/app/services/snackbar.service'
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -44,7 +45,7 @@ export class AddingAdComponent implements OnInit {
         private app: AppComponent,
         private titleService: Title,
         private http: HttpClient,
-        public snackBar: MatSnackBar,
+        private snackbar: SnackbarService,
         private router: Router
     ) {
         app.contentHeader = this.contentHeader;
@@ -114,7 +115,7 @@ export class AddingAdComponent implements OnInit {
             if (tmp['code'] == 0) {
                 //Все ок
                 if (tmp['text'] == '') {
-                    this.Snackbar_message('Ошибка записи файла');
+                    this.snackbar.show_message('Ошибка записи файла');
                 } else {
                     this.file_path = tmp['text'];
 
@@ -128,19 +129,19 @@ export class AddingAdComponent implements OnInit {
                         if (tmp['code'] == 0) {
                             //Все ок, выводим текст удачного сохранения данных
                             this.success_adding = tmp['text'];
-                            this.Snackbar_message(this.success_adding);
+                            this.snackbar.show_message(this.success_adding);
                             this.router.navigate(['/']);
                         } else if (tmp['code'] == 1) {
                             //Выводим ошибку
                             this.code_one_errors = tmp['text'];
-                            this.Snackbar_message(this.code_one_errors);
+                            this.snackbar.show_message(this.code_one_errors);
                         }
                     });
                 }
             } else if (tmp['code'] == 1) {
                 //Выводим ошибку
                 this.code_one_errors = tmp['text'];
-                this.Snackbar_message(this.code_one_errors);
+                this.snackbar.show_message(this.code_one_errors);
             }
         });
     }
@@ -232,13 +233,4 @@ export class AddingAdComponent implements OnInit {
             }
         }
     }
-
-    Snackbar_message(msg_text) {
-        if (msg_text != '') {
-            let snackBarRef = this.snackBar.open(msg_text, '', {
-                duration: 3000,
-            });
-        }
-    }
-
 }

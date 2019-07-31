@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { RequestOptions } from '@angular/http';
 import { Title } from '@angular/platform-browser';
 
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
 import { AppComponent } from 'src/app/app.component';
@@ -68,7 +67,7 @@ export class ProfileComponent implements OnInit {
     constructor(
         private app: AppComponent,
         private http: HttpClient,
-        public snackBar: MatSnackBar,
+        private snackbar: SnackbarService,
         private profileService: ProfileService,
         private titleService: Title
     ) {
@@ -132,11 +131,11 @@ export class ProfileComponent implements OnInit {
             if (tmp['code'] == 0) {
                 //Все ок, выводим текст удачного сохранения данных
                 this.success_saving_photo = tmp['text'];
-                this.Snackbar_message(this.success_saving_photo);
+                this.snackbar.show_message(this.success_saving_photo);
             } else if (tmp['code'] == 1) {
                 //Выводим ошибку
                 this.code_one_errors = tmp['text'];
-                this.Snackbar_message(this.code_one_errors);
+                this.snackbar.show_message(this.code_one_errors);
             }
         });
     }
@@ -152,13 +151,13 @@ export class ProfileComponent implements OnInit {
             if (tmp['code'] == 0) {
                 //Все ок, выводим текст удачного сохранения данных
                 this.success_saving = tmp['text'];
-                this.Snackbar_message(this.success_saving);
+                this.snackbar.show_message(this.success_saving);
                 //Передаем имя пользователя в хедер
                 this.profileService.setName(this.form.controls.user.get('name').value);
             } else if (tmp['code'] == 1) {
                 //Выводим ошибку
                 this.code_one_errors = tmp['text'];
-                this.Snackbar_message(this.code_one_errors);
+                this.snackbar.show_message(this.code_one_errors);
             }
         });
     }
@@ -187,16 +186,9 @@ export class ProfileComponent implements OnInit {
             } else if (tmp['code'] == 1) {
                 //Выводим ошибку
                 this.code_one_errors = tmp['text'];
-                this.Snackbar_message(this.code_one_errors);
+                this.snackbar.show_message(this.code_one_errors);
             }
         });
     }
 
-    Snackbar_message(msg_text) {
-        if (msg_text != '') {
-            let snackBarRef = this.snackBar.open(msg_text, '', {
-                duration: 3000,
-            });
-        }
-    }
 }

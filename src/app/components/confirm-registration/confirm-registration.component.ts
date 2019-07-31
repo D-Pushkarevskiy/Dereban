@@ -4,10 +4,10 @@ import { FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 
 import { AuthService } from 'src/app/services/auth.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -31,8 +31,8 @@ export class ConfirmRegistrationComponent implements OnInit {
         private authService: AuthService,
         private activateRoute: ActivatedRoute,
         private router: Router,
-        public snackBar: MatSnackBar,
-        private titleService: Title
+        private titleService: Title,
+        private snackbar: SnackbarService
     ) {
         app.contentHeader = this.contentHeader;
         this.titleService.setTitle(this.contentHeader);
@@ -58,11 +58,11 @@ export class ConfirmRegistrationComponent implements OnInit {
                 this.router.navigate(['/']);
                 //Все ок, оповещаем пользователя о успешном подтверждении регистрации
                 this.code_one_errors = tmp['text'];
-                this.Snackbar_message(this.code_one_errors);
+                this.snackbar.show_message(this.code_one_errors);
             } else if (tmp['code'] === 1) {
                 //Вывести текст ошибки
                 this.code_one_errors = tmp['text'];
-                this.Snackbar_message(this.code_one_errors);
+                this.snackbar.show_message(this.code_one_errors);
             } else if (tmp['code'] === 3) {
                 //Вывести текст с ошибкой некорректности пароля
                 this.password_error = tmp['text'];
@@ -72,14 +72,6 @@ export class ConfirmRegistrationComponent implements OnInit {
 
     Clear_text_errors() {
         this.password_error = '';
-    }
-
-    Snackbar_message(msg_text) {
-        if (msg_text != '') {
-            let snackBarRef = this.snackBar.open(msg_text, '', {
-                duration: 6000,
-            });
-        }
     }
 
 }

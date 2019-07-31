@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 
 import { Subscription } from 'rxjs';
@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { GetAdsService } from 'src/app/services/getAds.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { AppComponent } from 'src/app/app.component';
@@ -38,8 +39,8 @@ export class HeaderComponent implements OnInit {
         private authService: AuthService,
         private profileService: ProfileService,
         private http: HttpClient,
-        public snackBar: MatSnackBar,
         public getAds: GetAdsService,
+        private snackbar: SnackbarService
     ) {
         this.subscription = this.authService.getState().subscribe(state => {
             this.isAuth = state.value;
@@ -92,7 +93,7 @@ export class HeaderComponent implements OnInit {
                 this.user_id = tmp['text'];
             } else if (tmp['code'] === 1) {
                 this.error_text = tmp['text'];
-                this.Snackbar_message(this.error_text);
+                this.snackbar.show_message(this.error_text);
             }
         });
     }
@@ -108,7 +109,7 @@ export class HeaderComponent implements OnInit {
                 this.user_name = tmp['text'];
             } else if (tmp['code'] === 1) {
                 this.error_text = tmp['text'];
-                this.Snackbar_message(this.error_text);
+                this.snackbar.show_message(this.error_text);
             }
         });
     }
@@ -124,7 +125,7 @@ export class HeaderComponent implements OnInit {
                 this.user_rating = tmp['text'];
             } else if (tmp['code'] === 1) {
                 this.error_text = tmp['text'];
-                this.Snackbar_message(this.error_text);
+                this.snackbar.show_message(this.error_text);
             }
         });
     }
@@ -152,16 +153,9 @@ export class HeaderComponent implements OnInit {
                 this.photoName = tmp['text'];
             } else if (tmp['code'] === 1) {
                 this.error_text = tmp['text'];
-                this.Snackbar_message(this.error_text);
+                this.snackbar.show_message(this.error_text);
             }
         });
     }
 
-    Snackbar_message(msg_text) {
-        if (msg_text != '') {
-            let snackBarRef = this.snackBar.open(msg_text, '', {
-                duration: 3000,
-            });
-        }
-    }
 }

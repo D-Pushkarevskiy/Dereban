@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
 
 import { AdInfoService } from 'src/app/services/adInfo.service';
-import { AuthService } from './auth.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { SnackbarService } from 'src/app/services/snackbar.service'
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -20,9 +20,9 @@ export class GetAdsService {
     constructor(
         private app: AppComponent,
         private http: HttpClient,
-        public snackBar: MatSnackBar,
         private adInfoService: AdInfoService,
         private authService: AuthService,
+        private snackbar: SnackbarService
     ) {
 
     }
@@ -56,7 +56,7 @@ export class GetAdsService {
                 this.GetUserRating(case_id);
             } else if (tmp['code'] == 0) {
                 this.response_text = tmp['text'];
-                this.Snackbar_message(this.response_text);
+                this.snackbar.show_message(this.response_text);
             }
         });
     }
@@ -98,7 +98,7 @@ export class GetAdsService {
 
             if (tmp['code'] === 0) {
                 this.response_text = tmp['text'];
-                this.Snackbar_message(this.response_text);
+                this.snackbar.show_message(this.response_text);
                 this.GetActiveFavorite();
             }
         });
@@ -166,14 +166,6 @@ export class GetAdsService {
             return 'color-red';
         } else {
             return 'color-gray';
-        }
-    }
-
-    Snackbar_message(msg_text) {
-        if (msg_text != '') {
-            let snackBarRef = this.snackBar.open(msg_text, '', {
-                duration: 3000,
-            });
         }
     }
 }
