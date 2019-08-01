@@ -26,9 +26,7 @@ export class AdsListComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
-        this.authService.logIn();
-    }
+    ngOnInit() {}
 
     ZoomImage(event: any) {
         event.target.classList.toggle('opacity-img');

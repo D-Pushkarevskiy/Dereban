@@ -52,17 +52,17 @@ export class ProfileComponent implements OnInit {
     success_saving = '';
     success_saving_photo = '';
     files: any;
-    photoName = 'user_profile_image_default.jpg';
 
-    name = '';
-    surname = '';
-    phone = '';
-    phone2 = '';
-    area = '';
-    telegram = '';
-    vk = '';
-    facebook = '';
-    instagram = '';
+    photoName: String = 'user_profile_image_default.jpg';
+    name: String;
+    surname: String;
+    phone: Number;
+    phone2: Number;
+    area: String;
+    telegram: String;
+    vk: String;
+    facebook: String;
+    instagram: String;
 
     constructor(
         private app: AppComponent,
@@ -95,7 +95,6 @@ export class ProfileComponent implements OnInit {
         });
 
         this.GetUserInfo();
-        this.GetUserPhoto();
     }
 
     UploadPhoto() {
@@ -168,26 +167,10 @@ export class ProfileComponent implements OnInit {
             var tmp;
             tmp = response;
 
+            this.photoName = tmp['photo'];
             this.form.controls.user.setValue({ 'name': tmp['name'], 'surname': tmp['surname'] });
             this.form.controls.contacts.setValue({ 'phone': tmp['phone'], 'phone2': tmp['phone2'], 'area': tmp['area'] });
             this.form.controls.social.setValue({ 'telegram': tmp['telegram'], 'vk': tmp['vk'], 'facebook': tmp['facebook'], 'instagram': tmp['instagram'] });
-        });
-    }
-
-    GetUserPhoto() {
-        this.http.get(this.API_URL + '?func=get_user_photo'
-        ).subscribe(response => {
-            var tmp;
-            tmp = response;
-
-            if (tmp['code'] == 0) {
-                //Все ок, принимаем урл фотографии
-                this.photoName = tmp['text'];
-            } else if (tmp['code'] == 1) {
-                //Выводим ошибку
-                this.code_one_errors = tmp['text'];
-                this.snackbar.show_message(this.code_one_errors);
-            }
         });
     }
 

@@ -19,12 +19,10 @@ import { AppComponent } from 'src/app/app.component';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    charsCount = 8;
+    charsCount: number = 8;
     form: FormGroup;
-    API_URL = this.app.API_URL;
-    password_error = '';
-    code_one_errors = '';
-    success_register = '';
+    API_URL: String = this.app.API_URL;
+    password_error: String = '';
 
     constructor(
         public app: AppComponent,
@@ -49,14 +47,11 @@ export class LoginComponent implements OnInit {
         this.http.get(this.API_URL + '?func=auth&login=' + this.form.get('user.email').value + '&password=' + this.form.get('user.password').value).subscribe(response => {
             var tmp;
             this.password_error = '';
-            this.code_one_errors = '';
-            this.success_register = '';
             tmp = response;
 
             if (tmp['code'] === 0) {
                 //Все хорошо, авторизировать пользователя, закрыть модалку
-                localStorage.setItem('authToken', tmp['text']);
-                this.authService.logIn();
+                this.authService.logIn(tmp['text']);
                 this.dialogRef.close();
                 this.getAds.GetActiveFavorite();
                 //Если авторизован пользователь первый раз перекинуть на страницу контактов
@@ -65,13 +60,11 @@ export class LoginComponent implements OnInit {
                 }
             } else if (tmp['code'] === 1) {
                 //Вывести текст ошибки
-                this.code_one_errors = tmp['text'];
-                this.snackbar.show_message(this.code_one_errors);
+                this.snackbar.show_message(tmp['text']);
             } else if (tmp['code'] === 2) {
                 //Все хорошо, уведомить пользователя о удачной регистрации и письме, закрыть модалку
-                this.success_register = tmp['text'];
                 this.dialogRef.close();
-                this.snackbar.show_message(this.success_register);
+                this.snackbar.show_message(tmp['text']);
             }
             else if (tmp['code'] === 3) {
                 //Вывести текст с ошибкой корректности пароля
@@ -82,7 +75,6 @@ export class LoginComponent implements OnInit {
 
     Clear_text_errors() {
         this.password_error = '';
-        this.code_one_errors = '';
     }
 
 }

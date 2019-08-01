@@ -19,19 +19,17 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class HeaderComponent implements OnInit {
 
-    isAuth;
+    isAuth: Boolean;
     subscription: Subscription;
     subscription_name: Subscription;
-    subscription_rating: Subscription;
-    matTooltipText = "";
-    user_id;
-    user_name;
-    user_rating;
-    allads = 'allads/';
-    favorites = 'favorites/';
-    error_text = '';
-    API_URL = this.app.API_URL;
-    photoName = 'user_profile_image_default.jpg';
+    matTooltipText: String = '';
+    user_id: Number;
+    user_name: String;
+    user_rating: Number;
+    user_photo: String = 'user_profile_image_default.jpg';
+    allads: String = 'allads/';
+    favorites: String = 'favorites/';
+    API_URL: String = this.app.API_URL;
 
     constructor(
         private app: AppComponent,
@@ -44,16 +42,17 @@ export class HeaderComponent implements OnInit {
     ) {
         this.subscription = this.authService.getState().subscribe(state => {
             this.isAuth = state.value;
+        });
+    }
 
+    ngOnInit() {
+        if (this.authService.getAuthorizationToken()) {
+            this.isAuth = true;
             if (this.isAuth == true) {
-                //Запрос на id пользователя
-                this.GetUserId();
-                //Запрос на имя пользователя
-                this.GetUserName();
+                // Запрос на данные пользователя
+                this.GetUserData();
                 //Запрос на рейтинг пользователя
                 this.GetUserRating();
-                //Запрос на фотографию пользователя
-                this.GetUserPhoto();
                 //Очищаем текст тултипера
                 this.matTooltipText = "";
                 //Подписываемся на изменение имени (Профиль)
@@ -64,11 +63,7 @@ export class HeaderComponent implements OnInit {
                 //Добавляем текст тултипера
                 this.matTooltipText = 'Добавление доступно только авторизированным пользователям';
             }
-        });
-    }
-
-    ngOnInit() {
-
+        }
     }
 
     OpenModal() {
@@ -82,34 +77,15 @@ export class HeaderComponent implements OnInit {
         this.getAds.SetFavoriteNull();
     }
 
-    GetUserId() {
-        this.http.get(this.API_URL + '?func=get_user_id'
+    GetUserData() {
+        this.http.get(this.API_URL + '?func=get_user_data'
         ).subscribe(response => {
-            var tmp;
-            tmp = response;
-
-            if (tmp['code'] === 0) {
-                //Все ок, записываем имя пользователя
-                this.user_id = tmp['text'];
-            } else if (tmp['code'] === 1) {
-                this.error_text = tmp['text'];
-                this.snackbar.show_message(this.error_text);
-            }
-        });
-    }
-
-    GetUserName() {
-        this.http.get(this.API_URL + '?func=get_user_name'
-        ).subscribe(response => {
-            var tmp;
-            tmp = response;
-
-            if (tmp['code'] === 0) {
-                //Все ок, записываем имя пользователя
-                this.user_name = tmp['text'];
-            } else if (tmp['code'] === 1) {
-                this.error_text = tmp['text'];
-                this.snackbar.show_message(this.error_text);
+            if (response['code'] === 0) {
+                this.user_id = response['text']['id'];
+                this.user_name = response['text']['name'];
+                this.user_photo = response['text']['photo'];
+            } else if (response['code'] === 1) {
+                this.snackbar.show_message(response['text']);
             }
         });
     }
@@ -124,8 +100,7 @@ export class HeaderComponent implements OnInit {
                 //Все ок, записываем рейтинг пользователя
                 this.user_rating = tmp['text'];
             } else if (tmp['code'] === 1) {
-                this.error_text = tmp['text'];
-                this.snackbar.show_message(this.error_text);
+                this.snackbar.show_message(tmp['text']);
             }
         });
     }
@@ -140,22 +115,6 @@ export class HeaderComponent implements OnInit {
         } else {
             return 'color-gray';
         }
-    }
-
-    GetUserPhoto() {
-        this.http.get(this.API_URL + '?func=get_user_photo'
-        ).subscribe(response => {
-            var tmp;
-            tmp = response;
-
-            if (tmp['code'] == 0) {
-                //Все ок, записываем урл фотографии
-                this.photoName = tmp['text'];
-            } else if (tmp['code'] === 1) {
-                this.error_text = tmp['text'];
-                this.snackbar.show_message(this.error_text);
-            }
-        });
     }
 
 }

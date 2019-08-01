@@ -22,7 +22,7 @@ export class ConfirmRegistrationComponent implements OnInit {
     contentHeader = 'Подтверждение пароля';
     password_error = '';
     code_one_errors = '';
-    API_URL = 'http://derebanapi/';
+    API_URL = this.app.API_URL;
     regToken = '';
 
     constructor(

@@ -7,8 +7,8 @@ import { Observable, Subject } from 'rxjs';
 @Injectable()
 
 export class AuthService {
-    API_URL = 'http://derebanapi/';
-    authToken = localStorage.getItem('authToken');
+    API_URL: String = 'http://derebanapi/';
+    authToken: String = localStorage.getItem('authToken');
 
     constructor(
         private router: Router,
@@ -17,10 +17,9 @@ export class AuthService {
 
     private subject = new Subject<any>();
 
-    public logIn() {
-        if (this.authToken && this.authToken != '') {
-            this.subject.next({ value: true });
-        }
+    public logIn(token) {
+        this.subject.next({ value: true });
+        localStorage.setItem('authToken', token);
     }
 
     public logOut() {
