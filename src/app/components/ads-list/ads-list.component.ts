@@ -13,7 +13,7 @@ import { AppComponent } from 'src/app/app.component';
     styleUrls: ['./ads-list.component.css']
 })
 export class AdsListComponent implements OnInit {
-    isAuth;
+    isAuth: Boolean;
     subscription: Subscription;
 
     constructor(

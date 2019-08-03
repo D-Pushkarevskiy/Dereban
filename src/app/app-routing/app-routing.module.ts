@@ -12,16 +12,17 @@ import { UserAdsComponent } from 'src/app/components/user-ads/user-ads.component
 import { FavoritesAdsComponent } from 'src/app/components/favorites-ads/favorites-ads.component';
 
 import { AuthGuard } from '../guards/auth.guard';
+import { HomeGuard } from '../guards/home.guard';
 
 const appRoutes: Routes = [
-    { path: '', component: HomepageComponent },
+    { path: '', component: HomepageComponent, canActivate: [HomeGuard] },
     { path: 'confirm-registration/:regToken', component: ConfirmRegistrationComponent },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'adding-ad', component: AddingAdComponent, canActivate: [AuthGuard] },
-    { path: 'ad/:id', component: AdDetailComponent },
-    { path: 'allads/:id', component: UserAdsComponent },
+    { path: 'ad/:id', component: AdDetailComponent, canActivate: [HomeGuard] },
+    { path: 'allads/:id', component: UserAdsComponent, canActivate: [HomeGuard] },
     { path: 'favorites/:id', component: FavoritesAdsComponent, canActivate: [AuthGuard] },
-    { path: '**', component: NotFoundComponent },
+    { path: '**', component: NotFoundComponent, canActivate: [HomeGuard] },
 ];
 
 @NgModule({

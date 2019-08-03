@@ -1,45 +1,47 @@
 import { Injectable } from "@angular/core";
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable, Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 
 export class AuthService {
     API_URL: String = 'http://derebanapi/';
-    authToken: String = localStorage.getItem('authToken');
 
     constructor(
-        private router: Router,
         private http: HttpClient,
     ) { }
 
     private subject = new Subject<any>();
 
-    public logIn(token) {
+    public logIn() {
         this.subject.next({ value: true });
-        localStorage.setItem('authToken', token);
     }
 
     public logOut() {
         this.subject.next({ value: false });
-        //Удаление токена с базы данных
-        this.removeAuthToken();
-        localStorage.removeItem('authToken');
-        this.router.navigate(['/']);
     }
 
     public getState(): Observable<any> {
         return this.subject.asObservable();
     }
 
-    public getAuthorizationToken() {
-        return this.authToken;
+    public setAuthToken(token) {
+        localStorage.setItem('authToken', token);
+    }
+
+    public getAuthToken() {
+        return localStorage.getItem('authToken');
     }
 
     public removeAuthToken() {
-        if (!this.authToken) {
+        //Удаление токена с базы данных
+        this.removeAuthTokenFromDb();
+        localStorage.removeItem('authToken');
+    }
+
+    public removeAuthTokenFromDb() {
+        if (!this.getAuthToken()) {
             return;
         };
         this.http.get(this.API_URL + '?func=remove_auth_token').subscribe(response => {

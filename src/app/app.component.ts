@@ -11,9 +11,7 @@ export class AppComponent implements OnInit {
     overlay = false;
     public API_URL = 'http://derebanapi/';
 
-    constructor() {
-    }
+    constructor() { }
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
 }

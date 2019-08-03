@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -38,16 +39,12 @@ export class HeaderComponent implements OnInit {
         private profileService: ProfileService,
         private http: HttpClient,
         public getAds: GetAdsService,
-        private snackbar: SnackbarService
+        private snackbar: SnackbarService,
+        private router: Router
     ) {
         this.subscription = this.authService.getState().subscribe(state => {
             this.isAuth = state.value;
-        });
-    }
 
-    ngOnInit() {
-        if (this.authService.getAuthorizationToken()) {
-            this.isAuth = true;
             if (this.isAuth == true) {
                 // Запрос на данные пользователя
                 this.GetUserData();
@@ -63,8 +60,10 @@ export class HeaderComponent implements OnInit {
                 //Добавляем текст тултипера
                 this.matTooltipText = 'Добавление доступно только авторизированным пользователям';
             }
-        }
+        });
     }
+
+    ngOnInit() {}
 
     OpenModal() {
         this.dialogRef.open(LoginComponent, {
@@ -73,7 +72,9 @@ export class HeaderComponent implements OnInit {
     }
 
     logOut() {
+        this.authService.removeAuthToken();
         this.authService.logOut();
+        this.router.navigate(['/']);
         this.getAds.SetFavoriteNull();
     }
 

@@ -51,7 +51,8 @@ export class LoginComponent implements OnInit {
 
             if (tmp['code'] === 0) {
                 //Все хорошо, авторизировать пользователя, закрыть модалку
-                this.authService.logIn(tmp['text']);
+                this.authService.setAuthToken(tmp['text']);
+                this.authService.logIn();
                 this.dialogRef.close();
                 this.getAds.GetActiveFavorite();
                 //Если авторизован пользователь первый раз перекинуть на страницу контактов

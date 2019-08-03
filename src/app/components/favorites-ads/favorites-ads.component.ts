@@ -14,7 +14,7 @@ import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component
 })
 export class FavoritesAdsComponent implements OnInit {
 
-    authToken = this.authService.getAuthorizationToken();
+    authToken = this.authService.getAuthToken();
     contentHeader = 'Избранные объявления';
 
     constructor(

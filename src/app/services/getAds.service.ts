@@ -15,7 +15,7 @@ export class GetAdsService {
     public detailClass = false;
     response_text = '';
     API_URL = this.app.API_URL;
-    authToken = this.authService.getAuthorizationToken();
+    authToken = this.authService.getAuthToken();
 
     constructor(
         private app: AppComponent,

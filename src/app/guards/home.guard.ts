@@ -4,7 +4,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { AuthService } from '../services/auth.service';
 
 @Injectable({ providedIn: 'root' })
-export class AuthGuard implements CanActivate {
+export class HomeGuard implements CanActivate {
 
     constructor(private router: Router, private AuthService: AuthService) { }
 
@@ -12,14 +12,11 @@ export class AuthGuard implements CanActivate {
         if (this.AuthService.getAuthToken()) {
             console.log('LogIn user now');
             this.AuthService.logIn();
-            return true;
         } else {
             console.log('LogOut user now');
-            this.AuthService.removeAuthToken();
             this.AuthService.logOut();
-            this.router.navigate(['/']);
-
-            return false;
         }
+
+        return true;
     }
 }
