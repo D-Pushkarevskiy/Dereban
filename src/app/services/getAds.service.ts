@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { Subscription, Observable } from 'rxjs';
+
 import { AdInfoService } from 'src/app/services/adInfo.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service'
@@ -13,9 +15,11 @@ export class GetAdsService {
 
     public tmp;
     public detailClass = false;
-    response_text = '';
-    API_URL = this.app.API_URL;
-    authToken = this.authService.getAuthToken();
+
+    private API_URL = this.app.API_URL;
+    private authToken = this.authService.getAuthToken();
+    private subscription: Subscription;
+    public isAuth: Boolean;
 
     constructor(
         private app: AppComponent,
@@ -24,7 +28,9 @@ export class GetAdsService {
         private authService: AuthService,
         private snackbar: SnackbarService
     ) {
-
+        this.subscription = this.authService.getState().subscribe(state => {
+            this.isAuth = state.value;
+        });
     }
 
     GetShowCases(params, case_name) {
@@ -55,8 +61,7 @@ export class GetAdsService {
                 this.GetShowCaseRating(case_id);
                 this.GetUserRating(case_id);
             } else if (tmp['code'] == 0) {
-                this.response_text = tmp['text'];
-                this.snackbar.show_message(this.response_text);
+                this.snackbar.show_message(tmp['text']);
             }
         });
     }
@@ -97,8 +102,7 @@ export class GetAdsService {
             tmp = response;
 
             if (tmp['code'] === 0) {
-                this.response_text = tmp['text'];
-                this.snackbar.show_message(this.response_text);
+                this.snackbar.show_message(tmp['text']);
                 this.GetActiveFavorite();
             }
         });
@@ -168,4 +172,9 @@ export class GetAdsService {
             return 'color-gray';
         }
     }
+    
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+
 }

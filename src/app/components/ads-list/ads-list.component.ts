@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { GetAdsService } from 'src/app/services/getAds.service';
-import { AuthService } from 'src/app/services/auth.service';
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -13,18 +12,13 @@ import { AppComponent } from 'src/app/app.component';
     styleUrls: ['./ads-list.component.css']
 })
 export class AdsListComponent implements OnInit {
-    isAuth: Boolean;
+    isAuth: Boolean = this.getAds.isAuth;
     subscription: Subscription;
 
     constructor(
         private app: AppComponent,
-        public getAds: GetAdsService,
-        private authService: AuthService
-    ) {
-        this.subscription = this.authService.getState().subscribe(state => {
-            this.isAuth = state.value;
-        });
-    }
+        public getAds: GetAdsService
+    ) {}
 
     ngOnInit() {}
 

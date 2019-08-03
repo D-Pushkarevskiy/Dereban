@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ import { AppComponent } from 'src/app/app.component';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
     isAuth: Boolean;
     subscription: Subscription;
@@ -64,6 +64,10 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {}
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 
     OpenModal() {
         this.dialogRef.open(LoginComponent, {

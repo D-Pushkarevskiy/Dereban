@@ -10,10 +10,8 @@ export class HomeGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (this.AuthService.getAuthToken()) {
-            console.log('LogIn user now');
             this.AuthService.logIn();
         } else {
-            console.log('LogOut user now');
             this.AuthService.logOut();
         }
 
