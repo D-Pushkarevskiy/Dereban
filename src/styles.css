@@ -285,11 +285,6 @@ input.example-right-align {
     visibility: hidden;
 }
 
-.mat-tooltip-size {
-    font-size: 14px!important;
-    top: -100px;
-}
-
 .mat-menu-content button.align_center {
     text-align: center;
     border-bottom: 1px solid #efefef;
@@ -425,6 +420,7 @@ img.showcase_photo.zoomed-img {
 }
 
 .case-rating .material-icons {
+    outline: none;
     line-height: 1.5;
     font-weight: bold;
 }

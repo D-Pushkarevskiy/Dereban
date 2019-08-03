@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { MatDialog, MatMenuTrigger } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -31,6 +31,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     allads: String = 'allads/';
     favorites: String = 'favorites/';
     API_URL: String = this.app.API_URL;
+    @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+    scroll = (): void => { this.trigger.closeMenu(); };
 
     constructor(
         private app: AppComponent,
@@ -61,9 +63,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 this.matTooltipText = 'Добавление доступно только авторизированным пользователям';
             }
         });
+        window.addEventListener('scroll', this.scroll, true);
     }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     ngOnDestroy() {
         this.subscription.unsubscribe();

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { GetAdsService } from 'src/app/services/getAds.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -17,10 +18,15 @@ export class AdsListComponent implements OnInit {
 
     constructor(
         private app: AppComponent,
-        public getAds: GetAdsService
-    ) {}
+        public getAds: GetAdsService,
+        private authService: AuthService
+    ) {
+        this.subscription = this.authService.getState().subscribe(state => {
+            this.isAuth = state.value;
+        });
+    }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     ZoomImage(event: any) {
         event.target.classList.toggle('opacity-img');

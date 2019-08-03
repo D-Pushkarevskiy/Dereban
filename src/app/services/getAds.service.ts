@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { AdInfoService } from 'src/app/services/adInfo.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,7 +18,7 @@ export class GetAdsService {
 
     private API_URL = this.app.API_URL;
     private authToken = this.authService.getAuthToken();
-    private subscription: Subscription;
+    public subscription: Subscription;
     public isAuth: Boolean;
 
     constructor(

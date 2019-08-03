@@ -1,58 +1,59 @@
 <div class="header-inner">
-    <div>
-        <div [matTooltip]="matTooltipText" [matTooltipClass]="'mat-tooltip-size'" matTooltipPosition="below">
-            <button mat-raised-button color="primary" [disabled]="!isAuth" [routerLink]="['adding-ad']">Добавить объявление</button>
+  <div>
+    <button [title]="matTooltipText" mat-raised-button color="primary" [disabled]="!isAuth"
+      [routerLink]="['adding-ad']">Добавить
+      объявление</button>
+  </div>
+  <div>
+    <a routerLink="/">
+      <img src="../assets/img/Dereban_logo_colored_full.png" class="main-logo">
+    </a>
+  </div>
+  <div>
+    <button mat-raised-button color="primary" (click)="OpenModal()" *ngIf="!isAuth">Войти</button>
+    <div *ngIf="isAuth">
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="user_menu_button" style="position: relative;">
+        <div class="wrapper-for-spinner">
+          <div class="img_wrapper img_header">
+            <img src="../assets/users_images/{{user_photo}}" class="user_profile_img">
+          </div>
+          <mat-spinner class="spinner-circle" [class.loader-hidden]="!show" *ngIf="show"></mat-spinner>
         </div>
-    </div>
-    <div>
-        <a routerLink="/">
-            <img src="../assets/img/Dereban_logo_colored_full.png" class="main-logo">
-        </a>
-    </div>
-    <div>
-        <button mat-raised-button color="primary" (click)="OpenModal()" *ngIf="!isAuth">Войти</button>
-        <div *ngIf="isAuth">
-            <button mat-icon-button [matMenuTriggerFor]="menu" class="user_menu_button" style="position: relative;">
-                    <div class="wrapper-for-spinner">
-                    <div class="img_wrapper img_header">
-                        <img src="../assets/users_images/{{user_photo}}" class="user_profile_img">
-                    </div>
-                    <mat-spinner class="spinner-circle" [class.loader-hidden]="!show" *ngIf="show"></mat-spinner>
-                </div>
-                <div>
-                    <span>
-                        {{user_name}}
-                    </span>
-                    <mat-icon class="vert_align_middle">expand_more</mat-icon>
-                </div>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item disabled class="align_center">
-                    <span>Рейтинг</span>
-                    <span *ngIf="user_rating" class="user_rating" [ngClass]="ratingColor(user_rating)"><span *ngIf="user_rating > 0">+</span>{{user_rating}}</span>
-                    <span *ngIf="!user_rating" class="user_rating color-gray">0</span>
-                </button>
-                <button mat-menu-item [routerLink]="['profile']">
-                        <mat-icon>account_circle</mat-icon>
-                    <span>Профиль</span>
-                </button>
-                <button mat-menu-item [routerLink]="[allads,user_id]">
-                    <mat-icon>view_day</mat-icon>
-                    <span>Объявления</span>
-                </button>
-                <button mat-menu-item [routerLink]="[favorites,user_id]">
-                    <mat-icon>favorite</mat-icon>
-                    <span>Избранные</span>
-                </button>
-                <button mat-menu-item>
-                    <mat-icon>chat</mat-icon>
-                    <span>Комментарии</span>
-                </button>
-                <button mat-menu-item (click)="logOut()">
-                        <mat-icon>exit_to_app</mat-icon>
-                    <span>Выход</span>
-                </button>
-            </mat-menu>
+        <div>
+          <span>
+            {{user_name}}
+          </span>
+          <mat-icon class="vert_align_middle">expand_more</mat-icon>
         </div>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item disabled class="align_center">
+          <span>Рейтинг</span>
+          <span *ngIf="user_rating" class="user_rating" [ngClass]="ratingColor(user_rating)"><span
+              *ngIf="user_rating > 0">+</span>{{user_rating}}</span>
+          <span *ngIf="!user_rating" class="user_rating color-gray">0</span>
+        </button>
+        <button mat-menu-item [routerLink]="['profile']">
+          <mat-icon>account_circle</mat-icon>
+          <span>Профиль</span>
+        </button>
+        <button mat-menu-item [routerLink]="[allads,user_id]">
+          <mat-icon>view_day</mat-icon>
+          <span>Объявления</span>
+        </button>
+        <button mat-menu-item [routerLink]="[favorites,user_id]">
+          <mat-icon>favorite</mat-icon>
+          <span>Избранные</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>chat</mat-icon>
+          <span>Комментарии</span>
+        </button>
+        <button mat-menu-item (click)="logOut()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Выход</span>
+        </button>
+      </mat-menu>
     </div>
+  </div>
 </div>
