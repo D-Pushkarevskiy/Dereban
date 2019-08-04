@@ -1,16 +1,21 @@
 <div class="header-inner">
   <div>
     <button [title]="matTooltipText" mat-raised-button color="primary" [disabled]="!isAuth"
-      [routerLink]="['adding-ad']">Добавить
-      объявление</button>
+      [routerLink]="['adding-ad']">{{ 'MAIN.ADD_SHOWCASE' | translate }}</button>
   </div>
   <div>
     <a routerLink="/">
       <img src="../assets/img/Dereban_logo_colored_full.png" class="main-logo">
     </a>
+    <div>
+      <span class="lang color-gray" [ngClass]="{'active':this.isActiveLang('ru')}" (click)="setLang('ru')">RU</span>
+      <span class="lang color-gray" [ngClass]="{'active':this.isActiveLang('ua')}" (click)="setLang('ua')">UA</span>
+      <span class="lang color-gray" [ngClass]="{'active':this.isActiveLang('en')}" (click)="setLang('en')">EN</span>
+    </div>
   </div>
   <div>
-    <button mat-raised-button color="primary" (click)="OpenModal()" *ngIf="!isAuth">Войти</button>
+    <button mat-raised-button color="primary" (click)="OpenModal()"
+      *ngIf="!isAuth">{{ 'MENU.LOGIN' | translate }}</button>
     <div *ngIf="isAuth">
       <button mat-icon-button [matMenuTriggerFor]="menu" class="user_menu_button" style="position: relative;">
         <div class="wrapper-for-spinner">
@@ -28,30 +33,30 @@
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item disabled class="align_center">
-          <span>Рейтинг</span>
+          <span>{{ 'MENU.RATING' | translate }}</span>
           <span *ngIf="user_rating" class="user_rating" [ngClass]="ratingColor(user_rating)"><span
               *ngIf="user_rating > 0">+</span>{{user_rating}}</span>
           <span *ngIf="!user_rating" class="user_rating color-gray">0</span>
         </button>
         <button mat-menu-item [routerLink]="['profile']">
           <mat-icon>account_circle</mat-icon>
-          <span>Профиль</span>
+          <span>{{ 'MENU.PROFILE' | translate }}</span>
         </button>
         <button mat-menu-item [routerLink]="[allads,user_id]">
           <mat-icon>view_day</mat-icon>
-          <span>Объявления</span>
+          <span>{{ 'MENU.SHOWCASES' | translate }}</span>
         </button>
         <button mat-menu-item [routerLink]="[favorites,user_id]">
           <mat-icon>favorite</mat-icon>
-          <span>Избранные</span>
+          <span>{{ 'MENU.FAVORITES' | translate }}</span>
         </button>
         <button mat-menu-item>
           <mat-icon>chat</mat-icon>
-          <span>Комментарии</span>
+          <span>{{ 'MENU.COMMENTS' | translate }}</span>
         </button>
         <button mat-menu-item (click)="logOut()">
           <mat-icon>exit_to_app</mat-icon>
-          <span>Выход</span>
+          <span>{{ 'MENU.LOGOUT' | translate }}</span>
         </button>
       </mat-menu>
     </div>

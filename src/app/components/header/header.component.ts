@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog, MatMenuTrigger } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 import { Subscription } from 'rxjs';
 
@@ -42,7 +43,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private http: HttpClient,
         public getAds: GetAdsService,
         private snackbar: SnackbarService,
-        private router: Router
+        private router: Router,
+        private translate: TranslateService
     ) {
         this.subscription = this.authService.getState().subscribe(state => {
             this.isAuth = state.value;
@@ -67,10 +69,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() { }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    }
 
     OpenModal() {
         this.dialogRef.open(LoginComponent, {
@@ -123,6 +121,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
         } else {
             return 'color-gray';
         }
+    }
+
+    isActiveLang(lang: string) {
+        if (this.translate.currentLang === lang) {
+            return true;
+        }
+
+        return false;
+    }
+
+    setLang(lang: string) {
+        this.translate.use(lang);
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
 }

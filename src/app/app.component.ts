@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-root',
@@ -11,7 +12,14 @@ export class AppComponent implements OnInit {
     overlay = false;
     public API_URL = 'http://derebanapi/';
 
-    constructor() { }
+    constructor(public translate: TranslateService) {
+        // this language will be used as a fallback when a translation isn't found in the current language
+        translate.setDefaultLang('ua');
+
+        // the lang to use, if the lang isn't available, it will use the current loader to get them
+        translate.use(translate.getBrowserLang() ? translate.getBrowserLang() : 'ua');
+    }
 
     ngOnInit() { }
+
 }

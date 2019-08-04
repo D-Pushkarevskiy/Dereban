@@ -26,6 +26,8 @@
     "@fortawesome/angular-fontawesome": "^0.1.1",
     "@fortawesome/fontawesome-free": "^5.2.0",
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
     "rxjs": "^6.0.0",

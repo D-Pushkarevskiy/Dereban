@@ -3,3 +3,13 @@ span.user_rating {
     font-size: 18px;
     font-weight: bold;
 }
+
+.lang {
+    padding: 0 3px;
+    cursor: pointer;
+}
+
+.lang.active {
+    color: #445ba7;
+    font-weight: bold;
+}
