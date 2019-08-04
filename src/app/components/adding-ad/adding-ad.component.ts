@@ -5,6 +5,7 @@ import { Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 import { SnackbarService } from 'src/app/services/snackbar.service'
 
@@ -17,21 +18,20 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class AddingAdComponent implements OnInit {
 
-    contentHeader = 'Добавить объявление';
     form: FormGroup;
-    desc_template = '';
-    show_desc = false;
-    desc_num;
-    desc_full_num;
+    desc_template: string = '';
+    show_desc: Boolean = false;
+    desc_num: Number;
+    desc_full_num: Number;
     files: any;
-    img_showcase_main = '../assets/users_images/user_ads_image_default.jpg';
-    img_name = '';
+    img_showcase_main: string = '../assets/users_images/user_ads_image_default.jpg';
+    img_name: string = '';
 
-    templateFullComplete = 'Год выпуска: \n\Номер рамы: \n\Размер рамы: \n\ \n\Ссылка на сайт производителя: \n\Ссылка на геометрию: ';
-    templateFullСustom = 'Год выпуска: \n\Номер рамы: \n\Размер рамы: \n\ \n\Рама: \n\(задний амортизатор): \n\Вилка: \n\Рулевая: \n\Подседельный штырь: \n\Подседельный зажим: \n\Седло: \n\Каретка: \n\Шатуны: \n\Звезд(а)ы: \n\Педали: \n\Цепь: \n\ \n\Колеса\n\ Переднее\n\   Втулка: \n\   Спицы: \n\   Обод: \n\   Покрышка: \n\ Заднее\n\   Втулка: \n\   Спицы: \n\   Обод: \n\   Покрышка: \n\ \n\Тормоза: \n\Роторы: \n\Переключатели: \n\Руль: \n\Вынос: \n\Грипсы: \n\ \n\Вес в сборе: ';
-    templateParts = 'Рама: \n\(задний амортизатор): \n\Вилка: \n\Рулевая: \n\Подседельный штырь: \n\Подседельный зажим: \n\Седло: \n\Каретка: \n\Шатуны: \n\Звезд(а)ы: \n\Педали: \n\Цепь: \n\ \n\Колеса\n\ Переднее\n\   Втулка: \n\   Спицы: \n\   Обод: \n\   Покрышка: \n\ Заднее\n\   Втулка: \n\   Спицы: \n\   Обод: \n\   Покрышка: \n\ \n\Тормоза: \n\Роторы: \n\Переключатели: \n\Руль: \n\Вынос: \n\Грипсы: ';
-    templateDetail = 'Фирма: \n\Модель: \n\Параметры: \n\Вес: ';
-    descr_addition = '\n\ \n\Дополнительная информация: \n\  ';
+    templateFullComplete: string;
+    templateFullСustom: string;
+    templateParts: string;
+    templateDetail: string;
+    descr_addition: string;
 
     isHiddenFull = true;
     isHiddenDetail = true;
@@ -46,10 +46,33 @@ export class AddingAdComponent implements OnInit {
         private titleService: Title,
         private http: HttpClient,
         private snackbar: SnackbarService,
-        private router: Router
+        private router: Router,
+        private translate: TranslateService
     ) {
-        app.contentHeader = this.contentHeader;
-        this.titleService.setTitle(this.contentHeader);
+        this.translate.stream('MAIN.ADD_SHOWCASE').subscribe((res: string) => {
+            app.contentHeader = res;
+            this.titleService.setTitle(res);
+        });
+        this.translate.stream('SHOWCASE.BIKE.DESCRIPTION.TEMPLATE.COMPLETE').subscribe((res: string) => {
+            this.templateFullComplete = res;
+            this.ToggleDescTeplate({ checked: this.show_desc });
+        });
+        this.translate.stream('SHOWCASE.BIKE.DESCRIPTION.TEMPLATE.CUSTOM').subscribe((res: string) => {
+            this.templateFullСustom = res;
+            this.ToggleDescTeplate({ checked: this.show_desc });
+        });
+        this.translate.stream('SHOWCASE.BIKE.DESCRIPTION.TEMPLATE.COMPONENTS').subscribe((res: string) => {
+            this.templateParts = res;
+            this.ToggleDescTeplate({ checked: this.show_desc });
+        });
+        this.translate.stream('SHOWCASE.BIKE.DESCRIPTION.TEMPLATE.COMPONENT').subscribe((res: string) => {
+            this.templateDetail = res;
+            this.ToggleDescTeplate({ checked: this.show_desc });
+        });
+        this.translate.stream('SHOWCASE.BIKE.DESCRIPTION.TEMPLATE.ADDITIONAL').subscribe((res: string) => {
+            this.descr_addition = res;
+            this.ToggleDescTeplate({ checked: this.show_desc });
+        });
     }
 
     ngOnInit() {

@@ -108,6 +108,10 @@ pre {
     display: inline-block;
 }
 
+.mat-button-toggle {
+    background-color: #ffffffbf;
+}
+
 .mat-button-toggle-checked {
     background-color: #3f50b5;
     color: white;

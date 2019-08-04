@@ -1,6 +1,6 @@
 <div *ngIf="!this.getAds.tmp && !this.getAds.show" class="ads-not-found">
   <span class="color-gray">
-    Не найдено ни одного объявления
+    {{ 'INFO.SHOWCASE_NOT_FOUND' | translate }}
   </span>
 </div>
 
@@ -13,8 +13,7 @@
           (click)="this.getAds.ChangeRating(1, item.id)" [ngClass]="this.getAds.isActive(item.id, 1)">
           <i class="material-icons">keyboard_arrow_up</i>
         </div>
-        <div class="color-gray cursor-default" *ngIf="!isAuth"
-          title="Рейтинг доступен только авторизованным пользователям">
+        <div class="color-gray cursor-default" *ngIf="!isAuth" title="{{ 'INFO.RATING_NOT_AVAILABLE' | translate }}">
           <i class="material-icons">keyboard_arrow_up</i>
         </div>
 
@@ -28,11 +27,10 @@
           <i class="material-icons">keyboard_arrow_down</i>
         </div>
         <div class="color-gray cursor-default" *ngIf="!isAuth">
-          <i class="material-icons"
-            title="Рейтинг доступен только авторизованным пользователям">keyboard_arrow_down</i>
+          <i class="material-icons" title="{{ 'INFO.RATING_NOT_AVAILABLE' | translate }}">keyboard_arrow_down</i>
         </div>
 
-        <div class="selected opacity-arrow" title="Добавить в избранные" *ngIf="isAuth"
+        <div class="selected opacity-arrow" title="{{ 'MAIN.ADD_TO_FAVORITES' | translate }}" *ngIf="isAuth"
           (click)="this.getAds.ToggleFavorite(item.id)" [ngClass]="{'active':this.getAds.isFavorite(item.id)}">
           <i class="material-icons color-red" *ngIf="!this.getAds.isFavorite(item.id)">
             favorite_border
@@ -41,8 +39,7 @@
             favorite
           </i>
         </div>
-        <div class="selected" title="Добавление в избранное доступно только авторизованным пользователям"
-          *ngIf="!isAuth">
+        <div class="selected" title="{{ 'INFO.FAVORITES_NOT_AVAILABLE' | translate }}" *ngIf="!isAuth">
           <i class="material-icons color-gray cursor-default">
             favorite_border
           </i>
@@ -60,11 +57,11 @@
         </div>
 
         <div class="case-area-date color-orange">
-          <span title="Дата добавления">
+          <span title="{{ 'MAIN.ADDING_DATE' | translate }}">
             <i class="material-icons">calendar_today</i>
             {{item.adding_time}}
           </span>
-          <span title="Область" class="fl-right" *ngIf="item.user_area">
+          <span title="{{ 'MAIN.AREA' | translate }}" class="fl-right" *ngIf="item.user_area">
             <i class="material-icons">place</i>
             {{item.user_area}}
           </span>
@@ -75,7 +72,7 @@
         <div *ngIf="item.additionalPhotos">
           <a href="{{item.additionalPhotos}}" class="additional_photos" target="_blank">
             <mat-icon>link</mat-icon>
-            <span>Ссылка на доп. фотографии</span>
+            <span>{{ 'SHOWCASE.ADDITIONAL_PHOTO_LABEL' | translate }}</span>
           </a>
         </div>
       </div>
@@ -86,45 +83,45 @@
         <div>
           <mat-chip-list>
             <mat-chip [ngSwitch]="item.type" *ngIf="item.type != 0">
-              <span *ngSwitchCase="1">В сборе</span>
-              <span *ngSwitchCase="2">Деребан</span>
-              <span *ngSwitchCase="3">Деталь</span>
+              <span *ngSwitchCase="1">{{ 'SHOWCASE.ASSEMBLED' | translate }}</span>
+              <span *ngSwitchCase="2">{{ 'SHOWCASE.DEREBAN' | translate }}</span>
+              <span *ngSwitchCase="3">{{ 'SHOWCASE.COMPONENT.NAME' | translate }}</span>
             </mat-chip>
             <mat-chip [ngSwitch]="item.full_type" *ngIf="item.full_type != 0">
-              <span *ngSwitchCase="1">Комплит</span>
-              <span *ngSwitchCase="2">Кастом</span>
+              <span *ngSwitchCase="1">{{ 'SHOWCASE.COMPLETE' | translate }}</span>
+              <span *ngSwitchCase="2">{{ 'SHOWCASE.CUSTOM' | translate }}</span>
             </mat-chip>
             <mat-chip [ngSwitch]="item.detail_type" *ngIf="item.detail_type != 0">
-              <span *ngSwitchCase="1">Рама</span>
-              <span *ngSwitchCase="2">Вилка</span>
-              <span *ngSwitchCase="3">Амортизатор</span>
-              <span *ngSwitchCase="4">Тормоза</span>
-              <span *ngSwitchCase="5">Руль</span>
-              <span *ngSwitchCase="6">Вынос</span>
-              <span *ngSwitchCase="7">Педали</span>
-              <span *ngSwitchCase="8">Втулка</span>
-              <span *ngSwitchCase="9">Грипсы</span>
-              <span *ngSwitchCase="10">Камера</span>
-              <span *ngSwitchCase="11">Каретка</span>
-              <span *ngSwitchCase="12">Кассета</span>
-              <span *ngSwitchCase="13">Колесо</span>
-              <span *ngSwitchCase="14">Колодки</span>
-              <span *ngSwitchCase="15">Манетка</span>
-              <span *ngSwitchCase="16">Обод</span>
-              <span *ngSwitchCase="17">Переключатель</span>
-              <span *ngSwitchCase="18">Подседельный</span>
-              <span *ngSwitchCase="19">Покрышка</span>
-              <span *ngSwitchCase="20">Ротор</span>
-              <span *ngSwitchCase="21">Рулевая</span>
-              <span *ngSwitchCase="22">Седло</span>
-              <span *ngSwitchCase="23">Спицы</span>
-              <span *ngSwitchCase="24">Цепь</span>
-              <span *ngSwitchCase="25">Шатуны</span>
-              <span *ngSwitchCase="26">Другое</span>
+              <span *ngSwitchCase="1">{{ 'SHOWCASE.COMPONENT.TYPE.FRAME' | translate }}</span>
+              <span *ngSwitchCase="2">{{ 'SHOWCASE.COMPONENT.TYPE.FORK' | translate }}</span>
+              <span *ngSwitchCase="3">{{ 'SHOWCASE.COMPONENT.TYPE.SHOCK' | translate }}</span>
+              <span *ngSwitchCase="4">{{ 'SHOWCASE.COMPONENT.TYPE.BRAKES' | translate }}</span>
+              <span *ngSwitchCase="5">{{ 'SHOWCASE.COMPONENT.TYPE.BAR' | translate }}</span>
+              <span *ngSwitchCase="6">{{ 'SHOWCASE.COMPONENT.TYPE.STEM' | translate }}</span>
+              <span *ngSwitchCase="7">{{ 'SHOWCASE.COMPONENT.TYPE.PEDALS' | translate }}</span>
+              <span *ngSwitchCase="8">{{ 'SHOWCASE.COMPONENT.TYPE.HUB' | translate }}</span>
+              <span *ngSwitchCase="9">{{ 'SHOWCASE.COMPONENT.TYPE.GRIPS' | translate }}</span>
+              <span *ngSwitchCase="10">{{ 'SHOWCASE.COMPONENT.TYPE.TUBE' | translate }}</span>
+              <span *ngSwitchCase="11">{{ 'SHOWCASE.COMPONENT.TYPE.BOTTOM_BRACKET' | translate }}</span>
+              <span *ngSwitchCase="12">{{ 'SHOWCASE.COMPONENT.TYPE.CASSET' | translate }}</span>
+              <span *ngSwitchCase="13">{{ 'SHOWCASE.COMPONENT.TYPE.WHEEL' | translate }}</span>
+              <span *ngSwitchCase="14">{{ 'SHOWCASE.COMPONENT.TYPE.BRAKE_PADS' | translate }}</span>
+              <span *ngSwitchCase="15">{{ 'SHOWCASE.COMPONENT.TYPE.GEAR_SHIFTER' | translate }}</span>
+              <span *ngSwitchCase="16">{{ 'SHOWCASE.COMPONENT.TYPE.RIM' | translate }}</span>
+              <span *ngSwitchCase="17">{{ 'SHOWCASE.COMPONENT.TYPE.DERAILLEURS' | translate }}</span>
+              <span *ngSwitchCase="18">{{ 'SHOWCASE.COMPONENT.TYPE.SEATPOST' | translate }}</span>
+              <span *ngSwitchCase="19">{{ 'SHOWCASE.COMPONENT.TYPE.TYRE' | translate }}</span>
+              <span *ngSwitchCase="20">{{ 'SHOWCASE.COMPONENT.TYPE.BRAKE_SPARES' | translate }}</span>
+              <span *ngSwitchCase="21">{{ 'SHOWCASE.COMPONENT.TYPE.HEADSET' | translate }}</span>
+              <span *ngSwitchCase="22">{{ 'SHOWCASE.COMPONENT.TYPE.SADDLE' | translate }}</span>
+              <span *ngSwitchCase="23">{{ 'SHOWCASE.COMPONENT.TYPE.SPOKES' | translate }}</span>
+              <span *ngSwitchCase="24">{{ 'SHOWCASE.COMPONENT.TYPE.CHAIN' | translate }}</span>
+              <span *ngSwitchCase="25">{{ 'SHOWCASE.COMPONENT.TYPE.CRANKS' | translate }}</span>
+              <span *ngSwitchCase="26">{{ 'SHOWCASE.COMPONENT.TYPE.OTHER' | translate }}</span>
             </mat-chip>
             <mat-chip [ngSwitch]="item.state" *ngIf="item.state != 0">
-              <span *ngSwitchCase="1">Новое</span>
-              <span *ngSwitchCase="2">Б\У</span>
+              <span *ngSwitchCase="1">{{ 'SHOWCASE.CONDITION.NEW' | translate }}</span>
+              <span *ngSwitchCase="2">{{ 'SHOWCASE.CONDITION.USED' | translate }}</span>
             </mat-chip>
             <mat-chip *ngIf="item.wheel_size != 0 && item.wheel_size != 27">
               {{item.wheel_size}}"
@@ -133,28 +130,28 @@
               {{item.wheel_size}}.5"
             </mat-chip>
             <mat-chip [ngSwitch]="item.velo_type" *ngIf="item.velo_type != 0">
-              <span *ngSwitchCase="1">Дорожный</span>
-              <span *ngSwitchCase="2">Городской</span>
-              <span *ngSwitchCase="3">Горный</span>
-              <span *ngSwitchCase="4">Шоссе</span>
-              <span *ngSwitchCase="5">Туринговый</span>
-              <span *ngSwitchCase="6">Гибрид</span>
-              <span *ngSwitchCase="7">БМХ</span>
-              <span *ngSwitchCase="8">Уницикл</span>
+              <span *ngSwitchCase="1">{{ 'SHOWCASE.BIKE.TYPE.ROAD' | translate }}</span>
+              <span *ngSwitchCase="2">{{ 'SHOWCASE.BIKE.TYPE.SITY' | translate }}</span>
+              <span *ngSwitchCase="3">{{ 'SHOWCASE.BIKE.TYPE.MOUNTAIN' | translate }}</span>
+              <span *ngSwitchCase="4">{{ 'SHOWCASE.BIKE.TYPE.RACING' | translate }}</span>
+              <span *ngSwitchCase="5">{{ 'SHOWCASE.BIKE.TYPE.TOURING' | translate }}</span>
+              <span *ngSwitchCase="6">{{ 'SHOWCASE.BIKE.TYPE.HYBRID' | translate }}</span>
+              <span *ngSwitchCase="7">{{ 'SHOWCASE.BIKE.TYPE.EXTREME' | translate }}</span>
+              <span *ngSwitchCase="8">{{ 'SHOWCASE.BIKE.TYPE.OTHER' | translate }}</span>
             </mat-chip>
             <mat-chip [ngSwitch]="item.direction" *ngIf="item.direction != 0">
-              <span *ngSwitchCase="1">XC</span>
-              <span *ngSwitchCase="2">Trial</span>
-              <span *ngSwitchCase="3">DH</span>
-              <span *ngSwitchCase="4">Freeride</span>
-              <span *ngSwitchCase="5">Enduro</span>
-              <span *ngSwitchCase="6">Trail</span>
-              <span *ngSwitchCase="7">Track</span>
-              <span *ngSwitchCase="8">Fix</span>
-              <span *ngSwitchCase="9">Street</span>
-              <span *ngSwitchCase="10">Park</span>
-              <span *ngSwitchCase="11">Dirt</span>
-              <span *ngSwitchCase="12">4X</span>
+              <span *ngSwitchCase="1">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.XC' | translate }}</span>
+              <span *ngSwitchCase="2">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.TRIAL' | translate }}</span>
+              <span *ngSwitchCase="3">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.DH' | translate }}</span>
+              <span *ngSwitchCase="4">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.FREERIDE' | translate }}</span>
+              <span *ngSwitchCase="5">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.ENDURO' | translate }}</span>
+              <span *ngSwitchCase="6">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.TRAIL' | translate }}</span>
+              <span *ngSwitchCase="7">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.TRACK' | translate }}</span>
+              <span *ngSwitchCase="8">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.FIX' | translate }}</span>
+              <span *ngSwitchCase="9">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.STREET' | translate }}</span>
+              <span *ngSwitchCase="10">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.PARK' | translate }}</span>
+              <span *ngSwitchCase="11">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.DIRT' | translate }}</span>
+              <span *ngSwitchCase="12">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.4X' | translate }}</span>
             </mat-chip>
           </mat-chip-list>
         </div>
@@ -162,7 +159,7 @@
     </div>
     <div class="case-user-info" [ngClass]="{'ad-detail':this.getAds.detailClass}">
       <div class="inl_blck rating_wrapper">
-        <span class="cursor-default" title="Рейтинг" [ngClass]="this.getAds.GetShowClass(item.user_rating)">
+        <span class="cursor-default" title="{{ 'MAIN.RATING' | translate }}" [ngClass]="this.getAds.GetShowClass(item.user_rating)">
           <span *ngIf="item.user_rating > 0">+</span>{{item.user_rating}}
         </span>
         <span *ngIf="!item.user_rating" class="color-gray cursor-default">0</span>
@@ -180,15 +177,15 @@
         <button mat-flat-button color="primary" style="line-height: 25px;" routerLink="/allads/{{item.user_id}}">
           <mat-icon aria-hidden="true" class="mat-icon material-icons" role="img"
             style="font-size: 16px;line-height: 24px;">view_day</mat-icon>
-          объявления
+            {{ 'MAIN.SHOWCASES' | translate }}
         </button>
       </div>
       <div class="inl_blck user_contacts">
-        <span *ngIf="item.user_phone" title="Телефон">
+        <span *ngIf="item.user_phone" title="{{ 'CONTACTS.PHONE' | translate }}">
           <i class="material-icons">phone</i>
           <span>+380 {{item.user_phone}}</span>
         </span>
-        <span *ngIf="item.user_phone2" title="Второй телефон">
+        <span *ngIf="item.user_phone2" title="{{ 'CONTACTS.SECOND_PHONE' | translate }}">
           <i class="material-icons">phone</i>
           <span>+380 {{item.user_phone2}}</span>
         </span>

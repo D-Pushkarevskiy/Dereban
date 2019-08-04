@@ -7,7 +7,7 @@
     <a routerLink="/">
       <img src="../assets/img/Dereban_logo_colored_full.png" class="main-logo">
     </a>
-    <div>
+    <div class="lang-wrapper">
       <span class="lang color-gray" [ngClass]="{'active':this.isActiveLang('ru')}" (click)="setLang('ru')">RU</span>
       <span class="lang color-gray" [ngClass]="{'active':this.isActiveLang('ua')}" (click)="setLang('ua')">UA</span>
       <span class="lang color-gray" [ngClass]="{'active':this.isActiveLang('en')}" (click)="setLang('en')">EN</span>

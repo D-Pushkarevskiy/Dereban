@@ -4,6 +4,10 @@ span.user_rating {
     font-weight: bold;
 }
 
+.lang-wrapper .lang {
+    outline: none;
+}
+
 .lang {
     padding: 0 3px;
     cursor: pointer;
