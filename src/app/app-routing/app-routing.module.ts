@@ -13,10 +13,11 @@ import { FavoritesAdsComponent } from 'src/app/components/favorites-ads/favorite
 
 import { AuthGuard } from '../guards/auth.guard';
 import { HomeGuard } from '../guards/home.guard';
+import { NotAuthGuard } from '../guards/not-auth.guard';
 
 const appRoutes: Routes = [
     { path: '', component: HomepageComponent, canActivate: [HomeGuard] },
-    { path: 'confirm-registration/:regToken', component: ConfirmRegistrationComponent },
+    { path: 'confirm-registration/:regToken', component: ConfirmRegistrationComponent, canActivate: [NotAuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'adding-ad', component: AddingAdComponent, canActivate: [AuthGuard] },
     { path: 'ad/:id', component: AdDetailComponent, canActivate: [HomeGuard] },

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
@@ -6,6 +6,8 @@ import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+
+import { Subscription } from 'rxjs';
 
 import { SnackbarService } from 'src/app/services/snackbar.service'
 
@@ -16,9 +18,10 @@ import { AppComponent } from 'src/app/app.component';
     templateUrl: './adding-ad.component.html',
     styleUrls: ['./adding-ad.component.css']
 })
-export class AddingAdComponent implements OnInit {
+export class AddingAdComponent implements OnInit, OnDestroy {
 
     form: FormGroup;
+    subscription: Subscription;
     desc_template: string = '';
     show_desc: Boolean = false;
     desc_num: Number;
@@ -49,7 +52,7 @@ export class AddingAdComponent implements OnInit {
         private router: Router,
         private translate: TranslateService
     ) {
-        this.translate.stream('MAIN.ADD_SHOWCASE').subscribe((res: string) => {
+        this.subscription = this.translate.stream('MAIN.ADD_SHOWCASE').subscribe((res: string) => {
             app.contentHeader = res;
             this.titleService.setTitle(res);
         });
@@ -255,5 +258,9 @@ export class AddingAdComponent implements OnInit {
                 this.desc_num = 5;
             }
         }
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

@@ -2,10 +2,10 @@
     <form class="example-form" [formGroup]="form" (ngSubmit)="ConfirmRegistration()">
         <div formGroupName="user">
             <mat-form-field class="full-width-form">
-                <input type="password" matInput placeholder="Подтвердите ваш пароль" value="" name="password" formControlName="password" required (ngModelChange)='Clear_text_errors()' maxlength="26">
+                <input type="password" matInput placeholder="{{ 'INFO.CONFIRMATION_PASSWORD' | translate }}" value="" name="password" formControlName="password" required (ngModelChange)='Clear_text_errors()' maxlength="26">
                        <mat-error *ngIf="form.get('user.password').invalid && form.get('user.password').touched">
                        <span *ngIf="form.get('user.password').errors && form.get('user.password').errors.minlength">
-                        Пароль должен быть не менее <b>{{charsCount}}</b>-ми символов
+                        {{ 'INFO.PASSWORD_LENGTH' | translate }} <b>{{charsCount}}</b>{{ 'INFO.PASSWORD_LENGTH_SYMBOL' | translate }}
                     </span>
                 </mat-error>
                 <mat-hint class="error-message" *ngIf="!form.get('user.password').invalid && form.get('user.password').touched">
@@ -16,7 +16,7 @@
             </mat-form-field>
         </div>
         <div align="center">
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Подтвердить</button>            
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">{{ 'MAIN.APPLY' | translate }}</button>            
         </div>
     </form>
 </div>

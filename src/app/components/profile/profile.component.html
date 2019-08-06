@@ -5,17 +5,17 @@
             <div class="img_wrapper img_profie">
                 <img src="../assets/users_images/{{photoName}}" class="user_profile_img">
             </div>
-            <input type="file" name="photo" (change)="fileChange($event)" placeholder="Загрузите свою фотографию" accept=".jpg" hidden="" id="input_file_photo" #input_file_photo>
-            <a class="upl_photo">Изменить фотографию</a>
-            <span class="spn-descr">желательное соотношенее сторон 1к1<br>и размер <b>300х300px</b></span>
+            <input type="file" name="photo" (change)="fileChange($event)" placeholder="{{ 'INFO.UPLOAD_YOUR_PHOTO' | translate }}" accept=".jpg" hidden="" id="input_file_photo" #input_file_photo>
+            <a class="upl_photo">{{ 'INFO.CHANGE_PHOTO' | translate }}</a>
+            <span class="spn-descr">{{ 'INFO.DESIRED_ASPECT' | translate }}<br>{{ 'INFO.AND_RESOLUTION' | translate }} <b>300х300px</b></span>
         </div>
 
         <mat-form-field>
-            <input matInput name="name" placeholder="Имя" maxlength="20" required formControlName="name">
+            <input matInput name="name" placeholder="{{ 'CONTACTS.NAME' | translate }}" maxlength="20" required formControlName="name">
         </mat-form-field>
 
         <mat-form-field class="w25p" style="min-width: 180px;">
-            <input matInput name="surname" placeholder="Фамилия" maxlength="30" formControlName="surname">
+            <input matInput name="surname" placeholder="{{ 'CONTACTS.SURNAME' | translate }}" maxlength="30" formControlName="surname">
         </mat-form-field>
     </div>
 
@@ -24,26 +24,26 @@
     <div class="div_wrapper" formGroupName="contacts">
         <mat-form-field>
             <span matPrefix>+380&nbsp;</span>
-            <input matInput name="phone" placeholder="Номер телефона" maxlength="10" type="tel" required formControlName="phone" pattern="\d*">
+            <input matInput name="phone" placeholder="{{ 'CONTACTS.PHONE_NUMBER' | translate }}" maxlength="10" type="tel" required formControlName="phone" pattern="\d*">
             <mat-error *ngIf="form.get('contacts.phone').invalid && form.get('contacts.phone').touched">
                 <span *ngIf="form.get('contacts.phone').errors.maxlength || form.get('contacts.phone').errors.minlength">
-                    Телефонный номер должен состоять из <b>{{numCount}}</b>-ти символов
+                    {{ 'INFO.PHONE_LENGTH' | translate }} <b>{{numCount}}</b>{{ 'INFO.PHONE_LENGTH_SYMBOL' | translate }}
                 </span>
             </mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <span matPrefix>+380&nbsp;</span>
-            <input matInput name="phone2" placeholder="Второй номер телефона" maxlength="10" type="tel" formControlName="phone2" pattern="\d*">
+            <input matInput name="phone2" placeholder="{{ 'CONTACTS.SECOND_PHONE_NUMBER' | translate }}" maxlength="10" type="tel" formControlName="phone2" pattern="\d*">
             <mat-error *ngIf="form.get('contacts.phone2').invalid && form.get('contacts.phone2').touched">
                 <span *ngIf="form.get('contacts.phone2').errors.maxlength || form.get('contacts.phone2').errors.minlength">
-                    Телефонный номер должен состоять из <b>{{numCount}}</b>-ти символов
+                    {{ 'INFO.PHONE_LENGTH' | translate }} <b>{{numCount}}</b>{{ 'INFO.PHONE_LENGTH_SYMBOL' | translate }}
                 </span>
             </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <mat-select placeholder="Область" name="area" aria-label="Area" formControlName="area">
+            <mat-select placeholder="{{ 'MAIN.AREA' | translate }}" name="area" aria-label="Area" formControlName="area">
                 <mat-option *ngFor="let area of areas" [value]="area">{{area}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -74,7 +74,7 @@
 
     <div class="div_wrapper">
         <div class="button-row" align="center">
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Сохранить изменения</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">{{ 'MAIN.SAVE_CHANGES' | translate }}</button>
         </div>
     </div>
 
