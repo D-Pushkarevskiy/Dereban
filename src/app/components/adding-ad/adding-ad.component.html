@@ -49,13 +49,12 @@
       </mat-button-toggle-group>
 
       <mat-button-toggle-group name="typeOfFull" aria-label="Full_type" formControlName="fullType"
-        style="margin-left: 10px;" [class.hidden-el]="isHiddenFull" (change)="ChangeFullDescText($event.value)">
+        style="margin-left: 15px;" [class.hidden-el]="isHiddenFull" (change)="ChangeFullDescText($event.value)">
         <mat-button-toggle value="1">{{ 'SHOWCASE.COMPLETE' | translate }}</mat-button-toggle>
         <mat-button-toggle value="2">{{ 'SHOWCASE.CUSTOM' | translate }}</mat-button-toggle>
       </mat-button-toggle-group>
 
-      <mat-form-field style="margin-left: 10px;" [class.hidden-el]="isHiddenDetail"
-        style="margin-top: 0; margin-left: 15px;">
+      <mat-form-field [class.hidden-el]="isHiddenDetail" style="margin-top: 0; margin-left: 15px;">
         <mat-select placeholder="{{ 'SHOWCASE.COMPONENT.TYPE.NAME' | translate }}" name="typeOfDetail"
           aria-label="Detail_type" formControlName="detailType">
           <mat-option value="1">{{ 'SHOWCASE.COMPONENT.TYPE.FRAME' | translate }}</mat-option>
@@ -144,11 +143,12 @@
 
   <hr>
   <div class="div_wrapper" formGroupName="description">
-    <mat-slide-toggle color="primary" (change)="ToggleDescTeplate($event)">{{ 'SHOWCASE.BIKE.DESCRIPTION.TEMPLATE.USE_DESCRIPTION_TEMPLATE' | translate }}
+    <mat-slide-toggle color="primary" (change)="ToggleDescTeplate($event)">
+      {{ 'SHOWCASE.BIKE.DESCRIPTION.TEMPLATE.USE_DESCRIPTION_TEMPLATE' | translate }}
     </mat-slide-toggle>
     <mat-form-field class="full-width-form marg-l-null">
-      <textarea matInput placeholder="{{ 'SHOWCASE.BIKE.DESCRIPTION.NAME' | translate }}" class="textarea-height" name="description" formControlName="description"
-        value="{{desc_template}}"></textarea>
+      <textarea matInput placeholder="{{ 'SHOWCASE.BIKE.DESCRIPTION.NAME' | translate }}" class="textarea-height"
+        name="description" formControlName="description" value="{{desc_template}}"></textarea>
     </mat-form-field>
   </div>
 
@@ -170,7 +170,8 @@
 
   <div class="div_wrapper">
     <div class="button-row" align="center">
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">{{ 'MAIN.ADD' | translate }}</button>
+      <button mat-raised-button color="primary" type="submit"
+        [disabled]="form.invalid">{{ 'MAIN.ADD' | translate }}</button>
     </div>
   </div>
 

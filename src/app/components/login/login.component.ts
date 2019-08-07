@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
                 this.authService.logIn();
                 this.dialogRef.close();
                 this.getAds.GetActiveFavorite();
+                this.getAds.GetActiveRating();
                 //Если авторизован пользователь первый раз перекинуть на страницу контактов
                 if (tmp['isAuth'] == false) {
                     this.router.navigate(['/profile']);

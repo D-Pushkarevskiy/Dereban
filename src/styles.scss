@@ -3,7 +3,16 @@
 
 // For bootstrap
 .row {
-  margin: 0 !important;
+  margin: 0;
+
+  &:not(:first-child) {
+    margin-top: 25px;
+  }
+}
+
+// For material
+.mat-button-toggle-group {
+  flex-wrap: wrap;
 }
 
 // Margins
@@ -150,6 +159,8 @@ pre {
 }
 
 .content-header {
+  padding-left: 20px;
+
   h1 {
     color: #efa045;
   }
@@ -208,6 +219,14 @@ textarea.textarea-height {
     border: 5px dashed #00b754;
     border-radius: 10px;
   }
+}
+
+.img_profie,
+.img_header,
+.img_contacts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .img_profie {
@@ -269,13 +288,8 @@ textarea.textarea-height {
   display: inline-block;
   padding-right: 15px;
 
-  &:not(:first-child):not(.adding_types) {
-    border-left: 1px solid #f1f1f1;
-    padding-left: 15px;
-  }
-
-  &:not(:first-child)>.mat-button-toggle-group {
-    margin-right: 10px;
+  h4 {
+    margin-bottom: 0;
   }
 }
 
@@ -401,7 +415,7 @@ input.example-right-align {
 }
 
 .showcase_photo {
-  height: 300px;
+  height: 100%;
   cursor: zoom-in;
   -webkit-transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s, transform 0s;
   -moz-transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s, transform 0s;
@@ -498,18 +512,6 @@ img.showcase_photo {
     &.fl-right {
       float: right;
     }
-
-    .case-user-info.ad-detail {
-      padding: 20px 10px 0 0;
-    }
-
-    .case-user-info {
-      padding: 10px;
-      font-size: 14px;
-      color: #3f51b5;
-      border-top: 1px solid #f7f7f7;
-      margin-top: 20px;
-    }
   }
 
   i.material-icons {
@@ -520,6 +522,16 @@ img.showcase_photo {
 }
 
 .case-user-info {
+  padding: 10px;
+  font-size: 14px;
+  color: #3f51b5;
+  border-top: 1px solid #f7f7f7;
+  align-items: center;
+  justify-content: center;
+
+  &.ad-detail {
+    padding: 20px 10px 0 0;
+  }
 
   &>div,
   &.material-icons {
@@ -537,7 +549,6 @@ img.showcase_photo {
   .user_contacts>span {
     display: inline-block;
     margin-left: 10px;
-    border-left: 1px solid #efefef;
     padding-left: 10px;
 
     span {
@@ -643,7 +654,8 @@ img.showcase_photo {
     transition: opacity 0.5s ease-out 0.1s;
   }
 
-  &:hover i, &.active i {
+  &:hover i,
+  &.active i {
     opacity: 1;
   }
 }

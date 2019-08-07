@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     favorites: String = 'favorites/';
     API_URL: String = this.app.API_URL;
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-    scroll = (): void => { this.trigger.closeMenu(); };
+    scroll = (): void => { this.isAuth ? this.trigger.closeMenu() : ''; };
 
     constructor(
         private app: AppComponent,

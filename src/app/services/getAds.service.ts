@@ -45,6 +45,7 @@ export class GetAdsService {
                 }
                 if (this.authToken && this.authToken != '') {
                     this.GetActiveFavorite();
+                    this.GetActiveRating();
                 }
             } else {
                 this.tmp = false;
@@ -60,6 +61,7 @@ export class GetAdsService {
             if (tmp['code'] == 2) {
                 this.GetShowCaseRating(case_id);
                 this.GetUserRating(case_id);
+                this.GetActiveRating();
             } else if (tmp['code'] == 0) {
                 this.snackbar.show_message(tmp['text']);
             }
@@ -75,6 +77,34 @@ export class GetAdsService {
             var cur_arr = this.tmp.filter(x => x.id === case_id);
             cur_arr[0]['case_rating'] = tmp['text'];
         });
+    }
+
+    public GetActiveRating() {
+        if (this.authToken && this.authToken != '') {
+            this.http.get(this.API_URL + '?func=get_active_rating'
+            ).subscribe(response => {
+                var tmp;
+                tmp = response;
+
+                if (tmp['code'] === 0) {
+                    // Сбрасываем все активные рейтинги объявы
+                    for (let ads of this.tmp) {
+                        ads['rating'] = false;
+                    }
+                    //Все ок, раздаем статусы активных рейтингов объявлениям
+                    for (let active_arr of tmp['text']) {
+                        var active_ads = this.tmp.filter(x => x.id === active_arr.id);
+                        for (let ads of active_ads) {
+                            ads['rating'] = active_arr.value;
+                        }
+                    }
+                } else if (tmp['code'] === 1) {
+                    for (let ads of this.tmp) {
+                        ads['rating'] = false;
+                    }
+                }
+            });
+        }
     }
 
     GetUserRating(case_id) {
@@ -108,7 +138,7 @@ export class GetAdsService {
         });
     }
 
-    GetActiveFavorite() {
+    public GetActiveFavorite() {
         if (this.authToken && this.authToken != '') {
             this.http.get(this.API_URL + '?func=get_active_favorite'
             ).subscribe(response => {
@@ -143,18 +173,18 @@ export class GetAdsService {
         }
     }
 
-    isActive(case_id, act) {
+    isActive(case_id, type) {
         var cur_arr = this.tmp.filter(x => x.id === case_id);
-        if (cur_arr[0]['case_rating'] == act) {
-            return 'active';
+        if (cur_arr[0]['rating'] === type) {
+            return true;
         } else {
-            return '';
+            return false;
         }
     }
 
     isFavorite(case_id) {
         var cur_arr = this.tmp.filter(x => x.id === case_id);
-        if (cur_arr[0]['favorite'] == true) {
+        if (cur_arr[0]['favorite'] === true) {
             return true;
         } else {
             return false;
@@ -172,7 +202,7 @@ export class GetAdsService {
             return 'color-gray';
         }
     }
-    
+
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }

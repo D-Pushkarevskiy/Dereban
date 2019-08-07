@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-sm-1 case-rating" [ngClass]="{'ad-detail':this.getAds.detailClass}">
         <div class="color-green opacity-arrow cursor-pointer" *ngIf="isAuth"
-          (click)="this.getAds.ChangeRating(1, item.id)" [ngClass]="this.getAds.isActive(item.id, 1)">
+          (click)="this.getAds.ChangeRating(1, item.id)" [ngClass]="{'active':this.getAds.isActive(item.id, '1')}">
           <i class="material-icons">keyboard_arrow_up</i>
         </div>
         <div class="color-gray cursor-default" *ngIf="!isAuth" title="{{ 'INFO.RATING_NOT_AVAILABLE' | translate }}">
@@ -23,7 +23,7 @@
         </div>
 
         <div class="color-red opacity-arrow cursor-pointer" *ngIf="isAuth"
-          (click)="this.getAds.ChangeRating(-1, item.id)" [ngClass]="this.getAds.isActive(item.id, -1)">
+          (click)="this.getAds.ChangeRating(-1, item.id)" [ngClass]="{'active':this.getAds.isActive(item.id, '-1')}">
           <i class="material-icons">keyboard_arrow_down</i>
         </div>
         <div class="color-gray cursor-default" *ngIf="!isAuth">
@@ -156,20 +156,20 @@
         </div>
       </div>
     </div>
-    <div class="case-user-info" [ngClass]="{'ad-detail':this.getAds.detailClass}">
-      <div class="rating_wrapper">
+    <div class="case-user-info row" [ngClass]="{'ad-detail':this.getAds.detailClass}">
+      <div class="rating_wrapper col-sm-1">
         <span class="cursor-default" title="{{ 'MAIN.RATING' | translate }}"
           [ngClass]="this.getAds.GetShowClass(item.user_rating)">
           <span *ngIf="item.user_rating > 0">+</span>{{item.user_rating}}
         </span>
         <span *ngIf="!item.user_rating" class="color-gray cursor-default">0</span>
       </div>
-      <div class="marg-right">
+      <div class="col-sm-1">
         <div class="img_wrapper img_contacts">
           <img src="../assets/users_images/{{item.user_photo}}" class="user_contacts_img">
         </div>
       </div>
-      <div class="marg-right" style="text-align: center;">
+      <div class="col-sm-2" style="text-align: center;">
         <div style="padding-bottom: 5px;">
           {{item.user_name}}
           {{item.user_surname}}
@@ -180,7 +180,7 @@
           {{ 'MAIN.SHOWCASES' | translate }}
         </button>
       </div>
-      <div class="user_contacts">
+      <div class="user_contacts col-sm">
         <span *ngIf="item.user_phone" title="{{ 'CONTACTS.PHONE_NUMBER' | translate }}">
           <i class="material-icons">phone</i>
           <span>+380 {{item.user_phone}}</span>
