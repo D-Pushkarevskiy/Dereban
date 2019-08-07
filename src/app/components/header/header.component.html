@@ -1,9 +1,9 @@
-<div class="header-inner">
-  <div>
+<div class="header-inner row">
+  <div class="col-sm order-2 order-sm-1">
     <button [title]="matTooltipText" mat-raised-button color="primary" [disabled]="!isAuth"
       [routerLink]="['adding-ad']">{{ 'MAIN.ADD_SHOWCASE' | translate }}</button>
   </div>
-  <div>
+  <div class="col-sm order-1 order-sm-2">
     <a routerLink="/">
       <img src="../assets/img/Dereban_logo_colored_full.png" class="main-logo">
     </a>
@@ -13,7 +13,7 @@
       <span class="lang color-gray" [ngClass]="{'active':this.isActiveLang('en')}" (click)="setLang('en')">EN</span>
     </div>
   </div>
-  <div>
+  <div class="col-sm order-3">
     <button mat-raised-button color="primary" (click)="OpenModal()"
       *ngIf="!isAuth">{{ 'MENU.LOGIN' | translate }}</button>
     <div *ngIf="isAuth">

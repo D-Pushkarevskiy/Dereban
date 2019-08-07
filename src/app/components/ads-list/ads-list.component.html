@@ -7,8 +7,8 @@
 <div *ngIf="this.getAds.tmp">
   <div *ngFor="let item of this.getAds.tmp" style="overflow: auto;" class="showcase-wrapper" id="showcase_{{item.id}}"
     [ngClass]="{'ad-detail':this.getAds.detailClass}">
-    <div>
-      <div class="inl_blck case-rating" [ngClass]="{'ad-detail':this.getAds.detailClass}">
+    <div class="row">
+      <div class="col-sm-1 case-rating" [ngClass]="{'ad-detail':this.getAds.detailClass}">
         <div class="color-green opacity-arrow cursor-pointer" *ngIf="isAuth"
           (click)="this.getAds.ChangeRating(1, item.id)" [ngClass]="this.getAds.isActive(item.id, 1)">
           <i class="material-icons">keyboard_arrow_up</i>
@@ -30,7 +30,7 @@
           <i class="material-icons" title="{{ 'INFO.RATING_NOT_AVAILABLE' | translate }}">keyboard_arrow_down</i>
         </div>
 
-        <div class="selected opacity-arrow" title="{{ 'MAIN.ADD_TO_FAVORITES' | translate }}" *ngIf="isAuth"
+        <div class="cursor-pointer opacity-arrow" title="{{ 'MAIN.ADD_TO_FAVORITES' | translate }}" *ngIf="isAuth"
           (click)="this.getAds.ToggleFavorite(item.id)" [ngClass]="{'active':this.getAds.isFavorite(item.id)}">
           <i class="material-icons color-red" *ngIf="!this.getAds.isFavorite(item.id)">
             favorite_border
@@ -39,17 +39,16 @@
             favorite
           </i>
         </div>
-        <div class="selected" title="{{ 'INFO.FAVORITES_NOT_AVAILABLE' | translate }}" *ngIf="!isAuth">
+        <div class="cursor-pointer" title="{{ 'INFO.FAVORITES_NOT_AVAILABLE' | translate }}" *ngIf="!isAuth">
           <i class="material-icons color-gray cursor-default">
             favorite_border
           </i>
         </div>
-
       </div>
-      <div class="inl_blck marg-right showcase-photo-wrapper">
+      <div class="col-sm showcase-photo-wrapper">
         <img src="{{item.photo_url}}" class="showcase_photo" (click)="ZoomImage($event)">
       </div>
-      <div class="inl_blck marg-right" style="width: 47%;">
+      <div class="col-sm">
         <div class="case-name-wrapper">
           <div class="case-name">
             <a routerLink="/ad/{{item.id}}" class='color-blue'>{{item.case_name}}</a>
@@ -76,7 +75,7 @@
           </a>
         </div>
       </div>
-      <div class="inl_blck" style="width: 9%;">
+      <div class="col-sm-2">
         <div class="case-price-wrapper color-green">
           <span class="case-price">{{item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
         </div>
@@ -158,18 +157,19 @@
       </div>
     </div>
     <div class="case-user-info" [ngClass]="{'ad-detail':this.getAds.detailClass}">
-      <div class="inl_blck rating_wrapper">
-        <span class="cursor-default" title="{{ 'MAIN.RATING' | translate }}" [ngClass]="this.getAds.GetShowClass(item.user_rating)">
+      <div class="rating_wrapper">
+        <span class="cursor-default" title="{{ 'MAIN.RATING' | translate }}"
+          [ngClass]="this.getAds.GetShowClass(item.user_rating)">
           <span *ngIf="item.user_rating > 0">+</span>{{item.user_rating}}
         </span>
         <span *ngIf="!item.user_rating" class="color-gray cursor-default">0</span>
       </div>
-      <div class="inl_blck marg-right">
+      <div class="marg-right">
         <div class="img_wrapper img_contacts">
           <img src="../assets/users_images/{{item.user_photo}}" class="user_contacts_img">
         </div>
       </div>
-      <div class="inl_blck marg-right" style="text-align: center;">
+      <div class="marg-right" style="text-align: center;">
         <div style="padding-bottom: 5px;">
           {{item.user_name}}
           {{item.user_surname}}
@@ -177,10 +177,10 @@
         <button mat-flat-button color="primary" style="line-height: 25px;" routerLink="/allads/{{item.user_id}}">
           <mat-icon aria-hidden="true" class="mat-icon material-icons" role="img"
             style="font-size: 16px;line-height: 24px;">view_day</mat-icon>
-            {{ 'MAIN.SHOWCASES' | translate }}
+          {{ 'MAIN.SHOWCASES' | translate }}
         </button>
       </div>
-      <div class="inl_blck user_contacts">
+      <div class="user_contacts">
         <span *ngIf="item.user_phone" title="{{ 'CONTACTS.PHONE_NUMBER' | translate }}">
           <i class="material-icons">phone</i>
           <span>+380 {{item.user_phone}}</span>

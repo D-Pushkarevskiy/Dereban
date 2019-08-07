@@ -1,7 +1,7 @@
 <form enctype="multipart/form-data" class="full-width-form form-elements-marg" [formGroup]="form" (ngSubmit)="SaveUserInfo()">
 
     <div class="div_wrapper" formGroupName="user">
-        <div class="inl_blck change_photo" align="center" (click)="UploadPhoto()">
+        <div class="change_photo" align="center" (click)="UploadPhoto()">
             <div class="img_wrapper img_profie">
                 <img src="../assets/users_images/{{photoName}}" class="user_profile_img">
             </div>
