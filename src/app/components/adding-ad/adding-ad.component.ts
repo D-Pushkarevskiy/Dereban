@@ -16,7 +16,7 @@ import { AppComponent } from 'src/app/app.component';
 @Component({
     selector: 'app-adding-ad',
     templateUrl: './adding-ad.component.html',
-    styleUrls: ['./adding-ad.component.css']
+    styleUrls: ['./adding-ad.component.scss']
 })
 export class AddingAdComponent implements OnInit, OnDestroy {
 

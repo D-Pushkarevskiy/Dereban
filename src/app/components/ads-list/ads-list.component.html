@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="col-sm showcase-photo-wrapper">
-        <img src="{{item.photo_url}}" class="showcase_photo" (click)="ZoomImage($event)">
+        <img [src]="item.photo_url" class="showcase_photo" (click)="ZoomImage($event)">
       </div>
       <div class="col-sm">
         <div class="row showcase-name-price-wrapper">
@@ -56,7 +56,7 @@
             </div>
           </div>
           <div class="col-sm">
-            <div class="case-price-wrapper color-green">
+            <div class="case-price-wrapper color-green" *ngIf="item.price != 0">
               <span class="case-price">{{item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
             </div>
           </div>

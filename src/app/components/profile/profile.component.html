@@ -1,81 +1,101 @@
-<form enctype="multipart/form-data" class="full-width-form form-elements-marg" [formGroup]="form" (ngSubmit)="SaveUserInfo()">
+<form enctype="multipart/form-data" class="full-width-form" [formGroup]="form" (ngSubmit)="SaveUserInfo()">
 
-    <div class="div_wrapper" formGroupName="user">
-        <div class="change_photo" align="center" (click)="UploadPhoto()">
-            <div class="img_wrapper img_profie">
-                <img src="../assets/users_images/{{photoName}}" class="user_profile_img">
-            </div>
-            <input type="file" name="photo" (change)="fileChange($event)" placeholder="{{ 'INFO.UPLOAD_YOUR_PHOTO' | translate }}" accept=".jpg" hidden="" id="input_file_photo" #input_file_photo>
-            <a class="upl_photo">{{ 'INFO.CHANGE_PHOTO' | translate }}</a>
-            <span class="spn-descr">{{ 'INFO.DESIRED_ASPECT' | translate }}<br>{{ 'INFO.AND_RESOLUTION' | translate }} <b>300х300px</b></span>
-        </div>
-
-        <mat-form-field>
-            <input matInput name="name" placeholder="{{ 'CONTACTS.NAME' | translate }}" maxlength="20" required formControlName="name">
-        </mat-form-field>
-
-        <mat-form-field class="w25p" style="min-width: 180px;">
-            <input matInput name="surname" placeholder="{{ 'CONTACTS.SURNAME' | translate }}" maxlength="30" formControlName="surname">
-        </mat-form-field>
+  <div class="row div_wrapper" formGroupName="user">
+    <div class="col-sm-4 change_photo text-center" (click)="UploadPhoto()">
+      <div class="img_wrapper img_profie">
+        <img src="../assets/users_images/{{photoName}}" class="user_profile_img">
+      </div>
+      <input type="file" name="photo" (change)="fileChange($event)"
+        placeholder="{{ 'INFO.UPLOAD_YOUR_PHOTO' | translate }}" accept=".jpg" hidden="" id="input_file_photo"
+        #input_file_photo>
+      <a class="upl_photo">{{ 'INFO.CHANGE_PHOTO' | translate }}</a><br>
+      <span class="spn-descr">{{ 'INFO.DESIRED_ASPECT' | translate }}<br>{{ 'INFO.AND_RESOLUTION' | translate }}
+        <b>300х300px</b></span>
     </div>
-
-    <hr>
-
-    <div class="div_wrapper" formGroupName="contacts">
-        <mat-form-field>
-            <span matPrefix>+380&nbsp;</span>
-            <input matInput name="phone" placeholder="{{ 'CONTACTS.PHONE_NUMBER' | translate }}" maxlength="10" type="tel" required formControlName="phone" pattern="\d*">
-            <mat-error *ngIf="form.get('contacts.phone').invalid && form.get('contacts.phone').touched">
-                <span *ngIf="form.get('contacts.phone').errors.maxlength || form.get('contacts.phone').errors.minlength">
-                    {{ 'INFO.PHONE_LENGTH' | translate }} <b>{{numCount}}</b>{{ 'INFO.PHONE_LENGTH_SYMBOL' | translate }}
-                </span>
-            </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <span matPrefix>+380&nbsp;</span>
-            <input matInput name="phone2" placeholder="{{ 'CONTACTS.SECOND_PHONE_NUMBER' | translate }}" maxlength="10" type="tel" formControlName="phone2" pattern="\d*">
-            <mat-error *ngIf="form.get('contacts.phone2').invalid && form.get('contacts.phone2').touched">
-                <span *ngIf="form.get('contacts.phone2').errors.maxlength || form.get('contacts.phone2').errors.minlength">
-                    {{ 'INFO.PHONE_LENGTH' | translate }} <b>{{numCount}}</b>{{ 'INFO.PHONE_LENGTH_SYMBOL' | translate }}
-                </span>
-            </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-select placeholder="{{ 'MAIN.AREA' | translate }}" name="area" aria-label="Area" formControlName="area">
-                <mat-option *ngFor="let area of areas" [value]="area">{{area}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+    <div class="col-sm">
+      <mat-form-field>
+        <input matInput name="name" placeholder="{{ 'CONTACTS.NAME' | translate }}" maxlength="20" required
+          formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput name="surname" placeholder="{{ 'CONTACTS.SURNAME' | translate }}" maxlength="30"
+          formControlName="surname">
+      </mat-form-field>
     </div>
+  </div>
 
-    <hr>
+  <hr>
 
-    <div class="div_wrapper" formGroupName="social">
-        <mat-form-field>
-            <span matPrefix>@ &nbsp;</span>
-            <input matInput name="telegram" placeholder="TelegramID" maxlength="32" formControlName="telegram" autocomplete="new-password">
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput name="vk" placeholder="VK" maxlength="32" formControlName="vk" autocomplete="new-password">
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput name="facebook" placeholder="FacebookID" maxlength="32" formControlName="facebook" autocomplete="new-password">
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput name="instagram" placeholder="Instagram" maxlength="32" formControlName="instagram" autocomplete="new-password">
-        </mat-form-field>
+  <div class="row div_wrapper" formGroupName="contacts">
+    <div class="col-sm">
+      <mat-form-field>
+        <span matPrefix>+380&nbsp;</span>
+        <input matInput name="phone" placeholder="{{ 'CONTACTS.PHONE_NUMBER' | translate }}" maxlength="10" type="tel"
+          required formControlName="phone" pattern="\d*">
+        <mat-error *ngIf="form.get('contacts.phone').invalid && form.get('contacts.phone').touched">
+          <span *ngIf="form.get('contacts.phone').errors.maxlength || form.get('contacts.phone').errors.minlength">
+            {{ 'INFO.PHONE_LENGTH' | translate }} <b>{{numCount}}</b>{{ 'INFO.PHONE_LENGTH_SYMBOL' | translate }}
+          </span>
+        </mat-error>
+      </mat-form-field>
     </div>
-
-    <hr>
-
-    <div class="div_wrapper">
-        <div class="button-row" align="center">
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">{{ 'MAIN.SAVE_CHANGES' | translate }}</button>
-        </div>
+    <div class="col-sm">
+      <mat-form-field>
+        <span matPrefix>+380&nbsp;</span>
+        <input matInput name="phone2" placeholder="{{ 'CONTACTS.SECOND_PHONE_NUMBER' | translate }}" maxlength="10"
+          type="tel" formControlName="phone2" pattern="\d*">
+        <mat-error *ngIf="form.get('contacts.phone2').invalid && form.get('contacts.phone2').touched">
+          <span *ngIf="form.get('contacts.phone2').errors.maxlength || form.get('contacts.phone2').errors.minlength">
+            {{ 'INFO.PHONE_LENGTH' | translate }} <b>{{numCount}}</b>{{ 'INFO.PHONE_LENGTH_SYMBOL' | translate }}
+          </span>
+        </mat-error>
+      </mat-form-field>
     </div>
+    <div class="col-sm">
+      <mat-form-field>
+        <mat-select placeholder="{{ 'MAIN.AREA' | translate }}" name="area" aria-label="Area" formControlName="area">
+          <mat-option *ngFor="let area of areas" [value]="area">{{area}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row div_wrapper" formGroupName="social">
+    <div class="col-sm">
+      <mat-form-field>
+        <span matPrefix>@ &nbsp;</span>
+        <input matInput name="telegram" placeholder="TelegramID" maxlength="32" formControlName="telegram"
+          autocomplete="new-password">
+      </mat-form-field>
+    </div>
+    <div class="col-sm">
+      <mat-form-field>
+        <input matInput name="vk" placeholder="VK" maxlength="32" formControlName="vk" autocomplete="new-password">
+      </mat-form-field>
+    </div>
+    <div class="col-sm">
+      <mat-form-field>
+        <input matInput name="facebook" placeholder="FacebookID" maxlength="32" formControlName="facebook"
+          autocomplete="new-password">
+      </mat-form-field>
+    </div>
+    <div class="col-sm">
+      <mat-form-field>
+        <input matInput name="instagram" placeholder="Instagram" maxlength="32" formControlName="instagram"
+          autocomplete="new-password">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="div_wrapper">
+    <div class="button-row text-center">
+      <button mat-raised-button color="primary" type="submit"
+        [disabled]="form.invalid">{{ 'MAIN.SAVE_CHANGES' | translate }}</button>
+    </div>
+  </div>
 
 </form>

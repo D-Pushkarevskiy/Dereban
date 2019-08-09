@@ -7,6 +7,7 @@
 
   &:not(:first-child) {
     margin-top: 10px;
+
     @media only screen and (max-width: 576px) {
       margin-top: 15px;
     }
@@ -26,6 +27,24 @@
 .mat-button-toggle-checked {
   background-color: #3f50b5;
   color: white;
+}
+
+mat-dialog-actions {
+  button {
+    justify-content: center;
+    align-items: center;
+    margin: 0 !important;
+    margin-bottom: 10px !important;
+    width: 100%;
+  }
+}
+
+.full-width-form {
+  width: 100%;
+
+  .mat-form-field {
+    width: 100%;
+  }
 }
 
 // Margins
@@ -71,6 +90,11 @@
   cursor: default;
 }
 
+.text-center,
+.text-center * {
+  text-align: center;
+}
+
 body {
   background-color: #f7f7f7;
   font-family: Roboto, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -87,6 +111,7 @@ hr {
 
 pre {
   font-family: unset;
+  margin: 0;
 }
 
 .ads-not-found {
@@ -173,6 +198,7 @@ pre {
 
 .content-header {
   padding-left: 20px;
+  overflow: hidden;
 
   h1 {
     color: #efa045;
@@ -186,8 +212,10 @@ pre {
   border: 1px solid #efefef;
 }
 
-.full-width-form {
-  width: 100%;
+.upl_photo {
+  font-size: 12px;
+  color: #3f50b5;
+  border-bottom: 1px dashed;
 }
 
 .marg-l-null {
@@ -200,15 +228,10 @@ textarea.textarea-height {
 
 .change_photo {
   cursor: pointer;
-}
 
-.upl_photo {
-  font-size: 12px;
-  color: #3f50b5;
-  border-bottom: 1px dashed;
-  display: block;
-  width: max-content;
-  margin-top: 10px;
+  @media only screen and (max-width: 576px) {
+    margin-bottom: 20px;
+  }
 }
 
 .img_wrapper {
@@ -236,6 +259,7 @@ textarea.textarea-height {
 .img_profie {
   width: 150px;
   height: 150px;
+  margin: 0 auto;
 
   .user_profile_img {
     height: 150px;
@@ -243,8 +267,11 @@ textarea.textarea-height {
 }
 
 .img_showcase {
-  width: 450px;
   height: 300px;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 
   .user_profile_img {
     height: 300px;
@@ -321,16 +348,6 @@ input.example-right-align::-webkit-inner-spin-button {
 
 input.example-right-align {
   -moz-appearance: textfield;
-}
-
-.form-elements-marg {
-
-  & .inl_blck,
-  mat-form-field {
-    margin-top: 20px;
-    margin-left: 40px;
-    vertical-align: middle;
-  }
 }
 
 .error-message {

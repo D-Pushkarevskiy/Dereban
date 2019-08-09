@@ -1,38 +1,37 @@
-<form enctype="multipart/form-data" class="full-width-form form-elements-marg" [formGroup]="form"
-  (ngSubmit)="AddShowCase()">
+<form enctype="multipart/form-data" class="full-width-form" [formGroup]="form" (ngSubmit)="AddShowCase()">
 
   <mat-card class="marg-bott color-blue"><i class="material-icons">info</i>
     <span>{{ 'INFO.ADDING_REQUIRED_FILDS' | translate }}</span></mat-card>
 
-  <div class="div_wrapper" style="overflow: auto;" formGroupName="main">
-    <div class="change_photo marg-l-null" align="center" (click)="UploadPhoto()" style="float: left;">
+  <div class="row" formGroupName="main">
+    <div class="change_photo marg-l-null col-sm-6" (click)="UploadPhoto()">
       <div class="img_wrapper img_showcase">
         <img src="{{img_showcase_main}}" class="user_profile_img">
       </div>
       <input type="file" name="photo" formControlName="photo" (change)="fileChange($event)"
         placeholder="{{ 'INFO.ADDING_UPLOAD_PHOTO' | translate }}" accept=".jpg" hidden="" id="input_file_photo"
         #input_file_photo required="">
-      <div *ngIf="!img_name">
-        <a class="upl_photo">{{ 'INFO.ADDING_UPLOAD_PHOTO' | translate }} *</a>
+      <div *ngIf="!img_name" class="text-center marg-top">
+        <a class="upl_photo">{{ 'INFO.ADDING_UPLOAD_PHOTO' | translate }} *</a><br>
         <span class="spn-descr">{{ 'INFO.DESIRED_RESOLUTION' | translate }} <b>450х300px</b></span>
       </div>
-      <div *ngIf="img_name">
+      <div *ngIf="img_name" class="text-center marg-top">
         <span class="upl_photo">{{img_name}}</span>
       </div>
     </div>
-
-    <mat-form-field class="example-full-width w50p">
-      <input matInput #caseName placeholder="{{ 'MAIN.TITLE' | translate }}" value="" required="" name="name"
-        formControlName="name" maxlength="130">
-      <mat-hint align="end">{{caseName.value.length}} / 130</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput placeholder="{{ 'MAIN.PRICE' | translate }}" class="example-right-align" required="" name="price"
-        formControlName="price" maxlength="6">
-      <span matPrefix>₴&nbsp;</span>
-      <span matSuffix>&nbsp;{{ 'MAIN.UAH' | translate }}</span>
-    </mat-form-field>
+    <div class="col-sm-6">
+      <mat-form-field>
+        <input matInput #caseName placeholder="{{ 'MAIN.TITLE' | translate }}" value="" required="" name="name"
+          formControlName="name" maxlength="130">
+        <mat-hint align="end">{{caseName.value.length}} / 130</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="{{ 'MAIN.PRICE' | translate }}" class="example-right-align" required=""
+          name="price" formControlName="price" maxlength="6">
+        <span matPrefix>₴&nbsp;</span>
+        <span matSuffix>&nbsp;{{ 'MAIN.UAH' | translate }}</span>
+      </mat-form-field>
+    </div>
   </div>
 
   <hr style="clear: both;">
@@ -47,14 +46,16 @@
         <mat-button-toggle value="2">{{ 'SHOWCASE.DEREBAN' | translate }}</mat-button-toggle>
         <mat-button-toggle value="3">{{ 'SHOWCASE.COMPONENT.NAME' | translate }}</mat-button-toggle>
       </mat-button-toggle-group>
-
+    </div>
+    <div class="content-block" [class.hidden-el]="isHiddenFull">
       <mat-button-toggle-group name="typeOfFull" aria-label="Full_type" formControlName="fullType"
-        style="margin-left: 15px;" [class.hidden-el]="isHiddenFull" (change)="ChangeFullDescText($event.value)">
+        (change)="ChangeFullDescText($event.value)">
         <mat-button-toggle value="1">{{ 'SHOWCASE.COMPLETE' | translate }}</mat-button-toggle>
         <mat-button-toggle value="2">{{ 'SHOWCASE.CUSTOM' | translate }}</mat-button-toggle>
       </mat-button-toggle-group>
-
-      <mat-form-field [class.hidden-el]="isHiddenDetail" style="margin-top: 0; margin-left: 15px;">
+    </div>
+    <div class="content-block adding-detail" [class.hidden-el]="isHiddenDetail">
+      <mat-form-field style="width: auto;">
         <mat-select placeholder="{{ 'SHOWCASE.COMPONENT.TYPE.NAME' | translate }}" name="typeOfDetail"
           aria-label="Detail_type" formControlName="detailType">
           <mat-option value="1">{{ 'SHOWCASE.COMPONENT.TYPE.FRAME' | translate }}</mat-option>
@@ -146,7 +147,7 @@
     <mat-slide-toggle color="primary" (change)="ToggleDescTeplate($event)">
       {{ 'SHOWCASE.BIKE.DESCRIPTION.TEMPLATE.USE_DESCRIPTION_TEMPLATE' | translate }}
     </mat-slide-toggle>
-    <mat-form-field class="full-width-form marg-l-null">
+    <mat-form-field>
       <textarea matInput placeholder="{{ 'SHOWCASE.BIKE.DESCRIPTION.NAME' | translate }}" class="textarea-height"
         name="description" formControlName="description" value="{{desc_template}}"></textarea>
     </mat-form-field>
@@ -169,7 +170,7 @@
   <hr>
 
   <div class="div_wrapper">
-    <div class="button-row" align="center">
+    <div class="button-row text-center">
       <button mat-raised-button color="primary" type="submit"
         [disabled]="form.invalid">{{ 'MAIN.ADD' | translate }}</button>
     </div>
