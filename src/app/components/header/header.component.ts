@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { GetAdsService } from 'src/app/services/getAds.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { LangService } from 'src/app/services/lang.service';
 
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { AppComponent } from 'src/app/app.component';
@@ -44,7 +45,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         public getAds: GetAdsService,
         private snackbar: SnackbarService,
         private router: Router,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private langService: LangService
     ) {
         this.subscription = this.authService.getState().subscribe(state => {
             this.isAuth = state.value;
@@ -133,6 +135,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     setLang(lang: string) {
         this.translate.use(lang);
+        this.langService.setTranslateLang(lang);
     }
 
     ngOnDestroy() {

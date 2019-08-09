@@ -10,7 +10,7 @@ import { AppComponent } from 'src/app/app.component';
 @Component({
     selector: 'app-ads-list',
     templateUrl: './ads-list.component.html',
-    styleUrls: ['./ads-list.component.css']
+    styleUrls: ['./ads-list.component.scss']
 })
 export class AdsListComponent implements OnInit {
     isAuth: Boolean = this.getAds.isAuth;

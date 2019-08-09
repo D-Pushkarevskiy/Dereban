@@ -34,6 +34,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AdInfoService } from 'src/app/services/adInfo.service';
 import { GetAdsService } from 'src/app/services/getAds.service';
+import { LangService } from 'src/app/services/lang.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -113,7 +114,7 @@ export function createTranslateLoader(http: HttpClient) {
     MatSlideToggleModule,
     MatPaginatorModule
   ],
-  providers: [httpInterceptorProviders, AuthService, ProfileService, AdInfoService, GetAdsService, AppComponent, AdsListComponent],
+  providers: [httpInterceptorProviders, AuthService, ProfileService, AdInfoService, GetAdsService, LangService, AppComponent, AdsListComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
