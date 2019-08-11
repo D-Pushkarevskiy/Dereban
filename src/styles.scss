@@ -12,6 +12,15 @@
       margin-top: 15px;
     }
   }
+
+  div {
+    &.row {
+      div {
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
+  }
 }
 
 // For material
@@ -153,9 +162,9 @@ pre {
 }
 
 .spinner-circle {
-  position: absolute !important;
-  left: -8px;
-  top: -8px;
+  position: absolute!important;
+  left: -12px;
+  top: -12px;
 }
 
 .main-logo {
@@ -168,7 +177,7 @@ pre {
   height: 75px;
   margin: 0 auto;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .app {
@@ -407,7 +416,8 @@ input.example-right-align {
 }
 
 .showcase_photo {
-  height: 100%;
+  max-width: 100%;
+  height: auto;
   cursor: zoom-in;
   -webkit-transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s, transform 0s;
   -moz-transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s, transform 0s;

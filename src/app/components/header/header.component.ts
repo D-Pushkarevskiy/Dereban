@@ -11,6 +11,9 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { GetAdsService } from 'src/app/services/getAds.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { LangService } from 'src/app/services/lang.service';
+import { LoaderService } from 'src/app/services/loader.service';
+
+import { LoaderState } from '../../interfaces/loader';
 
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { AppComponent } from 'src/app/app.component';
@@ -23,6 +26,7 @@ import { AppComponent } from 'src/app/app.component';
 export class HeaderComponent implements OnInit, OnDestroy {
 
     isAuth: Boolean;
+    subscription_loader: Subscription;
     subscription: Subscription;
     subscription_name: Subscription;
     matTooltipText: String = '';
@@ -33,6 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     allads: String = 'allads/';
     favorites: String = 'favorites/';
     API_URL: String = this.app.API_URL;
+    show = false;
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
     scroll = (): void => { this.isAuth ? this.trigger.closeMenu() : ''; };
 
@@ -46,7 +51,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private snackbar: SnackbarService,
         private router: Router,
         private translate: TranslateService,
-        private langService: LangService
+        private langService: LangService,
+        private loaderService: LoaderService
     ) {
         this.subscription = this.authService.getState().subscribe(state => {
             this.isAuth = state.value;
@@ -70,7 +76,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         window.addEventListener('scroll', this.scroll, true);
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.subscription_loader = this.loaderService.loaderState
+          .subscribe((state: LoaderState) => {
+            this.show = state.show;
+          });
+      }
 
     OpenModal() {
         this.dialogRef.open(LoginComponent, {
@@ -140,6 +151,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+        this.subscription_loader.unsubscribe();
     }
 
 }

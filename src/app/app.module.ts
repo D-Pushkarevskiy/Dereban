@@ -36,6 +36,8 @@ import { AdInfoService } from 'src/app/services/adInfo.service';
 import { GetAdsService } from 'src/app/services/getAds.service';
 import { LangService } from 'src/app/services/lang.service';
 
+import { ShortNumberPipe } from 'src/app/pipes/short-number.pipe';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
@@ -74,7 +76,8 @@ export function createTranslateLoader(http: HttpClient) {
     UserAdsComponent,
     FavoritesAdsComponent,
     AdsListComponent,
-    LoaderComponent
+    LoaderComponent,
+    ShortNumberPipe
   ],
   entryComponents: [LoginComponent],
   imports: [

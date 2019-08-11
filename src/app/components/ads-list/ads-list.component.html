@@ -50,12 +50,12 @@
       </div>
       <div class="col-sm">
         <div class="row showcase-name-price-wrapper">
-          <div class="col-sm">
+          <div class="col-md">
             <div class="case-name">
               <a routerLink="/ad/{{item.id}}" class='color-blue'>{{item.case_name}}</a>
             </div>
           </div>
-          <div class="col-sm">
+          <div class="col-md-4">
             <div class="case-price-wrapper color-green" *ngIf="item.price != 0">
               <span class="case-price">{{item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
             </div>
@@ -169,19 +169,19 @@
     </div>
     <div class="case-user-info row" [ngClass]="{'ad-detail':this.getAds.detailClass}">
       <div class="col-sm-1 fix-for-desktop"></div>
-      <div class="col-sm-1 photo-rating-wrapper">
+      <div class="col-md-1 photo-rating-wrapper">
         <div class="img_wrapper img_contacts">
           <img src="../assets/users_images/{{item.user_photo}}" class="user_contacts_img">
         </div>
         <div class="rating_wrapper">
           <span class="cursor-default" title="{{ 'MAIN.RATING' | translate }}"
             [ngClass]="this.getAds.GetShowClass(item.user_rating)">
-            <span *ngIf="item.user_rating > 0">+</span>{{item.user_rating}}
+            <span *ngIf="item.user_rating > 0">+</span>{{ item.user_rating | shortNumber }}
           </span>
           <span *ngIf="!item.user_rating" class="color-gray cursor-default">0</span>
         </div>
       </div>
-      <div class="col-sm-2 contacts-names">
+      <div class="col-md-3 contacts-names">
         <div>
           {{item.user_name}}
           {{item.user_surname}}
@@ -192,7 +192,7 @@
       </div>
       <div class="col-sm user_contacts">
         <div class="row">
-          <div class="col-sm-7">
+          <div class="col-sm-8">
             <div class="row">
               <div class="col-lg" *ngIf="item.user_phone" title="{{ 'CONTACTS.PHONE_NUMBER' | translate }}">
                 <i class="material-icons">phone</i>
@@ -207,7 +207,7 @@
           <div class="col-sm">
             <div class="row">
               <div *ngIf="item.user_telegram" title="TelegramID" class="telegramId col">
-                <a href="@{{item.user_telegram}}" target="_blank">
+                <a href="https://t.me/{{item.user_telegram}}" target="_blank">
                   <i class="svg-icons">
                     <svg viewBox="0 0 24 24">
                       <path fill="#36ace1"
@@ -238,7 +238,7 @@
                 </a>
               </div>
               <div *ngIf="item.user_instagram" title="InstagramID" class="instagramId col">
-                <a href="{{item.user_instagram}}" target="_blank">
+                <a href="https://www.instagram.com/{{item.user_instagram}}" target="_blank">
                   <i class="svg-icons">
                     <svg viewBox="0 0 24 24">
                       <path fill="#d10869"

@@ -14,6 +14,7 @@ export class SnackbarService {
         if (msg_text != '') {
             this.snackBar.open(msg_text, '', {
                 duration: 3000,
+                verticalPosition: 'top'
             });
         }
     }
