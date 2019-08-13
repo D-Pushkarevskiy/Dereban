@@ -89,6 +89,12 @@
     align-items: center;
   }
 
+  .price-wrapper {
+    @media only screen and (min-width: 768px) {
+      justify-content: flex-end;
+    }
+  }
+
   .case-price-wrapper {
     text-align: center;
     border: 2px solid;
@@ -97,9 +103,16 @@
     align-items: center;
     justify-content: center;
     display: flex;
+
     @media only screen and (max-width: 768px) {
       margin-top: 5px;
     }
+  }
+}
+
+.case-area-wrapper {
+  @media only screen and (min-width: 576px) {
+    justify-content: flex-end;
   }
 }
 
@@ -169,10 +182,6 @@
     font-size: 14px;
     display: inline-flex;
     vertical-align: text-top;
-
-    &.fl-right {
-      float: right;
-    }
   }
 
   i.material-icons {

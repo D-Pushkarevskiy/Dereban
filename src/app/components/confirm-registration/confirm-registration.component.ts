@@ -54,7 +54,7 @@ export class ConfirmRegistrationComponent implements OnInit {
             this.password_error = '';
             this.code_one_errors = '';
             if (tmp['code'] === 0) {
-                //На страницу личного кабинета
+                //На главную страницу
                 this.router.navigate(['/']);
                 //Все ок, оповещаем пользователя о успешном подтверждении регистрации
                 this.code_one_errors = tmp['text'];

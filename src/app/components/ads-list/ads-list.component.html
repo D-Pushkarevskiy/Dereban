@@ -55,7 +55,7 @@
               <a routerLink="/ad/{{item.id}}" class='color-blue'>{{item.case_name}}</a>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 price-wrapper">
             <div class="case-price-wrapper color-green" *ngIf="item.price != 0">
               <span class="case-price">{{item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
             </div>
@@ -68,8 +68,8 @@
               {{item.adding_time}}
             </span>
           </div>
-          <div class="col-sm">
-            <span title="{{ 'MAIN.AREA' | translate }}" class="fl-right" *ngIf="item.user_area">
+          <div class="col-sm case-area-wrapper">
+            <span title="{{ 'MAIN.AREA' | translate }}" *ngIf="item.user_area">
               <i class="material-icons">place</i>
               {{item.user_area}}
             </span>

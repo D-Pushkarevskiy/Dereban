@@ -51,8 +51,10 @@ import { UserAdsComponent } from './components/user-ads/user-ads.component';
 import { FavoritesAdsComponent } from './components/favorites-ads/favorites-ads.component';
 import { AdsListComponent } from './components/ads-list/ads-list.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { RefreshPasswordModalComponent } from './components/refresh-password/modal/modal';
 
 import { httpInterceptorProviders } from './interceptors/index';
+import { RefreshPasswordComponent } from './components/refresh-password/refresh-password.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -77,9 +79,11 @@ export function createTranslateLoader(http: HttpClient) {
     FavoritesAdsComponent,
     AdsListComponent,
     LoaderComponent,
-    ShortNumberPipe
+    ShortNumberPipe,
+    RefreshPasswordModalComponent,
+    RefreshPasswordComponent
   ],
-  entryComponents: [LoginComponent],
+  entryComponents: [LoginComponent, RefreshPasswordModalComponent],
   imports: [
     BrowserModule,
     TranslateModule.forRoot({

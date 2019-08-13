@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="col-sm order-3">
-    <button mat-raised-button color="primary" (click)="OpenModal()"
+    <button mat-raised-button color="primary" (click)="OpenModal()" id="btn-login"
       *ngIf="!isAuth">{{ 'MENU.LOGIN' | translate }}</button>
     <div *ngIf="isAuth">
       <button mat-icon-button [matMenuTriggerFor]="menu" class="user_menu_button" style="position: relative;">

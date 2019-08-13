@@ -123,6 +123,21 @@ pre {
   margin: 0;
 }
 
+.like-a-link {
+  cursor: pointer;
+  font-size: 12px;
+  color: #3f50b5;
+  border-bottom: 1px dashed;
+}
+
+.ttl {
+  text-transform: lowercase;
+}
+
+.modal-component {
+  padding: 20px;
+}
+
 .ads-not-found {
   text-align: center;
   margin-top: 20px;
@@ -162,7 +177,7 @@ pre {
 }
 
 .spinner-circle {
-  position: absolute!important;
+  position: absolute !important;
   left: -12px;
   top: -12px;
 }
@@ -219,12 +234,6 @@ pre {
   padding: 20px;
   border-radius: 10px;
   border: 1px solid #efefef;
-}
-
-.upl_photo {
-  font-size: 12px;
-  color: #3f50b5;
-  border-bottom: 1px dashed;
 }
 
 .marg-l-null {

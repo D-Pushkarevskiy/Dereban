@@ -10,6 +10,7 @@ import { AddingAdComponent } from 'src/app/components/adding-ad/adding-ad.compon
 import { AdDetailComponent } from 'src/app/components/ad-detail/ad-detail.component';
 import { UserAdsComponent } from 'src/app/components/user-ads/user-ads.component';
 import { FavoritesAdsComponent } from 'src/app/components/favorites-ads/favorites-ads.component';
+import { RefreshPasswordComponent } from 'src/app/components/refresh-password/refresh-password.component';
 
 import { AuthGuard } from '../guards/auth.guard';
 import { HomeGuard } from '../guards/home.guard';
@@ -18,6 +19,7 @@ import { NotAuthGuard } from '../guards/not-auth.guard';
 const appRoutes: Routes = [
     { path: '', component: HomepageComponent, canActivate: [HomeGuard] },
     { path: 'confirm-registration/:regToken', component: ConfirmRegistrationComponent, canActivate: [NotAuthGuard] },
+    { path: 'refresh-password/:token', component: RefreshPasswordComponent, canActivate: [NotAuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'adding-ad', component: AddingAdComponent, canActivate: [AuthGuard] },
     { path: 'ad/:id', component: AdDetailComponent, canActivate: [HomeGuard] },
