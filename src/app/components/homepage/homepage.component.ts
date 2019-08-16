@@ -22,7 +22,7 @@ export class HomepageComponent implements OnInit {
         public getAds: GetAdsService,
     ) {
         this.app.contentHeader = ' ';
-        this.titleService.setTitle('"Dereban.ua" бесплатная площадка объявлений на велотематику');
+        this.titleService.setTitle('"Dereban.ua" купи, продай, катай');
     }
 
     ngOnInit() {
