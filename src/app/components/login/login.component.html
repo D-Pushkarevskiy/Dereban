@@ -30,13 +30,16 @@
           </span>
         </mat-hint>
       </mat-form-field>
+      <div class="recaptcha-wrapper text-center" *ngIf="passwordWrong">
+        <re-captcha formControlName="recaptcha"></re-captcha>
+      </div>
       <div class="text-center">
         <span class="like-a-link ttl" (click)="openEmailDialog()">{{ 'INFO.FORGOT_PASSWORD' | translate }}</span>
       </div>
     </mat-dialog-content>
     <mat-dialog-actions class="text-center">
       <button mat-raised-button color="primary" type="submit"
-        [disabled]="form.invalid">{{ 'MAIN.LOGIN' | translate }}</button>
+        [disabled]="!form.valid">{{ 'MAIN.LOGIN' | translate }}</button>
       <button mat-raised-button mat-dialog-close>{{ 'MAIN.CANCEL' | translate }}</button>
     </mat-dialog-actions>
   </form>

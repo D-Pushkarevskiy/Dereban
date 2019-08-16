@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     form: FormGroup;
     API_URL: String = this.app.API_URL;
     password_error: String = '';
+    passwordWrong: Boolean = false;
 
     constructor(
         public app: AppComponent,
@@ -34,15 +35,17 @@ export class LoginComponent implements OnInit {
         private authService: AuthService,
         private router: Router,
         public getAds: GetAdsService,
-    ) { }
-
-    ngOnInit() {
+    ) {
         this.form = new FormGroup({
             user: new FormGroup({
                 email: new FormControl('', [Validators.required, Validators.email]),
-                password: new FormControl('', [Validators.required, Validators.minLength(this.charsCount), Validators.pattern('^[a-zA-Z0-9]+$')])
+                password: new FormControl('', [Validators.required, Validators.minLength(this.charsCount), Validators.pattern('^[a-zA-Z0-9]+$')]),
+                recaptcha: new FormControl({ disabled: true, value: null }, Validators.required)
             })
         });
+    }
+
+    ngOnInit() {
     }
 
     Auth() {
@@ -68,11 +71,16 @@ export class LoginComponent implements OnInit {
                 //Все хорошо, уведомить пользователя о удачной регистрации и письме, закрыть модалку
                 this.headerRef.close();
                 this.snackbar.show_message(tmp['text']);
-            }
-            else if (tmp['code'] === 3) {
+            } else if (tmp['code'] === 3) {
                 //Вывести текст с ошибкой корректности пароля
                 this.password_error = tmp['text'];
+            } else if (tmp['code'] === 4) {
+                // Вывести рекапчу, неудачных попыток входа было 5
+                this.passwordWrong = true;
+                this.form.get('user.recaptcha').enable();
+                this.snackbar.show_message(tmp['text']);
             }
+
         });
     }
 
