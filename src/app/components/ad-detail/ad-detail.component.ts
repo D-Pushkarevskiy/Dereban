@@ -20,7 +20,7 @@ export class AdDetailComponent implements OnInit {
     private id: number;
     private subscription: Subscription;
     private subscriptionName: Subscription;
-    adsName: string = '';
+    private adsName: string = '';
 
     constructor(
         private app: AppComponent,

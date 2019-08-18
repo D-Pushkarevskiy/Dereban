@@ -99,9 +99,15 @@ mat-dialog-actions {
   cursor: default;
 }
 
+// Text
 .text-center,
 .text-center * {
   text-align: center;
+}
+
+.text-right,
+.text-right * {
+  text-align: right;
 }
 
 .recaptcha-wrapper {
@@ -501,7 +507,7 @@ img.showcase_photo {
   background-color: white;
   border-radius: 5px;
   padding: 10px 25px;
-  margin: 10px 10px 25px;
+  margin: 10px 10px 60px;
   width: -webkit-fill-available;
 }
 

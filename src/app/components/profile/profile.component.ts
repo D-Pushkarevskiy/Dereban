@@ -148,13 +148,13 @@ export class ProfileComponent implements OnInit {
             this.success_saving = '';
 
             if (tmp['code'] == 0) {
-                //Все ок, выводим текст удачного сохранения данных
+                // Все ок, выводим текст удачного сохранения данных
                 this.success_saving = tmp['text'];
                 this.snackbar.show_message(this.success_saving);
-                //Передаем имя пользователя в хедер
+                // Передаем имя пользователя в хедер
                 this.profileService.setName(this.form.controls.user.get('name').value);
             } else if (tmp['code'] == 1) {
-                //Выводим ошибку
+                // Выводим ошибку
                 this.code_one_errors = tmp['text'];
                 this.snackbar.show_message(this.code_one_errors);
             }
