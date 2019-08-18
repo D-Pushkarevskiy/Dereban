@@ -10,6 +10,6 @@
         <h1>{{contentHeader}}</h1>
     </div>
     <div class="content-inner">
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="onActivate($event)"></router-outlet>
     </div>
 </div>

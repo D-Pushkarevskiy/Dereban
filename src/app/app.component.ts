@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { LangService } from './services/lang.service';
 
@@ -16,8 +18,9 @@ export class AppComponent implements OnInit {
 
     constructor(
         public translate: TranslateService,
-        public langService: LangService
-        ) {
+        public langService: LangService,
+        @Inject(PLATFORM_ID) private platformId: Object
+    ) {
         // this language will be used as a fallback when a translation isn't found in the current language
         translate.setDefaultLang('ua');
 
@@ -26,5 +29,18 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() { }
+
+    onActivate(event: any) {
+        if (isPlatformBrowser(this.platformId)) {
+            let scrollToTop = window.setInterval(() => {
+                let pos = window.pageYOffset;
+                if (pos > 0) {
+                    window.scrollTo(0, pos - 50); // how far to scroll on each step
+                } else {
+                    window.clearInterval(scrollToTop);
+                }
+            }, 16);
+        }
+    }
 
 }
