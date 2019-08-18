@@ -1,7 +1,9 @@
 <form enctype="multipart/form-data" class="full-width-form" [formGroup]="form" (ngSubmit)="AddShowCase()">
 
-  <mat-card class="marg-bott color-blue"><i class="material-icons">info</i>
-    <span>{{ 'INFO.ADDING_REQUIRED_FILDS' | translate }}</span></mat-card>
+  <mat-card class="marg-bott color-blue" *ngIf="!id">
+    <i class="material-icons">info</i>
+    <span>{{ 'INFO.ADDING_REQUIRED_FILDS' | translate }}</span>
+  </mat-card>
 
   <div class="row" formGroupName="main">
     <div class="change_photo marg-l-null col-sm-6" (click)="UploadPhoto()">

@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Subscription } from 'rxjs';
@@ -20,29 +20,31 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class AddingAdComponent implements OnInit, OnDestroy {
 
-    form: FormGroup;
-    subscription: Subscription;
-    desc_template: string = '';
-    show_desc: Boolean = false;
-    desc_num: Number;
-    desc_full_num: Number;
-    files: any;
-    img_showcase_main: string = '../assets/users_images/user_ads_image_default.jpg';
-    img_name: string = '';
+    private form: FormGroup;
+    private subscription: Subscription;
+    private subscription_id: Subscription;
+    private id: number;
+    private desc_template: string = '';
+    private show_desc: Boolean = false;
+    private desc_num: Number;
+    private desc_full_num: Number;
+    private files: any;
+    private img_showcase_main: string = '../assets/users_images/user_ads_image_default.jpg';
+    private img_name: string = '';
 
-    templateFullComplete: string;
-    templateFullСustom: string;
-    templateParts: string;
-    templateDetail: string;
-    descr_addition: string;
+    private templateFullComplete: string;
+    private templateFullСustom: string;
+    private templateParts: string;
+    private templateDetail: string;
+    private descr_addition: string;
 
-    isHiddenFull = true;
-    isHiddenDetail = true;
+    private isHiddenFull = true;
+    private isHiddenDetail = true;
 
-    API_URL = this.app.API_URL;
-    code_one_errors = '';
-    success_adding = '';
-    file_path = '';
+    public API_URL = this.app.API_URL;
+    private code_one_errors = '';
+    private success_adding = '';
+    private file_path = '';
 
     constructor(
         private app: AppComponent,
@@ -50,12 +52,14 @@ export class AddingAdComponent implements OnInit, OnDestroy {
         private http: HttpClient,
         private snackbar: SnackbarService,
         private router: Router,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private activateRoute: ActivatedRoute
     ) {
         this.subscription = this.translate.stream('MAIN.ADD_SHOWCASE').subscribe((res: string) => {
             app.contentHeader = res;
             this.titleService.setTitle(res);
         });
+        this.subscription_id = activateRoute.params.subscribe(params => this.id = params['id']);
         this.translate.stream('SHOWCASE.BIKE.DESCRIPTION.TEMPLATE.COMPLETE').subscribe((res: string) => {
             this.templateFullComplete = res;
             this.ToggleDescTeplate({ checked: this.show_desc });
@@ -262,5 +266,6 @@ export class AddingAdComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+        this.subscription_id.unsubscribe();
     }
 }
