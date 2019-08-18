@@ -103,6 +103,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 this.user_id = response['text']['id'];
                 this.user_name = response['text']['name'];
                 this.user_photo = response['text']['photo'];
+                // Передаем имя пользователя в ads-list
+                this.profileService.setId(response['text']['id']);
             } else if (response['code'] === 1) {
                 this.snackbar.show_message(response['text']);
             }

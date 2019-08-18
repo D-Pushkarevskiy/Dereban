@@ -6,13 +6,22 @@ import { Observable, Subject } from 'rxjs';
 
 export class ProfileService {
 
-    private subject = new Subject<any>();
+    private name = new Subject<any>();
+    private id = new Subject<any>();
 
     setName(uName) {
-        this.subject.next({ value: uName });
+        this.name.next({ value: uName });
     }
 
     getName(): Observable<any> {
-        return this.subject.asObservable();
+        return this.name.asObservable();
+    }
+    
+    setId(uId) {
+        this.id.next({ value: uId });
+    }
+
+    getId(): Observable<any> {
+        return this.id.asObservable();
     }
 }
