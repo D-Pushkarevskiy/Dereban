@@ -103,6 +103,8 @@ mat-dialog-actions {
 .text-center,
 .text-center * {
   text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .text-right,
@@ -161,6 +163,10 @@ pre {
 
 .color-gray {
   color: #e0e0e0;
+}
+
+.color-gray-darker {
+  color: #8e8e8e;
 }
 
 .color-blue {
@@ -271,9 +277,16 @@ textarea.textarea-height {
 
 .img_wrapper {
   &.img_showcase {
-    border: 5px dashed #00b754;
     border-radius: 10px;
   }
+
+  &.adding_showcase {
+    border: 5px dashed #00b754;
+  }
+}
+
+.toggling-icon mat-icon {
+  font-size: 24px !important;
 }
 
 .img_profie,
@@ -430,7 +443,7 @@ input.example-right-align {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: 111;
   background-color: #f7f7f7;
 }
 

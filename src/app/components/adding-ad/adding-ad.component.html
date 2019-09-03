@@ -7,7 +7,7 @@
 
   <div class="row" formGroupName="main">
     <div class="change_photo marg-l-null col-sm-6" (click)="UploadPhoto()">
-      <div class="img_wrapper img_showcase">
+      <div class="img_wrapper img_showcase" [ngClass]="{'adding_showcase': !id}">
         <img src="{{img_showcase_main}}" class="user_profile_img">
       </div>
       <input type="file" name="photo" formControlName="photo" (change)="fileChange($event)"
@@ -15,7 +15,9 @@
         #input_file_photo required="">
       <div *ngIf="!img_name" class="text-center marg-top">
         <a class="like-a-link">{{ 'INFO.ADDING_UPLOAD_PHOTO' | translate }} *</a><br>
-        <span class="spn-descr">{{ 'INFO.DESIRED_RESOLUTION' | translate }} <b>450х300px</b></span>
+        <span class="spn-descr">{{ 'INFO.DESIRED_RESOLUTION' | translate }}
+          <b>450х300px</b>
+        </span>
       </div>
       <div *ngIf="img_name" class="text-center marg-top">
         <span class="like-a-link">{{img_name}}</span>
@@ -173,8 +175,10 @@
 
   <div class="div_wrapper">
     <div class="button-row text-center">
-      <button mat-raised-button color="primary" type="submit"
+      <button *ngIf="!id" mat-raised-button color="primary" type="submit"
         [disabled]="form.invalid">{{ 'MAIN.ADD' | translate }}</button>
+      <button *ngIf="id" mat-raised-button color="primary" type="submit"
+        [disabled]="form.invalid">{{ 'MAIN.EDIT' | translate }}</button>
     </div>
   </div>
 

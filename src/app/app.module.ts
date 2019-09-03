@@ -38,6 +38,7 @@ import { GetAdsService } from 'src/app/services/getAds.service';
 import { LangService } from 'src/app/services/lang.service';
 
 import { ShortNumberPipe } from 'src/app/pipes/short-number.pipe';
+import { SafeHtmlPipe } from './pipes/safehtml.pipe';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -52,10 +53,11 @@ import { UserAdsComponent } from './components/user-ads/user-ads.component';
 import { FavoritesAdsComponent } from './components/favorites-ads/favorites-ads.component';
 import { AdsListComponent } from './components/ads-list/ads-list.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { RefreshPasswordComponent } from './components/refresh-password/refresh-password.component';
+import { ConfirmationDialogComponent } from './components/shared/confirmation-dialog/confirmation-dialog.component';
 import { RefreshPasswordModalComponent } from './components/refresh-password/modal/modal';
 
 import { httpInterceptorProviders } from './interceptors/index';
-import { RefreshPasswordComponent } from './components/refresh-password/refresh-password.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -82,9 +84,11 @@ export function createTranslateLoader(http: HttpClient) {
     LoaderComponent,
     ShortNumberPipe,
     RefreshPasswordModalComponent,
-    RefreshPasswordComponent
+    RefreshPasswordComponent,
+    ConfirmationDialogComponent,
+    SafeHtmlPipe
   ],
-  entryComponents: [LoginComponent, RefreshPasswordModalComponent],
+  entryComponents: [LoginComponent, RefreshPasswordModalComponent, ConfirmationDialogComponent],
   imports: [
     BrowserModule,
     TranslateModule.forRoot({

@@ -7,17 +7,24 @@
 <div *ngIf="this.getAds.tmp">
   <div *ngFor="let item of this.getAds.tmp" id="showcase_{{item.id}}">
     <div class="showcase-wrapper" [ngClass]="{'ad-detail':this.getAds.detailClass}">
+      <div *ngIf="item.active == 0" class="inactive-case-overlay"></div>
       <div *ngIf="isAuth && item.user_id === user_id && !this.getAds.detailClass" class="showcase-user-actions">
-        <button mat-icon-button color="primary" aria-label="Edit showcase" title="Редактировать" routerLink="/edit-ad/{{item.id}}">
+        <button *ngIf="item.active == 1" mat-icon-button color="primary" aria-label="Edit showcase" title="{{ 'MAIN.EDIT' | translate }}" routerLink="/edit-ad/{{item.id}}">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" aria-label="Delete showcase" title="Удолить">
+        <button *ngIf="item.active == 1" mat-icon-button class="color-green toggling-icon" aria-label="Deactivate showcase" title="{{ 'MAIN.DEACTIVATE' | translate }}" (click)="this.getAds.ToggleActive(item.id)">
+          <mat-icon>toggle_on</mat-icon>
+        </button>
+        <button *ngIf="item.active == 0" mat-icon-button class="color-gray-darker toggling-icon" aria-label="Activate showcase" title="{{ 'MAIN.ACTIVATE' | translate }}" (click)="this.getAds.ToggleActive(item.id)">
+          <mat-icon>toggle_off</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" aria-label="Delete showcase" title="{{ 'MAIN.DELETE' | translate }}" (click)="this.getAds.DeleteShowCase(item.id)">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </div>
       <div class="row">
-        <div class="col-sm-1 case-rating" [ngClass]="{'ad-detail':this.getAds.detailClass}">
-          <div class="color-green opacity-arrow cursor-pointer" *ngIf="isAuth && item.user_id !== user_id"
+        <div class="col-sm-1 case-rating" [ngClass]="{'ad-detail':this.getAds.detailClass, 'col-xl-1': this.getAds.detailClass}">
+          <div class="color-green opacity-arrow cursor-pointer" *ngIf="isAuth && item.user_id !== user_id && item.active == 1"
             (click)="this.getAds.ChangeRating(1, item.id)" [ngClass]="{'active':this.getAds.isActive(item.id, '1')}">
             <i class="material-icons">keyboard_arrow_up</i>
           </div>
@@ -30,7 +37,7 @@
             <span *ngIf="!item.case_rating">0</span>
           </div>
 
-          <div class="color-red opacity-arrow cursor-pointer" *ngIf="isAuth && item.user_id !== user_id"
+          <div class="color-red opacity-arrow cursor-pointer" *ngIf="isAuth && item.user_id !== user_id && item.active == 1"
             (click)="this.getAds.ChangeRating(-1, item.id)" [ngClass]="{'active':this.getAds.isActive(item.id, '-1')}">
             <i class="material-icons">keyboard_arrow_down</i>
           </div>
@@ -39,7 +46,7 @@
           </div>
 
           <div class="cursor-pointer opacity-arrow" title="{{ 'MAIN.ADD_TO_FAVORITES' | translate }}"
-            *ngIf="isAuth && item.user_id !== user_id" (click)="this.getAds.ToggleFavorite(item.id)"
+            *ngIf="isAuth && item.user_id !== user_id && item.active == 1" (click)="this.getAds.ToggleFavorite(item.id)"
             [ngClass]="{'active':this.getAds.isFavorite(item.id)}">
             <i class="material-icons color-red" *ngIf="!this.getAds.isFavorite(item.id)">
               favorite_border
@@ -54,10 +61,10 @@
             </i>
           </div>
         </div>
-        <div class="col-sm showcase-photo-wrapper">
+        <div class="col-sm showcase-photo-wrapper" [ngClass]="{'col-xl-11': this.getAds.detailClass}">
           <img [src]="item.photo_url" class="showcase_photo" (click)="ZoomImage($event)">
         </div>
-        <div class="col-sm">
+        <div class="col-sm" [ngClass]="{'col-xl-12': this.getAds.detailClass}">
           <div class="row showcase-name-price-wrapper">
             <div class="col-md">
               <div class="case-name">
@@ -99,7 +106,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-1 fix-for-desktop"></div>
+        <div *ngIf="!this.getAds.detailClass" class="col-sm-1 fix-for-desktop"></div>
         <div class="col-sm chips-wrapper">
           <mat-chip-list>
             <mat-chip [ngSwitch]="item.type" *ngIf="item.type != 0">
@@ -177,7 +184,7 @@
         </div>
       </div>
       <div class="case-user-info row" [ngClass]="{'ad-detail':this.getAds.detailClass}">
-        <div class="col-sm-1 fix-for-desktop"></div>
+        <div *ngIf="!this.getAds.detailClass" class="col-sm-1 fix-for-desktop"></div>
         <div class="col-md-1 photo-rating-wrapper">
           <div class="img_wrapper img_contacts">
             <img src="../assets/users_images/{{item.user_photo}}" class="user_contacts_img">
