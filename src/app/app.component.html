@@ -1,7 +1,8 @@
 <div class="app">
     <app-loader></app-loader>
-    <div class="overlay-all" *ngIf="overlay">
+    <div class="overlay-all" [ngClass]="{'show': overlay}">
         &nbsp;
+        <i class="material-icons" (click)="closeOverlay()" title="Close">close</i>
     </div>
     <header>
         <app-header></app-header>

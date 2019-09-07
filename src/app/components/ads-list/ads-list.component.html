@@ -62,7 +62,7 @@
           </div>
         </div>
         <div class="col-sm showcase-photo-wrapper" [ngClass]="{'col-xl-11': this.getAds.detailClass}">
-          <img [src]="item.photo_url" class="showcase_photo" (click)="ZoomImage($event)">
+          <img [src]="item.photo_url" class="showcase_photo allow-transition" (click)="ZoomImage($event)">
         </div>
         <div class="col-sm" [ngClass]="{'col-xl-12': this.getAds.detailClass}">
           <div class="row showcase-name-price-wrapper">

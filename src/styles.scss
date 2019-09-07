@@ -438,31 +438,49 @@ input.example-right-align {
 }
 
 .overlay-all {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 111;
-  background-color: #f7f7f7;
+  background-color: #e6e6e6;
+  opacity: 0;
+  -webkit-transition: all 3.6s cubic-bezier(0.0, 0.0, 0.2, 1);
+  -moz-transition: all 3.6s cubic-bezier(0.0, 0.0, 0.2, 1);
+  -o-transition: all 3.6s cubic-bezier(0.0, 0.0, 0.2, 1);
+  transition: all 3.6s cubic-bezier(0.0, 0.0, 0.2, 1);
+  &.show {
+    opacity: 1;
+    display: block;
+  }
+
+  .material-icons {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+  }
 }
 
 .showcase_photo {
   max-width: 100%;
   height: auto;
   cursor: zoom-in;
-  -webkit-transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s, transform 0s;
-  -moz-transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s, transform 0s;
-  -o-transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s, transform 0s;
-  transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s, transform 0s;
 
   &:hover {
-    opacity: 0.5;
     transform: scale(1.1);
-    -webkit-transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s;
-    -moz-transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s;
-    -o-transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s;
-    transition: transform .135s cubic-bezier(0.0, 0.0, 0.2, 1), opacity linear .15s;
+  }
+
+  &.allow-transition {
+    &:hover {
+      filter: saturate(1.05);
+    }
+    -webkit-transition: all .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -moz-transition: all .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -o-transition: all .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+    transition: all .3s cubic-bezier(0.0, 0.0, 0.2, 1);
   }
 }
 
@@ -475,6 +493,10 @@ input.example-right-align {
 img.showcase_photo {
   &.opacity-img {
     opacity: 0;
+    -webkit-transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -moz-transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -o-transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+    transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1);
   }
 
   &.zoomed-img {
@@ -487,10 +509,6 @@ img.showcase_photo {
     cursor: zoom-out;
     z-index: 111;
     opacity: 1;
-    -webkit-transition: opacity .135s cubic-bezier(0.0, 0.0, 0.2, 1);
-    -moz-transition: opacity .135s cubic-bezier(0.0, 0.0, 0.2, 1);
-    -o-transition: opacity .135s cubic-bezier(0.0, 0.0, 0.2, 1);
-    transition: opacity .135s cubic-bezier(0.0, 0.0, 0.2, 1);
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);

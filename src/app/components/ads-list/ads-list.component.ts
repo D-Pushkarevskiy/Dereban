@@ -45,6 +45,9 @@ export class AdsListComponent implements OnInit {
         }
         setTimeout(function () {
             event.target.classList.toggle('zoomed-img');
+            setTimeout(function () {
+              event.target.classList.toggle('allow-transition');
+            }, 25);
         }, 25);
     }
 
