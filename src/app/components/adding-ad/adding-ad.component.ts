@@ -64,6 +64,7 @@ export class AddingAdComponent implements OnInit, OnDestroy {
         this.http.get(this.API_URL + '?func=get_case&id=' + this.id
         ).subscribe(response => {
           this.case = response['text'];
+          this.form.get('main.photo').disable();
           this.form.patchValue({
             main: {
               name: this.case.case_name,
@@ -144,6 +145,7 @@ export class AddingAdComponent implements OnInit, OnDestroy {
   }
 
   UploadPhoto() {
+    this.form.get('main.photo').enable();
     document.getElementById('input_file_photo').click();
   }
 
@@ -167,7 +169,7 @@ export class AddingAdComponent implements OnInit, OnDestroy {
 
       finalData = formData;
     } else {
-      finalData = this.form;
+      finalData = JSON.stringify(this.form.getRawValue());
     }
 
     this.http.post(this.API_URL + '?func=save_showcase_photo', finalData
@@ -176,34 +178,31 @@ export class AddingAdComponent implements OnInit, OnDestroy {
       tmp = response;
       this.code_one_errors = '';
       this.file_path = '';
+      var photo_url_for_db = this.case.photo_url.replace('../assets/users_images/showcase_photos/','');
 
       if (tmp['code'] == 0) {
         //Все ок
-        if (tmp['text'] == '') {
-          this.snackbar.show_message('Ошибка записи файла');
-        } else {
-          this.file_path = tmp['text'];
+        this.file_path = tmp['text'] != '' ? tmp['text'] : photo_url_for_db;
 
-          const update_params = this.id ? '&edit=true&id=' + this.id : '';
-          this.http.post(this.API_URL + '?func=save_showcase&file_path=' + this.file_path + update_params, this.form.getRawValue()
-          ).subscribe(response => {
-            var tmp;
-            tmp = response;
-            this.code_one_errors = '';
-            this.success_adding = '';
+        const update_params = this.id ? '&edit=true&id=' + this.id : '';
+        this.http.post(this.API_URL + '?func=save_showcase&file_path=' + this.file_path + update_params, this.form.getRawValue()
+        ).subscribe(response => {
+          var tmp;
+          tmp = response;
+          this.code_one_errors = '';
+          this.success_adding = '';
 
-            if (tmp['code'] == 0) {
-              //Все ок, выводим текст удачного сохранения данных
-              this.success_adding = tmp['text'];
-              this.snackbar.show_message(this.success_adding);
-              this.router.navigate(['/']);
-            } else if (tmp['code'] == 1) {
-              //Выводим ошибку
-              this.code_one_errors = tmp['text'];
-              this.snackbar.show_message(this.code_one_errors);
-            }
-          });
-        }
+          if (tmp['code'] == 0) {
+            //Все ок, выводим текст удачного сохранения данных
+            this.success_adding = tmp['text'];
+            this.snackbar.show_message(this.success_adding);
+            this.router.navigate(['/']);
+          } else if (tmp['code'] == 1) {
+            //Выводим ошибку
+            this.code_one_errors = tmp['text'];
+            this.snackbar.show_message(this.code_one_errors);
+          }
+        });
       } else if (tmp['code'] == 1) {
         //Выводим ошибку
         this.code_one_errors = tmp['text'];

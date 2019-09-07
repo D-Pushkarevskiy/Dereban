@@ -57,8 +57,8 @@ export class GetAdsService {
 
   public DeleteShowCase(case_id: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '350px',
-      data: "Удаление объявления <b>вычтет</b> из вашего рейтинга рейтинг объявления. <br>Вы действительно хотите удалить объявление?"
+      width: '450px',
+      data: "Ваш <b>рейтинг</b> зависит от рейтинга Ваших объявлений. <br>Вы действительно хотите удалить объявление?"
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
