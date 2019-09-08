@@ -475,7 +475,7 @@ input.example-right-align {
 
   &.allow-transition {
     &:hover {
-      filter: saturate(1.05);
+      filter: saturate(1.1);
     }
     -webkit-transition: all .3s cubic-bezier(0.0, 0.0, 0.2, 1);
     -moz-transition: all .3s cubic-bezier(0.0, 0.0, 0.2, 1);

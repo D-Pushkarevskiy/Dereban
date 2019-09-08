@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
-import { GetAdsService } from 'src/app/services/getAds.service';
+import { GetAdsService } from 'src/app/services/get-ads.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -37,7 +37,6 @@ export class AdsListComponent implements OnInit {
     ngOnInit() { }
 
     ZoomImage(event: any) {
-        event.target.classList.toggle('opacity-img');
         document.querySelector("body").classList.toggle('stop-scroll');
         this.app.overlay = true;
         if (event.target.classList.contains('zoomed-img')) {
@@ -47,6 +46,7 @@ export class AdsListComponent implements OnInit {
             event.target.classList.toggle('zoomed-img');
             setTimeout(function () {
               event.target.classList.toggle('allow-transition');
+              event.target.classList.toggle('opacity-img');
             }, 25);
         }, 25);
     }

@@ -33,8 +33,8 @@ import { AppRoutingModule } from 'src/app/app-routing/app-routing.module';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { AdInfoService } from 'src/app/services/adInfo.service';
-import { GetAdsService } from 'src/app/services/getAds.service';
+import { AdInfoService } from 'src/app/services/ad-info.service';
+import { GetAdsService } from 'src/app/services/get-ads.service';
 import { LangService } from 'src/app/services/lang.service';
 
 import { ShortNumberPipe } from 'src/app/pipes/short-number.pipe';

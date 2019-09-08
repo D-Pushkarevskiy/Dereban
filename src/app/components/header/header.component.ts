@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { GetAdsService } from 'src/app/services/getAds.service';
+import { GetAdsService } from 'src/app/services/get-ads.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { LangService } from 'src/app/services/lang.service';
 import { LoaderService } from 'src/app/services/loader.service';

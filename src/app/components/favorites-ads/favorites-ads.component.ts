@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { GetAdsService } from 'src/app/services/getAds.service';
+import { GetAdsService } from 'src/app/services/get-ads.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 import { AppComponent } from 'src/app/app.component';

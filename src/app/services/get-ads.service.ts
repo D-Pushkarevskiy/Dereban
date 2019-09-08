@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 
 import { Subscription } from 'rxjs';
 
-import { AdInfoService } from 'src/app/services/adInfo.service';
+import { AdInfoService } from 'src/app/services/ad-info.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service'
 

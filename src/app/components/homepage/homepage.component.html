@@ -1,6 +1,6 @@
 <mat-form-field class="full-width-form search-wrapper">
-    <input matInput placeholder="{{ 'SEARCH.NAME' | translate }}" value="">
-    <mat-icon matSuffix>search</mat-icon>
+    <input matInput placeholder="{{ 'SEARCH.NAME' | translate }}" value="" (input)="searchItems($event.target.value)">
+    <mat-icon matSuffix class="cursor-pointer">search</mat-icon>
 </mat-form-field>
 
 <app-ads-list></app-ads-list>

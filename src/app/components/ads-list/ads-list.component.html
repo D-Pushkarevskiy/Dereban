@@ -5,7 +5,7 @@
 </div>
 
 <div *ngIf="this.getAds.tmp">
-  <div *ngFor="let item of this.getAds.tmp" id="showcase_{{item.id}}">
+  <div *ngFor="let item of this.getAds.tmp" id="showcase_{{item.id}}" class="showcase-main-wrapper" [ngClass]="{'inactive-case':item.active == 0, 'ad-detail':this.getAds.detailClass}">
     <div class="showcase-wrapper" [ngClass]="{'ad-detail':this.getAds.detailClass}">
       <div *ngIf="item.active == 0" class="inactive-case-overlay"></div>
       <div *ngIf="isAuth && item.user_id === user_id && !this.getAds.detailClass" class="showcase-user-actions">

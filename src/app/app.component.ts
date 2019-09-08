@@ -44,7 +44,8 @@ export class AppComponent implements OnInit {
   }
 
   closeOverlay() {
-    this.overlay = false;
+    let element: HTMLElement = document.getElementsByClassName('zoomed-img')[0] as HTMLElement;
+    element.click();
   }
 
 }

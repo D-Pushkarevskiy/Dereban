@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 import { SnackbarService } from 'src/app/services/snackbar.service'
-import { GetAdsService } from 'src/app/services/getAds.service';
+import { GetAdsService } from 'src/app/services/get-ads.service';
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -178,11 +178,10 @@ export class AddingAdComponent implements OnInit, OnDestroy {
       tmp = response;
       this.code_one_errors = '';
       this.file_path = '';
-      var photo_url_for_db = this.case.photo_url.replace('../assets/users_images/showcase_photos/','');
 
       if (tmp['code'] == 0) {
         //Все ок
-        this.file_path = tmp['text'] != '' ? tmp['text'] : photo_url_for_db;
+        this.file_path = tmp['text'] !== '' ? tmp['text'] : this.case.photo_url.replace('../assets/users_images/showcase_photos/','');
 
         const update_params = this.id ? '&edit=true&id=' + this.id : '';
         this.http.post(this.API_URL + '?func=save_showcase&file_path=' + this.file_path + update_params, this.form.getRawValue()

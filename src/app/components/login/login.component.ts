@@ -7,7 +7,7 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth.service';
-import { GetAdsService } from 'src/app/services/getAds.service';
+import { GetAdsService } from 'src/app/services/get-ads.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
 import { HeaderComponent } from 'src/app/components/header/header.component';

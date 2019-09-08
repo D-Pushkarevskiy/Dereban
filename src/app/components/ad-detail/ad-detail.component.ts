@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { AdInfoService } from 'src/app/services/adInfo.service';
-import { GetAdsService } from 'src/app/services/getAds.service';
+import { AdInfoService } from 'src/app/services/ad-info.service';
+import { GetAdsService } from 'src/app/services/get-ads.service';
 
 import { AppComponent } from 'src/app/app.component';
 import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component';
