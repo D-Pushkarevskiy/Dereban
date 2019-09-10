@@ -36,6 +36,8 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { AdInfoService } from 'src/app/services/ad-info.service';
 import { GetAdsService } from 'src/app/services/get-ads.service';
 import { LangService } from 'src/app/services/lang.service';
+import { CaseStorageService } from 'src/app/services/case-storage.service';
+import { SearchCasesService } from './services/search-cases.service';
 
 import { ShortNumberPipe } from 'src/app/pipes/short-number.pipe';
 import { SafeHtmlPipe } from './pipes/safehtml.pipe';
@@ -137,6 +139,8 @@ export function createTranslateLoader(http: HttpClient) {
     LangService,
     AppComponent,
     AdsListComponent,
+    CaseStorageService,
+    SearchCasesService,
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {

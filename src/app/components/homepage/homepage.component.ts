@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { GetAdsService } from 'src/app/services/get-ads.service';
+import { CaseStorageService } from 'src/app/services/case-storage.service';
+import { SearchCasesService } from 'src/app/services/search-cases.service';
 
 import { AppComponent } from 'src/app/app.component';
 import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component';
@@ -21,6 +23,8 @@ export class HomepageComponent implements OnInit {
         private titleService: Title,
         private adsList: AdsListComponent,
         public getAds: GetAdsService,
+        public caseStorage: CaseStorageService,
+        public searchService: SearchCasesService
     ) {
         this.app.contentHeader = ' ';
         this.titleService.setTitle('"Dereban.ua" купи, продай, катай');
@@ -32,15 +36,13 @@ export class HomepageComponent implements OnInit {
     }
 
     public searchItems(searchValue: string): void {
-        if (!searchValue || searchValue === '') {
-            return;
-        }
+        var _this = this;
         if (this.searchTimeout !== null) {
             clearTimeout(this.searchTimeout);
         }
         this.searchTimeout = setTimeout(function () {
-            this.searchTimeout = null;
-            console.log(searchValue);
-        }, 1000);
+            _this.searchTimeout = null;
+            _this.getAds.tmp = _this.searchService.search(searchValue) || _this.caseStorage.getCases();
+        }, 500);
     }
 }

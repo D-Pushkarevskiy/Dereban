@@ -1,11 +1,11 @@
-<div *ngIf="!this.getAds.tmp && !this.getAds.show" class="ads-not-found">
+<div *ngIf="!this.getAds.tmp || this.getAds.tmp <= 0" class="ads-not-found">
   <span class="color-gray">
     {{ 'INFO.SHOWCASE_NOT_FOUND' | translate }}
   </span>
 </div>
 
 <div *ngIf="this.getAds.tmp">
-  <div *ngFor="let item of this.getAds.tmp" id="showcase_{{item.id}}" class="showcase-main-wrapper" [ngClass]="{'inactive-case':item.active == 0, 'ad-detail':this.getAds.detailClass}">
+  <div *ngFor="let item of this.getAds.tmp" id="showcase_{{item.id}}" class="showcase-main-wrapper" [ngClass]="{'inactive-case':item.active == 0, 'ad-detail':this.getAds.detailClass, 'disable-transform':this.app.overlay}">
     <div class="showcase-wrapper" [ngClass]="{'ad-detail':this.getAds.detailClass}">
       <div *ngIf="item.active == 0" class="inactive-case-overlay"></div>
       <div *ngIf="isAuth && item.user_id === user_id && !this.getAds.detailClass" class="showcase-user-actions">
