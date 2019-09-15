@@ -17,6 +17,7 @@ import { ConfirmationDialogComponent } from '../components/shared/confirmation-d
 export class GetAdsService {
 
   public tmp;
+  public allCases;
   public detailClass: Boolean = false;
 
   private API_URL = this.app.API_URL;
@@ -45,6 +46,7 @@ export class GetAdsService {
       if (tmp['code'] == 0) {
         this.tmp = tmp['text'];
         this.caseStorage.setCases(tmp['text']);
+        this.allCases = tmp['text'];
         if (case_name) {
           this.adInfoService.setCaseName(this.tmp[0]['case_name']);
         }

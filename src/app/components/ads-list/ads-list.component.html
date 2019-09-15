@@ -61,18 +61,18 @@
             </i>
           </div>
         </div>
-        <div class="col-sm showcase-photo-wrapper" [ngClass]="{'col-xl-11': this.getAds.detailClass}">
+        <div class="col-sm showcase-photo-wrapper" [ngClass]="{'col-sm-11 col-xl-11 col-md-11': this.getAds.detailClass}">
           <img [src]="item.photo_url" class="showcase_photo allow-transition" (click)="ZoomImage($event)">
         </div>
-        <div class="col-sm" [ngClass]="{'col-xl-12': this.getAds.detailClass}">
+        <div class="col-sm" [ngClass]="{'col-sm-12 col-xl-12 col-md-12': this.getAds.detailClass}">
           <div class="row showcase-name-price-wrapper">
             <div class="col-md">
               <div class="case-name">
                 <a routerLink="/ad/{{item.id}}" class='color-blue'>{{item.case_name}}</a>
               </div>
             </div>
-            <div class="col-md-4 price-wrapper">
-              <div class="case-price-wrapper color-green" *ngIf="item.price != 0">
+            <div class="col-md-4 price-wrapper" *ngIf="item.price != 0">
+              <div class="case-price-wrapper color-green">
                 <span class="case-price">{{item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
               </div>
             </div>
@@ -109,16 +109,16 @@
         <div *ngIf="!this.getAds.detailClass" class="col-sm-1 fix-for-desktop"></div>
         <div class="col-sm chips-wrapper">
           <mat-chip-list>
-            <mat-chip [ngSwitch]="item.type" *ngIf="item.type != 0">
+            <mat-chip [ngSwitch]="item.type" *ngIf="item.type != 0" (click)="searchByTag('type', item.type)">
               <span *ngSwitchCase="1">{{ 'SHOWCASE.ASSEMBLED' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.DEREBAN' | translate }}</span>
               <span *ngSwitchCase="3">{{ 'SHOWCASE.COMPONENT.NAME' | translate }}</span>
             </mat-chip>
-            <mat-chip [ngSwitch]="item.full_type" *ngIf="item.full_type != 0">
+            <mat-chip [ngSwitch]="item.full_type" *ngIf="item.full_type != 0" (click)="searchByTag('full_type', item.full_type)">
               <span *ngSwitchCase="1">{{ 'SHOWCASE.COMPLETE' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.CUSTOM' | translate }}</span>
             </mat-chip>
-            <mat-chip [ngSwitch]="item.detail_type" *ngIf="item.detail_type != 0">
+            <mat-chip [ngSwitch]="item.detail_type" *ngIf="item.detail_type != 0" (click)="searchByTag('detail_type', item.detail_type)">
               <span *ngSwitchCase="1">{{ 'SHOWCASE.COMPONENT.TYPE.FRAME' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.COMPONENT.TYPE.FORK' | translate }}</span>
               <span *ngSwitchCase="3">{{ 'SHOWCASE.COMPONENT.TYPE.SHOCK' | translate }}</span>
@@ -146,17 +146,17 @@
               <span *ngSwitchCase="25">{{ 'SHOWCASE.COMPONENT.TYPE.CRANKS' | translate }}</span>
               <span *ngSwitchCase="26">{{ 'SHOWCASE.COMPONENT.TYPE.OTHER' | translate }}</span>
             </mat-chip>
-            <mat-chip [ngSwitch]="item.state" *ngIf="item.state != 0">
+            <mat-chip [ngSwitch]="item.state" *ngIf="item.state != 0" (click)="searchByTag('state', item.state)">
               <span *ngSwitchCase="1">{{ 'SHOWCASE.CONDITION.NEW' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.CONDITION.USED' | translate }}</span>
             </mat-chip>
-            <mat-chip *ngIf="item.wheel_size != 0 && item.wheel_size != 27">
+            <mat-chip *ngIf="item.wheel_size != 0 && item.wheel_size != 27" (click)="searchByTag('wheel_size', item.wheel_size)">
               {{item.wheel_size}}"
             </mat-chip>
             <mat-chip *ngIf="item.wheel_size == 27">
               {{item.wheel_size}}.5"
             </mat-chip>
-            <mat-chip [ngSwitch]="item.velo_type" *ngIf="item.velo_type != 0">
+            <mat-chip [ngSwitch]="item.velo_type" *ngIf="item.velo_type != 0" (click)="searchByTag('velo_type', item.velo_type)">
               <span *ngSwitchCase="1">{{ 'SHOWCASE.BIKE.TYPE.ROAD' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.BIKE.TYPE.SITY' | translate }}</span>
               <span *ngSwitchCase="3">{{ 'SHOWCASE.BIKE.TYPE.MOUNTAIN' | translate }}</span>
@@ -166,7 +166,7 @@
               <span *ngSwitchCase="7">{{ 'SHOWCASE.BIKE.TYPE.EXTREME' | translate }}</span>
               <span *ngSwitchCase="8">{{ 'SHOWCASE.BIKE.TYPE.OTHER' | translate }}</span>
             </mat-chip>
-            <mat-chip [ngSwitch]="item.direction" *ngIf="item.direction != 0">
+            <mat-chip [ngSwitch]="item.direction" *ngIf="item.direction != 0" (click)="searchByTag('direction', item.direction)">
               <span *ngSwitchCase="1">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.XC' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.TRIAL' | translate }}</span>
               <span *ngSwitchCase="3">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.DH' | translate }}</span>

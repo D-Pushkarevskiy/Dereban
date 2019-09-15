@@ -138,7 +138,7 @@
     text-align: center;
     border: 2px solid;
     border-radius: 5px;
-    width: 110px;
+    width: 100%;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -169,6 +169,7 @@
 .case-price {
   font-size: 18px;
   text-decoration: none;
+  word-break: break-word;
 }
 
 .fix-for-desktop {

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { MatChipInputEvent } from '@angular/material';
+
+import { Subscription } from 'rxjs';
 
 import { GetAdsService } from 'src/app/services/get-ads.service';
 import { CaseStorageService } from 'src/app/services/case-storage.service';
@@ -13,10 +16,23 @@ import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component
     templateUrl: './homepage.component.html',
     styleUrls: ['./homepage.component.css']
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, OnDestroy {
 
     contentHeader = '';
     searchTimeout = null;
+    foundCases: Array<any> = [];
+    subscription_item: Subscription;
+    searchItem = {
+        case_name: "",
+        description: "",
+        detail_type: "",
+        direction: "",
+        full_type: "",
+        state: "",
+        type: "",
+        velo_type: "",
+        wheel_size: ""
+    };
 
     constructor(
         private app: AppComponent,
@@ -24,10 +40,28 @@ export class HomepageComponent implements OnInit {
         private adsList: AdsListComponent,
         public getAds: GetAdsService,
         public caseStorage: CaseStorageService,
-        public searchService: SearchCasesService
+        public searchService: SearchCasesService,
     ) {
         this.app.contentHeader = ' ';
         this.titleService.setTitle('"Dereban.ua" купи, продай, катай');
+        //Подписываемся на searchItem
+        this.subscription_item = this.searchService.getSearchItem().subscribe(item => {
+            this.searchItem[item[0]] = item[1];
+            // Поиск по объявлениям и отобразить результат если есть хотя бы один item
+            var goSearch = false;
+            for (var i = 0; i < Object.keys(this.searchItem).length; i++) {
+                if (this.searchItem[Object.keys(this.searchItem)[i]]) {
+                    goSearch = true;
+                }
+            }
+            if (goSearch) {
+                // Поиск по объекту с не пустыми значениями
+                this.getAds.tmp = this.searchService.search(this.getAds.allCases, this.searchItem);
+            } else {
+                // Отобразить все объявы, как и было
+                this.getAds.tmp = this.getAds.allCases;
+            }
+        });
     }
 
     ngOnInit() {
@@ -35,14 +69,25 @@ export class HomepageComponent implements OnInit {
         this.getAds.detailClass = false;
     }
 
-    public searchItems(searchValue: string): void {
-        var _this = this;
-        if (this.searchTimeout !== null) {
-            clearTimeout(this.searchTimeout);
+    add(event: MatChipInputEvent): void {
+        const input = event.input;
+        const value = event.value;
+
+        if ((value).trim() && (value).trim() != '') {
+            this.searchTimeout = null;
+            this.searchService.setSearchItem('case_name', value.trim());
         }
-        this.searchTimeout = setTimeout(function () {
-            _this.searchTimeout = null;
-            _this.getAds.tmp = _this.searchService.search(searchValue) || _this.caseStorage.getCases();
-        }, 500);
+
+        if (input) {
+            input.value = '';
+        }
+    }
+
+    remove(term): void {
+        this.searchService.removeSearchItem(term);
+    }
+
+    ngOnDestroy() {
+        this.subscription_item.unsubscribe();
     }
 }

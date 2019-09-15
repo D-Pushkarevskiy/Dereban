@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { GetAdsService } from 'src/app/services/get-ads.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { SearchCasesService } from 'src/app/services/search-cases.service';
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -23,7 +24,8 @@ export class AdsListComponent implements OnInit {
         private app: AppComponent,
         public getAds: GetAdsService,
         private authService: AuthService,
-        private profileService: ProfileService
+        private profileService: ProfileService,
+        public searchService: SearchCasesService
     ) {
         this.subscription = this.authService.getState().subscribe(state => {
             this.isAuth = state.value;
@@ -49,6 +51,10 @@ export class AdsListComponent implements OnInit {
               event.target.classList.toggle('opacity-img');
             }, 25);
         }, 25);
+    }
+
+    searchByTag(tag, value) {
+        this.searchService.setSearchItem(tag, value);
     }
 
 }
