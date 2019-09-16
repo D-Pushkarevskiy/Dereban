@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
     form: FormGroup;
     areas: string[] = [
         '',
+        'АР Крым',
         'Винницкая область',
         'Волынская область',
         'Днепропетровская область',

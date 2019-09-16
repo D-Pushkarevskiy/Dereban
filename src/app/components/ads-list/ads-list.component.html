@@ -5,26 +5,35 @@
 </div>
 
 <div *ngIf="this.getAds.tmp">
-  <div *ngFor="let item of this.getAds.tmp" id="showcase_{{item.id}}" class="showcase-main-wrapper" [ngClass]="{'inactive-case':item.active == 0, 'ad-detail':this.getAds.detailClass, 'disable-transform':this.app.overlay}">
+  <div *ngFor="let item of this.getAds.tmp" id="showcase_{{item.id}}" class="showcase-main-wrapper"
+    [ngClass]="{'inactive-case':item.active == 0, 'ad-detail':this.getAds.detailClass, 'disable-transform':this.app.overlay}">
     <div class="showcase-wrapper" [ngClass]="{'ad-detail':this.getAds.detailClass}">
       <div *ngIf="item.active == 0" class="inactive-case-overlay"></div>
       <div *ngIf="isAuth && item.user_id === user_id && !this.getAds.detailClass" class="showcase-user-actions">
-        <button *ngIf="item.active == 1" mat-icon-button color="primary" aria-label="Edit showcase" title="{{ 'MAIN.EDIT' | translate }}" routerLink="/edit-ad/{{item.id}}">
+        <button *ngIf="item.active == 1" mat-icon-button color="primary" aria-label="Edit showcase"
+          title="{{ 'MAIN.EDIT' | translate }}" routerLink="/edit-ad/{{item.id}}">
           <mat-icon>edit</mat-icon>
         </button>
-        <button *ngIf="item.active == 1" mat-icon-button class="color-green toggling-icon" aria-label="Deactivate showcase" title="{{ 'MAIN.DEACTIVATE' | translate }}" (click)="this.getAds.ToggleActive(item.id)">
+        <button *ngIf="item.active == 1" mat-icon-button class="color-green toggling-icon"
+          aria-label="Deactivate showcase" title="{{ 'MAIN.DEACTIVATE' | translate }}"
+          (click)="this.getAds.ToggleActive(item.id)">
           <mat-icon>toggle_on</mat-icon>
         </button>
-        <button *ngIf="item.active == 0" mat-icon-button class="color-gray-darker toggling-icon" aria-label="Activate showcase" title="{{ 'MAIN.ACTIVATE' | translate }}" (click)="this.getAds.ToggleActive(item.id)">
+        <button *ngIf="item.active == 0" mat-icon-button class="color-gray-darker toggling-icon"
+          aria-label="Activate showcase" title="{{ 'MAIN.ACTIVATE' | translate }}"
+          (click)="this.getAds.ToggleActive(item.id)">
           <mat-icon>toggle_off</mat-icon>
         </button>
-        <button mat-icon-button color="warn" aria-label="Delete showcase" title="{{ 'MAIN.DELETE' | translate }}" (click)="this.getAds.DeleteShowCase(item.id)">
+        <button mat-icon-button color="warn" aria-label="Delete showcase" title="{{ 'MAIN.DELETE' | translate }}"
+          (click)="this.getAds.DeleteShowCase(item.id)">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </div>
       <div class="row">
-        <div class="col-sm-1 case-rating" [ngClass]="{'ad-detail':this.getAds.detailClass, 'col-xl-1': this.getAds.detailClass}">
-          <div class="color-green opacity-arrow cursor-pointer" *ngIf="isAuth && item.user_id !== user_id && item.active == 1"
+        <div class="col-sm-1 case-rating"
+          [ngClass]="{'ad-detail':this.getAds.detailClass, 'col-xl-1': this.getAds.detailClass}">
+          <div class="color-green opacity-arrow cursor-pointer"
+            *ngIf="isAuth && item.user_id !== user_id && item.active == 1"
             (click)="this.getAds.ChangeRating(1, item.id)" [ngClass]="{'active':this.getAds.isActive(item.id, '1')}">
             <i class="material-icons">keyboard_arrow_up</i>
           </div>
@@ -37,7 +46,8 @@
             <span *ngIf="!item.case_rating">0</span>
           </div>
 
-          <div class="color-red opacity-arrow cursor-pointer" *ngIf="isAuth && item.user_id !== user_id && item.active == 1"
+          <div class="color-red opacity-arrow cursor-pointer"
+            *ngIf="isAuth && item.user_id !== user_id && item.active == 1"
             (click)="this.getAds.ChangeRating(-1, item.id)" [ngClass]="{'active':this.getAds.isActive(item.id, '-1')}">
             <i class="material-icons">keyboard_arrow_down</i>
           </div>
@@ -61,14 +71,22 @@
             </i>
           </div>
         </div>
-        <div class="col-sm showcase-photo-wrapper" [ngClass]="{'col-sm-11 col-xl-11 col-md-11': this.getAds.detailClass}">
+        <div class="col-sm showcase-photo-wrapper"
+          [ngClass]="{'col-sm-11 col-xl-11 col-md-11': this.getAds.detailClass}">
           <img [src]="item.photo_url" class="showcase_photo allow-transition" (click)="ZoomImage($event)">
         </div>
         <div class="col-sm" [ngClass]="{'col-sm-12 col-xl-12 col-md-12': this.getAds.detailClass}">
           <div class="row showcase-name-price-wrapper">
             <div class="col-md">
               <div class="case-name">
-                <a routerLink="/ad/{{item.id}}" class='color-blue'>{{item.case_name}}</a>
+                <a routerLink="/ad/{{item.id}}" class='color-blue'
+                  [ngClass]="{'color-orange': item.priority === this.searchService.termsLength}">
+                  <i class="material-icons best-search-match color-orange"
+                    *ngIf="item.priority === this.searchService.termsLength" title="Найдено по всем критериям">
+                    done_all
+                  </i>
+                  {{item.case_name}}
+                </a>
               </div>
             </div>
             <div class="col-md-4 price-wrapper" *ngIf="item.price != 0">
@@ -114,11 +132,13 @@
               <span *ngSwitchCase="2">{{ 'SHOWCASE.DEREBAN' | translate }}</span>
               <span *ngSwitchCase="3">{{ 'SHOWCASE.COMPONENT.NAME' | translate }}</span>
             </mat-chip>
-            <mat-chip [ngSwitch]="item.full_type" *ngIf="item.full_type != 0" (click)="searchByTag('full_type', item.full_type)">
+            <mat-chip [ngSwitch]="item.full_type" *ngIf="item.full_type != 0"
+              (click)="searchByTag('full_type', item.full_type)">
               <span *ngSwitchCase="1">{{ 'SHOWCASE.COMPLETE' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.CUSTOM' | translate }}</span>
             </mat-chip>
-            <mat-chip [ngSwitch]="item.detail_type" *ngIf="item.detail_type != 0" (click)="searchByTag('detail_type', item.detail_type)">
+            <mat-chip [ngSwitch]="item.detail_type" *ngIf="item.detail_type != 0"
+              (click)="searchByTag('detail_type', item.detail_type)">
               <span *ngSwitchCase="1">{{ 'SHOWCASE.COMPONENT.TYPE.FRAME' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.COMPONENT.TYPE.FORK' | translate }}</span>
               <span *ngSwitchCase="3">{{ 'SHOWCASE.COMPONENT.TYPE.SHOCK' | translate }}</span>
@@ -150,13 +170,15 @@
               <span *ngSwitchCase="1">{{ 'SHOWCASE.CONDITION.NEW' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.CONDITION.USED' | translate }}</span>
             </mat-chip>
-            <mat-chip *ngIf="item.wheel_size != 0 && item.wheel_size != 27" (click)="searchByTag('wheel_size', item.wheel_size)">
+            <mat-chip *ngIf="item.wheel_size != 0 && item.wheel_size != 27"
+              (click)="searchByTag('wheel_size', item.wheel_size)">
               {{item.wheel_size}}"
             </mat-chip>
             <mat-chip *ngIf="item.wheel_size == 27">
               {{item.wheel_size}}.5"
             </mat-chip>
-            <mat-chip [ngSwitch]="item.velo_type" *ngIf="item.velo_type != 0" (click)="searchByTag('velo_type', item.velo_type)">
+            <mat-chip [ngSwitch]="item.velo_type" *ngIf="item.velo_type != 0"
+              (click)="searchByTag('velo_type', item.velo_type)">
               <span *ngSwitchCase="1">{{ 'SHOWCASE.BIKE.TYPE.ROAD' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.BIKE.TYPE.SITY' | translate }}</span>
               <span *ngSwitchCase="3">{{ 'SHOWCASE.BIKE.TYPE.MOUNTAIN' | translate }}</span>
@@ -166,7 +188,8 @@
               <span *ngSwitchCase="7">{{ 'SHOWCASE.BIKE.TYPE.EXTREME' | translate }}</span>
               <span *ngSwitchCase="8">{{ 'SHOWCASE.BIKE.TYPE.OTHER' | translate }}</span>
             </mat-chip>
-            <mat-chip [ngSwitch]="item.direction" *ngIf="item.direction != 0" (click)="searchByTag('direction', item.direction)">
+            <mat-chip [ngSwitch]="item.direction" *ngIf="item.direction != 0"
+              (click)="searchByTag('direction', item.direction)">
               <span *ngSwitchCase="1">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.XC' | translate }}</span>
               <span *ngSwitchCase="2">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.TRIAL' | translate }}</span>
               <span *ngSwitchCase="3">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.DH' | translate }}</span>

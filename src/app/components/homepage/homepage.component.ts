@@ -49,8 +49,10 @@ export class HomepageComponent implements OnInit, OnDestroy {
             this.searchItem[item[0]] = item[1];
             // Поиск по объявлениям и отобразить результат если есть хотя бы один item
             var goSearch = false;
+            this.searchService.termsLength = 0;
             for (var i = 0; i < Object.keys(this.searchItem).length; i++) {
                 if (this.searchItem[Object.keys(this.searchItem)[i]]) {
+                    this.searchService.termsLength++;
                     goSearch = true;
                 }
             }
@@ -59,7 +61,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
                 this.getAds.tmp = this.searchService.search(this.getAds.allCases, this.searchItem);
             } else {
                 // Отобразить все объявы, как и было
-                this.getAds.tmp = this.getAds.allCases;
+                this.getAds.tmp = this.removePriority(this.getAds.allCases);
             }
         });
     }
@@ -67,6 +69,14 @@ export class HomepageComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.adsList.getAds.GetShowCases('', false);
         this.getAds.detailClass = false;
+    }
+
+    removePriority(showcases) {
+        var equalShowcases = showcases;
+        for (let i = 0; i < equalShowcases.length; i++) {
+            equalShowcases[i].priority = null;
+        }
+        return equalShowcases;
     }
 
     add(event: MatChipInputEvent): void {

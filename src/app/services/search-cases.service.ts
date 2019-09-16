@@ -9,6 +9,7 @@ import { CaseStorageService } from './case-storage.service';
 })
 export class SearchCasesService {
   private searchItem = new Subject<any>();
+  public termsLength: number = 0;
 
   constructor(
     public caseStorage: CaseStorageService
@@ -36,8 +37,8 @@ export class SearchCasesService {
       // Добавляем приоритет для сортировки
       cases[i].priority = 0;
       if (
-        searchObj.case_name && searchObj.case_name != '' && cases[i].case_name.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1
-        || searchObj.case_name && searchObj.case_name != '' && cases[i].description.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1
+        (searchObj.case_name && searchObj.case_name != '' && cases[i].case_name.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1
+        || searchObj.case_name && searchObj.case_name != '' && cases[i].description.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1)
         && cases[i].active === '1') {
         resultCases.push(cases[i]);
         cases[i].priority++
@@ -47,7 +48,7 @@ export class SearchCasesService {
         // Если ключ не пустой
         if (searchObj[Object.keys(searchObj)[j]] && searchObj[Object.keys(searchObj)[j]] != '') {
           // Если значение ключа совпадает со значением ключа объявления
-          if (cases[i][searchingKey] === searchObj[Object.keys(searchObj)[j]] && searchingKey !== 'case_name' && cases[i].active === '1') {
+          if ((cases[i][searchingKey] === searchObj[Object.keys(searchObj)[j]] && searchingKey !== 'case_name') && cases[i].active === '1') {
             resultCases.push(cases[i]);
             cases[i].priority++
           }
