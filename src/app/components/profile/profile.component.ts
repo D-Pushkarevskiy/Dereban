@@ -7,6 +7,7 @@ import { Title } from '@angular/platform-browser';
 
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { AreasService } from 'src/app/services/areas.service';
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -19,34 +20,7 @@ export class ProfileComponent implements OnInit {
 
     contentHeader = 'Профиль';
     form: FormGroup;
-    areas: string[] = [
-        '',
-        'АР Крым',
-        'Винницкая область',
-        'Волынская область',
-        'Днепропетровская область',
-        'Донецкая область',
-        'Житомирская область',
-        'Закарпатская область',
-        'Запорожская область',
-        'Ивано-Франковская область',
-        'Киевская область',
-        'Кировоградская область',
-        'Луганская область',
-        'Львовская область',
-        'Николаевская область',
-        'Одесская область',
-        'Полтавская область',
-        'Ровенская область',
-        'Сумская область',
-        'Тернопольская область',
-        'Харьковская область',
-        'Херсонская область',
-        'Хмельницкая область',
-        'Черкасская область',
-        'Черниговская область',
-        'Черновицкая область'
-    ];
+    areas: string[] = this.areasService.getAreas()
     API_URL = this.app.API_URL;
     numCount = 9;
     code_one_errors = '';
@@ -70,7 +44,8 @@ export class ProfileComponent implements OnInit {
         private http: HttpClient,
         private snackbar: SnackbarService,
         private profileService: ProfileService,
-        private titleService: Title
+        private titleService: Title,
+        private areasService: AreasService
     ) {
         app.contentHeader = this.contentHeader;
         this.titleService.setTitle(this.contentHeader);

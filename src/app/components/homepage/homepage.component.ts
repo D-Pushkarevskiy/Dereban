@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { GetAdsService } from 'src/app/services/get-ads.service';
 import { CaseStorageService } from 'src/app/services/case-storage.service';
 import { SearchCasesService } from 'src/app/services/search-cases.service';
+import { AreasService } from 'src/app/services/areas.service';
 
 import { AppComponent } from 'src/app/app.component';
 import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component';
@@ -41,6 +42,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
         public getAds: GetAdsService,
         public caseStorage: CaseStorageService,
         public searchService: SearchCasesService,
+        private areasService: AreasService
     ) {
         this.app.contentHeader = ' ';
         this.titleService.setTitle('"Dereban.ua" купи, продай, катай');
@@ -96,6 +98,14 @@ export class HomepageComponent implements OnInit, OnDestroy {
     remove(term): void {
         this.searchService.removeSearchItem(term);
     }
+
+    sortByArea(ev) {
+        if (ev.checked === true) {
+          console.log(this.areasService.getNearbyAreas('Николаевская область'));
+        } else {
+          // Nothing
+        }
+      }
 
     ngOnDestroy() {
         this.subscription_item.unsubscribe();

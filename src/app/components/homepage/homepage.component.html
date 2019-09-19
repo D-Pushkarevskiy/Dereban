@@ -98,6 +98,9 @@
       <mat-icon matSuffix class="cursor-pointer">search</mat-icon>
     </mat-chip-list>
   </mat-form-field>
+  <mat-slide-toggle color="primary" (change)="sortByArea($event)">
+    {{ 'Ближе ко мне' | translate }}
+  </mat-slide-toggle>
 </div>
 
 <app-ads-list></app-ads-list>
