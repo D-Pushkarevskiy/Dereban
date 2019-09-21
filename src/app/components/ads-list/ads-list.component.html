@@ -80,9 +80,9 @@
             <div class="col-md">
               <div class="case-name">
                 <a routerLink="/ad/{{item.id}}" class='color-blue'
-                  [ngClass]="{'color-orange': item.priority === this.searchService.termsLength}">
+                  [ngClass]="{'color-orange': isFullMatch(item.priority_searchTerms)}">
                   <i class="material-icons best-search-match color-orange"
-                    *ngIf="item.priority === this.searchService.termsLength" title="Найдено по всем критериям">
+                    *ngIf="isFullMatch(item.priority_searchTerms)" title="Найдено по всем критериям">
                     done_all
                   </i>
                   {{item.case_name}}

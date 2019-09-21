@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { CaseStorageService } from './case-storage.service';
+import { AreasService } from './areas.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class SearchCasesService {
   public termsLength: number = 0;
 
   constructor(
-    public caseStorage: CaseStorageService
+    public caseStorage: CaseStorageService,
+    public areasService: AreasService
   ) { }
 
   public setSearchItem(term, item) {
@@ -31,26 +33,25 @@ export class SearchCasesService {
     var resultCases = [];
     var searchingKey = '';
     var uniqueCases;
-    var sortedCases;
 
     for (let i = 0; i < cases.length; i++) {
-      // Добавляем приоритет для сортировки
-      cases[i].priority = 0;
+      // Added searchTerms priority for sort
+      cases[i].priority_searchTerms = 0;
       if (
         (searchObj.case_name && searchObj.case_name != '' && cases[i].case_name.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1
-        || searchObj.case_name && searchObj.case_name != '' && cases[i].description.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1)
+          || searchObj.case_name && searchObj.case_name != '' && cases[i].description.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1)
         && cases[i].active === '1') {
         resultCases.push(cases[i]);
-        cases[i].priority++
+        cases[i].priority_searchTerms++;
       }
       for (let j = 0; j < Object.keys(searchObj).length; j++) {
         searchingKey = Object.keys(searchObj)[j];
-        // Если ключ не пустой
+        // If key value not empty and exist
         if (searchObj[Object.keys(searchObj)[j]] && searchObj[Object.keys(searchObj)[j]] != '') {
-          // Если значение ключа совпадает со значением ключа объявления
+          // If key value equal to key value of case
           if ((cases[i][searchingKey] === searchObj[Object.keys(searchObj)[j]] && searchingKey !== 'case_name') && cases[i].active === '1') {
             resultCases.push(cases[i]);
-            cases[i].priority++
+            cases[i].priority_searchTerms++;
           }
         }
       }
@@ -60,9 +61,98 @@ export class SearchCasesService {
         return JSON.stringify(obj) === JSON.stringify(cases);
       });
     });
-    sortedCases = uniqueCases.sort(function(a,b){
+
+    return uniqueCases;
+  }
+
+  public sortBy(cases, sortingTerm) {
+    var nearbyAreasArr;
+    var i;
+    var j;
+    if (!sortingTerm || sortingTerm === '') {
+      return;
+    }
+    if (sortingTerm === 'area') {
+      nearbyAreasArr = this.areasService.getNearbyAreas('Николаевская область');
+      if (!nearbyAreasArr) {
+        return;
+      }
+      for (i = 0; i < cases.length; i++) {
+        // Added area priority for sort
+        cases[i].priority_area = 0;
+        console.log('added area priority');
+        for (j = 0; j < nearbyAreasArr.length; j++) {
+          if (cases[i].user_area === nearbyAreasArr[j]) {
+            cases[i].priority_area++;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  public sortByPriority(cases) {
+    var sortedCases;
+    var listPropertyValues;
+    var i;
+    var j;
+
+    for (i = 0; i < cases.length; i++) {
+      listPropertyValues = Object.keys(cases[i]);
+      cases[i].priority = 0;
+      for (j = 0; j < listPropertyValues.length; j++) {
+        if (listPropertyValues[j].startsWith('priority_') && cases[i][listPropertyValues[j]]) {
+          cases[i].priority = cases[i].priority + cases[i][listPropertyValues[j]];
+        }
+      }
+    }
+
+    if (this.isEqualPriority(cases)) {
+      return this.sortByAddingTime(cases);
+    }
+
+    sortedCases = cases.sort(function (a, b) {
       return b.priority - a.priority;
     });
+
     return sortedCases;
+  }
+
+  public sortByAddingTime(cases) {
+    var sortedCases;
+    sortedCases = cases.sort(function (a, b) {
+      return b.adding_time_raw - a.adding_time_raw;
+    });
+
+    return sortedCases;
+  }
+
+  public removePriority(cases, sortingTerm) {
+    var objPriorityParam = 'priority_' + sortingTerm;
+    console.log('remove ' + sortingTerm);
+    for (let i = 0; i < cases.length; i++) {
+      delete cases[i][objPriorityParam];
+    }
+  }
+
+  public isEqualPriority(cases) {
+    var equal = true;
+    var counter = 0;
+
+    for (let i = 0; i < cases.length; i++) {
+      if (cases[i].priority > 0) {
+        counter += cases[i].priority;
+        equal = false;
+      }
+    }
+
+    // If all cases priority is equal
+    if (counter === cases.length) {
+      equal = true;
+    }
+
+    console.log(equal);
+
+    return equal;
   }
 }

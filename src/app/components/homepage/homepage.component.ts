@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { GetAdsService } from 'src/app/services/get-ads.service';
 import { CaseStorageService } from 'src/app/services/case-storage.service';
 import { SearchCasesService } from 'src/app/services/search-cases.service';
-import { AreasService } from 'src/app/services/areas.service';
 
 import { AppComponent } from 'src/app/app.component';
 import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component';
@@ -41,8 +40,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
         private adsList: AdsListComponent,
         public getAds: GetAdsService,
         public caseStorage: CaseStorageService,
-        public searchService: SearchCasesService,
-        private areasService: AreasService
+        public searchService: SearchCasesService
     ) {
         this.app.contentHeader = ' ';
         this.titleService.setTitle('"Dereban.ua" купи, продай, катай');
@@ -61,9 +59,12 @@ export class HomepageComponent implements OnInit, OnDestroy {
             if (goSearch) {
                 // Поиск по объекту с не пустыми значениями
                 this.getAds.tmp = this.searchService.search(this.getAds.allCases, this.searchItem);
+                this.getAds.tmp = this.searchService.sortByPriority(this.getAds.tmp);
             } else {
-                // Отобразить все объявы, как и было
-                this.getAds.tmp = this.removePriority(this.getAds.allCases);
+                // Отобразить все объявы без поисковых запросов
+                this.getAds.tmp = this.getAds.allCases;
+                this.searchService.removePriority(this.getAds.allCases, 'searchTerms');
+                this.getAds.tmp = this.searchService.sortByPriority(this.getAds.tmp);
             }
         });
     }
@@ -71,14 +72,6 @@ export class HomepageComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.adsList.getAds.GetShowCases('', false);
         this.getAds.detailClass = false;
-    }
-
-    removePriority(showcases) {
-        var equalShowcases = showcases;
-        for (let i = 0; i < equalShowcases.length; i++) {
-            equalShowcases[i].priority = null;
-        }
-        return equalShowcases;
     }
 
     add(event: MatChipInputEvent): void {
@@ -101,11 +94,13 @@ export class HomepageComponent implements OnInit, OnDestroy {
 
     sortByArea(ev) {
         if (ev.checked === true) {
-          console.log(this.areasService.getNearbyAreas('Николаевская область'));
+            this.searchService.sortBy(this.getAds.tmp, 'area');
         } else {
-          // Nothing
+            this.searchService.removePriority(this.getAds.allCases, 'area');
         }
-      }
+
+        this.getAds.tmp = this.searchService.sortByPriority(this.getAds.tmp);
+    }
 
     ngOnDestroy() {
         this.subscription_item.unsubscribe();

@@ -53,6 +53,10 @@ export class AdsListComponent implements OnInit {
         }, 25);
     }
 
+    isFullMatch(priority) {
+        return this.searchService.termsLength > 0 && (priority === this.searchService.termsLength);
+    }
+
     searchByTag(tag, value) {
         this.searchService.setSearchItem(tag, value);
     }
