@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { GetAdsService } from 'src/app/services/get-ads.service';
 import { CaseStorageService } from 'src/app/services/case-storage.service';
 import { SearchCasesService } from 'src/app/services/search-cases.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { AppComponent } from 'src/app/app.component';
 import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component';
@@ -14,12 +15,14 @@ import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component
 @Component({
     selector: 'app-homepage',
     templateUrl: './homepage.component.html',
-    styleUrls: ['./homepage.component.css']
+    styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit, OnDestroy {
 
     contentHeader = '';
     searchTimeout = null;
+    isAuth: Boolean = this.getAds.isAuth;
+    subscription: Subscription;
     foundCases: Array<any> = [];
     subscription_item: Subscription;
     searchItem = {
@@ -40,10 +43,14 @@ export class HomepageComponent implements OnInit, OnDestroy {
         private adsList: AdsListComponent,
         public getAds: GetAdsService,
         public caseStorage: CaseStorageService,
-        public searchService: SearchCasesService
+        public searchService: SearchCasesService,
+        private authService: AuthService
     ) {
         this.app.contentHeader = ' ';
         this.titleService.setTitle('"Dereban.ua" купи, продай, катай');
+        this.subscription = this.authService.getState().subscribe(state => {
+            this.isAuth = state.value;
+        });
         //Подписываемся на searchItem
         this.subscription_item = this.searchService.getSearchItem().subscribe(item => {
             this.searchItem[item[0]] = item[1];
@@ -59,12 +66,10 @@ export class HomepageComponent implements OnInit, OnDestroy {
             if (goSearch) {
                 // Поиск по объекту с не пустыми значениями
                 this.getAds.tmp = this.searchService.search(this.getAds.allCases, this.searchItem);
-                this.getAds.tmp = this.searchService.sortByPriority(this.getAds.tmp);
             } else {
                 // Отобразить все объявы без поисковых запросов
                 this.getAds.tmp = this.getAds.allCases;
-                this.searchService.removePriority(this.getAds.allCases, 'searchTerms');
-                this.getAds.tmp = this.searchService.sortByPriority(this.getAds.tmp);
+                this.getAds.tmp = this.searchService.removePriority(this.getAds.allCases, 'pr_searchTerms');
             }
         });
     }
@@ -92,14 +97,12 @@ export class HomepageComponent implements OnInit, OnDestroy {
         this.searchService.removeSearchItem(term);
     }
 
-    sortByArea(ev) {
+    sortBy(ev, sortTerm) {
         if (ev.checked === true) {
-            this.searchService.sortBy(this.getAds.tmp, 'area');
+            this.getAds.tmp = this.searchService.sortBy(this.getAds.tmp, sortTerm);
         } else {
-            this.searchService.removePriority(this.getAds.allCases, 'area');
+            this.getAds.tmp = this.searchService.removePriority(this.getAds.tmp, sortTerm);
         }
-
-        this.getAds.tmp = this.searchService.sortByPriority(this.getAds.tmp);
     }
 
     ngOnDestroy() {

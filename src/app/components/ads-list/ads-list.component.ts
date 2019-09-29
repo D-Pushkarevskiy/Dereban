@@ -53,8 +53,12 @@ export class AdsListComponent implements OnInit {
         }, 25);
     }
 
-    isFullMatch(priority) {
-        return this.searchService.termsLength > 0 && (priority === this.searchService.termsLength);
+    ifNeedToShow(item) {
+        if (item.hasOwnProperty('priority') && this.isAuth && !item.show || item.hasOwnProperty('priority') && item.active === '0' && !item.show) {
+            return false;
+        }
+
+        return true;
     }
 
     searchByTag(tag, value) {

@@ -60,6 +60,7 @@ import { ConfirmationDialogComponent } from './components/shared/confirmation-di
 import { RefreshPasswordModalComponent } from './components/refresh-password/modal/modal';
 
 import { httpInterceptorProviders } from './interceptors/index';
+import { RoundPipe } from './pipes/round.pipe';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -88,7 +89,8 @@ export function createTranslateLoader(http: HttpClient) {
     RefreshPasswordModalComponent,
     RefreshPasswordComponent,
     ConfirmationDialogComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    RoundPipe
   ],
   entryComponents: [LoginComponent, RefreshPasswordModalComponent, ConfirmationDialogComponent],
   imports: [

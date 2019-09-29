@@ -8,6 +8,7 @@ export class ProfileService {
 
     private name = new Subject<any>();
     private id = new Subject<any>();
+    private area = new Subject<any>();
 
     setName(uName) {
         this.name.next({ value: uName });
@@ -23,5 +24,13 @@ export class ProfileService {
 
     getId(): Observable<any> {
         return this.id.asObservable();
+    }
+
+    setArea(uArea) {
+        this.area.next({ value: uArea });
+    }
+
+    getArea(): Observable<any> {
+        return this.area.asObservable();
     }
 }
