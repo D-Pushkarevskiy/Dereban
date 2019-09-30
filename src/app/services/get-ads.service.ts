@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, Observable } from 'rxjs';
 
 import { AdInfoService } from 'src/app/services/ad-info.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,11 +19,15 @@ export class GetAdsService {
   public tmp;
   public allCases;
   public detailClass: Boolean = false;
+  public minValue;
+  public maxValue;
 
   private API_URL = this.app.API_URL;
   private authToken = this.authService.getAuthToken();
   public subscription: Subscription;
   public isAuth: Boolean;
+  private minPrice = new Subject<any>();
+  private maxPrice = new Subject<any>();
 
   constructor(
     private app: AppComponent,
@@ -47,6 +51,7 @@ export class GetAdsService {
         this.tmp = tmp['text'];
         this.caseStorage.setCases(tmp['text']);
         this.allCases = tmp['text'];
+        this.getMinMaxPrice(tmp['text']);
         if (case_name) {
           this.adInfoService.setCaseName(this.tmp[0]['case_name']);
         }
@@ -60,13 +65,44 @@ export class GetAdsService {
     })
   }
 
+  public getMinMaxPrice(cases) {
+    var sortedCases = cases;
+
+    if (!sortedCases) {
+      return null;
+    }
+
+    sortedCases = cases.concat().sort(function (a, b) {
+      return parseInt(a.price) - parseInt(b.price);
+    });
+
+    this.setMinPrice(sortedCases[0].price); // min
+    this.setMaxPrice(sortedCases[cases.length - 1].price); // max
+  }
+
+  setMaxPrice(maxPrice) {
+    this.maxPrice.next({ value: maxPrice });
+  }
+
+  getMaxPrice(): Observable<any> {
+    return this.maxPrice.asObservable();
+  }
+
+  setMinPrice(minPrice) {
+    this.minPrice.next({ value: minPrice });
+  }
+
+  getMinPrice(): Observable<any> {
+    return this.minPrice.asObservable();
+  }
+
   public DeleteShowCase(case_id: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '450px',
       data: "Ваш <b>рейтинг</b> зависит от рейтинга Ваших объявлений. <br>Вы действительно хотите удалить объявление?"
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.http.get(this.API_URL + '?func=delete_showcase&case_id=' + case_id
         ).subscribe(response => {
           this.snackbar.show_message(response['text']);

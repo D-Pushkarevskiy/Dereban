@@ -23,8 +23,13 @@ export class HomepageComponent implements OnInit, OnDestroy {
     searchTimeout = null;
     isAuth: Boolean = this.getAds.isAuth;
     subscription: Subscription;
+    subscription_min_price: Subscription;
+    subscription_max_price: Subscription;
     foundCases: Array<any> = [];
     subscription_item: Subscription;
+    filterTimer;
+    minValue = 0;
+    maxValue = 999999;
     searchItem = {
         case_name: "",
         description: "",
@@ -50,6 +55,12 @@ export class HomepageComponent implements OnInit, OnDestroy {
         this.titleService.setTitle('"Dereban.ua" купи, продай, катай');
         this.subscription = this.authService.getState().subscribe(state => {
             this.isAuth = state.value;
+        });
+        this.subscription_min_price = this.getAds.getMinPrice().subscribe(price => {
+            this.minValue = price.value;
+        });
+        this.subscription_max_price = this.getAds.getMaxPrice().subscribe(price => {
+            this.maxValue = price.value;
         });
         //Подписываемся на searchItem
         this.subscription_item = this.searchService.getSearchItem().subscribe(item => {
@@ -103,6 +114,24 @@ export class HomepageComponent implements OnInit, OnDestroy {
         } else {
             this.getAds.tmp = this.searchService.removePriority(this.getAds.tmp, sortTerm);
         }
+    }
+
+    filterByPrice() {
+        var __this = this;
+        clearTimeout(this.filterTimer);
+        this.filterTimer = setTimeout(function () {
+            __this.getAds.tmp = __this.searchService.filterByPrice(__this.getAds.allCases, __this.minValue, __this.maxValue);
+        }, 500);
+    }
+
+    clearValue(type) {
+        if (type === 'min') {
+            this.minValue = null;
+        } else if (type === 'max') {
+            this.maxValue = null;
+        }
+
+        this.filterByPrice();
     }
 
     ngOnDestroy() {

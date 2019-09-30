@@ -55,7 +55,7 @@ export class SearchCasesService {
       if (
         (searchObj.case_name && searchObj.case_name != '' && cases[i].case_name.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1
           || searchObj.case_name && searchObj.case_name != '' && cases[i].description.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1)
-        && cases[i].active === '1' && this.user_id !== cases[i].user_id) {
+        && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter) {
         cases[i].pr_searchTerms++;
         cases[i].gr_pr_searchTerms++;
       }
@@ -64,7 +64,7 @@ export class SearchCasesService {
         // If key value not empty and exist
         if (searchObj[Object.keys(searchObj)[j]] && searchObj[Object.keys(searchObj)[j]] != '') {
           // If key value equal to key value of case
-          if ((cases[i][searchingKey] === searchObj[Object.keys(searchObj)[j]] && searchingKey !== 'case_name') && cases[i].active === '1' && this.user_id !== cases[i].user_id) {
+          if ((cases[i][searchingKey] === searchObj[Object.keys(searchObj)[j]] && searchingKey !== 'case_name') && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter) {
             cases[i].pr_searchTerms++;
             cases[i].gr_pr_searchTerms++;
           }
@@ -166,10 +166,10 @@ export class SearchCasesService {
       cases[i].priority = 0;
       cases[i].gr_priority = 0;
       for (let j = 0; j < listPropertyValues.length; j++) {
-        if (listPropertyValues[j].startsWith('pr_') && cases[i][listPropertyValues[j]] && cases[i].active === '1' && this.user_id !== cases[i].user_id) {
+        if (listPropertyValues[j].startsWith('pr_') && cases[i][listPropertyValues[j]] && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter) {
           cases[i].priority = parseInt(cases[i].priority) + parseInt(cases[i][listPropertyValues[j]]);
         }
-        if (listPropertyValues[j].startsWith('gr_pr_') && cases[i][listPropertyValues[j]] && cases[i].active === '1' && this.user_id !== cases[i].user_id) {
+        if (listPropertyValues[j].startsWith('gr_pr_') && cases[i][listPropertyValues[j]] && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter) {
           cases[i].gr_priority += parseInt(cases[i][listPropertyValues[j]]);
         }
       }
@@ -247,7 +247,6 @@ export class SearchCasesService {
   }
 
   public groupByPriority(cases) {
-
     // Clear all previous priority names
     for (let d = 0; d < cases.length; d++) {
       delete cases[d].gr_priority_name;
@@ -255,25 +254,45 @@ export class SearchCasesService {
 
     // Adding 'best' pr_name or 'other'
     for (let i = 0; i < cases.length; i++) {
-      if (this.prevGroupValue === null) {
-        if (cases[i].gr_priority !== 0) {
-          cases[i].gr_priority_name = 'best';
-        } else {
-          cases[i].gr_priority_name = 'not-found';
-          break;
-        }
-      } else {
-        if (this.prevGroupValue !== cases[i].gr_priority && cases[i].active === '1') {
-          cases[i].gr_priority_name = 'other';
-          break;
-        }
+      // If sorting terms is less then 2 - break
+      if (cases[0].gr_priority < 2) {
+        break;
       }
-      this.prevGroupValue = cases[i].gr_priority;
+      if (!cases[i].hideByFilter) {
+        if (this.prevGroupValue === null) {
+          if (cases[i].gr_priority !== 0) {
+            cases[i].gr_priority_name = 'best';
+          } else {
+            cases[i].gr_priority_name = 'not-found';
+            break;
+          }
+        } else {
+          if (this.prevGroupValue !== cases[i].gr_priority && cases[i].active === '1') {
+            cases[i].gr_priority_name = 'other';
+            break;
+          }
+        }
+        this.prevGroupValue = cases[i].gr_priority;
+      }
     }
 
     this.prevGroupValue = null;
 
     return cases;
+  }
+
+  public filterByPrice(cases, minValue, maxValue) {
+    minValue = minValue || 0;
+    maxValue = maxValue || 999999;
+
+    for (let i = 0; i < cases.length; i++) {
+      delete cases[i].hideByFilter;
+      if (parseInt(cases[i].price) < minValue || parseInt(cases[i].price) > maxValue) {
+        cases[i].hideByFilter = true;
+      }
+    }
+
+    return this.sortByPriority(cases);
   }
 
 }

@@ -27,6 +27,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSliderModule } from '@angular/material/slider';
+
 import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 
 import { AppRoutingModule } from 'src/app/app-routing/app-routing.module';
@@ -129,6 +131,7 @@ export function createTranslateLoader(http: HttpClient) {
     MatChipsModule,
     MatSlideToggleModule,
     MatPaginatorModule,
+    MatSliderModule,
     RecaptchaModule,
     RecaptchaFormsModule
   ],

@@ -11,7 +11,7 @@
       <div style="padding: 0 20px 30px;"
         *ngIf="item.gr_priority_name && item.gr_priority_name === 'not-found' && item.gr_priority <= 0">
         <span class="color-orange">
-          По запросам не найдено, добавьте больше данных для поиска 🙂
+          По запросам не найдено, добавьте больше данных для поиска 🙄
         </span>
       </div>
 
@@ -22,16 +22,16 @@
       </div>
 
       <div style="padding: 0 20px 30px;"
-        *ngIf="item.gr_priority_name && item.gr_priority_name === 'other' && item.gr_priority > 0">
+        *ngIf="item.gr_priority_name && item.gr_priority_name === 'other' && item.gr_priority > 1">
         <span class="color-orange">
-          Найдены по {{item.gr_priority}} запросам и менее 🙂
+          Найдены по {{item.gr_priority}} запросам и менее 🤔
         </span>
       </div>
 
       <div style="padding: 0 20px 30px;"
-        *ngIf="item.gr_priority_name && item.gr_priority_name === 'other' && item.gr_priority <= 0">
+        *ngIf="item.gr_priority_name && item.gr_priority_name === 'other' && item.gr_priority <= 1">
         <span class="color-orange">
-          Менее подходящие 🙂
+          Менее подходящие 🙃
         </span>
       </div>
 
