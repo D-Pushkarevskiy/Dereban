@@ -55,7 +55,7 @@ export class SearchCasesService {
       if (
         (searchObj.case_name && searchObj.case_name != '' && cases[i].case_name.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1
           || searchObj.case_name && searchObj.case_name != '' && cases[i].description.toLowerCase().indexOf(searchObj.case_name.toLowerCase()) != -1)
-        && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter) {
+        && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter && !cases[i].hideByFilterArea) {
         cases[i].pr_searchTerms++;
         cases[i].gr_pr_searchTerms++;
       }
@@ -64,7 +64,7 @@ export class SearchCasesService {
         // If key value not empty and exist
         if (searchObj[Object.keys(searchObj)[j]] && searchObj[Object.keys(searchObj)[j]] != '') {
           // If key value equal to key value of case
-          if ((cases[i][searchingKey] === searchObj[Object.keys(searchObj)[j]] && searchingKey !== 'case_name') && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter) {
+          if ((cases[i][searchingKey] === searchObj[Object.keys(searchObj)[j]] && searchingKey !== 'case_name') && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter && !cases[i].hideByFilterArea) {
             cases[i].pr_searchTerms++;
             cases[i].gr_pr_searchTerms++;
           }
@@ -166,10 +166,10 @@ export class SearchCasesService {
       cases[i].priority = 0;
       cases[i].gr_priority = 0;
       for (let j = 0; j < listPropertyValues.length; j++) {
-        if (listPropertyValues[j].startsWith('pr_') && cases[i][listPropertyValues[j]] && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter) {
+        if (listPropertyValues[j].startsWith('pr_') && cases[i][listPropertyValues[j]] && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter && !cases[i].hideByFilterArea) {
           cases[i].priority = parseInt(cases[i].priority) + parseInt(cases[i][listPropertyValues[j]]);
         }
-        if (listPropertyValues[j].startsWith('gr_pr_') && cases[i][listPropertyValues[j]] && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter) {
+        if (listPropertyValues[j].startsWith('gr_pr_') && cases[i][listPropertyValues[j]] && cases[i].active === '1' && this.user_id !== cases[i].user_id && !cases[i].hideByFilter && !cases[i].hideByFilterArea) {
           cases[i].gr_priority += parseInt(cases[i][listPropertyValues[j]]);
         }
       }
@@ -258,7 +258,7 @@ export class SearchCasesService {
       if (cases[0].gr_priority < 2) {
         break;
       }
-      if (!cases[i].hideByFilter) {
+      if (!cases[i].hideByFilter && !cases[i].hideByFilterArea) {
         if (this.prevGroupValue === null) {
           if (cases[i].gr_priority !== 0) {
             cases[i].gr_priority_name = 'best';
@@ -289,6 +289,25 @@ export class SearchCasesService {
       delete cases[i].hideByFilter;
       if (parseInt(cases[i].price) < minValue || parseInt(cases[i].price) > maxValue) {
         cases[i].hideByFilter = true;
+      }
+    }
+
+    return this.sortByPriority(cases);
+  }
+
+  public filterByArea(cases, area) {
+    if (!area || area === '') {
+      for (let i = 0; i < cases.length; i++) {
+        delete cases[i].hideByFilterArea;
+      }
+
+      return this.sortByPriority(cases);
+    }
+
+    for (let i = 0; i < cases.length; i++) {
+      delete cases[i].hideByFilterArea;
+      if (cases[i].user_area !== area) {
+        cases[i].hideByFilterArea = true;
       }
     }
 

@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
 
     contentHeader = 'Профиль';
     form: FormGroup;
-    areas: string[] = this.areasService.getAreas()
+    areas: string[] = this.areasService.getAreas();
     API_URL = this.app.API_URL;
     numCount = 9;
     code_one_errors = '';

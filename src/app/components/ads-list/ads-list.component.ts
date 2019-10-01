@@ -54,7 +54,7 @@ export class AdsListComponent implements OnInit {
     }
 
     ifNeedToShow(item) {
-        if (item.hasOwnProperty('priority') && this.isAuth && !item.show || item.hasOwnProperty('priority') && item.active === '0' && !item.show || item.hideByFilter) {
+        if (item.hasOwnProperty('priority') && this.isAuth && !item.show || item.hasOwnProperty('priority') && item.active === '0' && !item.show || item.hideByFilter || item.hideByFilterArea) {
             return false;
         }
 

@@ -8,6 +8,7 @@ import { GetAdsService } from 'src/app/services/get-ads.service';
 import { CaseStorageService } from 'src/app/services/case-storage.service';
 import { SearchCasesService } from 'src/app/services/search-cases.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { AreasService } from 'src/app/services/areas.service';
 
 import { AppComponent } from 'src/app/app.component';
 import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component';
@@ -22,6 +23,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
     contentHeader = '';
     searchTimeout = null;
     isAuth: Boolean = this.getAds.isAuth;
+    areas: string[] = this.areasService.getAreas();
     subscription: Subscription;
     subscription_min_price: Subscription;
     subscription_max_price: Subscription;
@@ -30,6 +32,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
     filterTimer;
     minValue = 0;
     maxValue = 999999;
+    selectedArea: string;
     searchItem = {
         case_name: "",
         description: "",
@@ -49,7 +52,8 @@ export class HomepageComponent implements OnInit, OnDestroy {
         public getAds: GetAdsService,
         public caseStorage: CaseStorageService,
         public searchService: SearchCasesService,
-        private authService: AuthService
+        private authService: AuthService,
+        private areasService: AreasService
     ) {
         this.app.contentHeader = ' ';
         this.titleService.setTitle('"Dereban.ua" купи, продай, катай');
@@ -132,6 +136,10 @@ export class HomepageComponent implements OnInit, OnDestroy {
         }
 
         this.filterByPrice();
+    }
+
+    filterByArea() {
+        this.getAds.tmp = this.searchService.filterByArea(this.getAds.tmp, this.selectedArea);
     }
 
     ngOnDestroy() {
