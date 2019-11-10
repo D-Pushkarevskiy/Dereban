@@ -169,6 +169,21 @@
   }
 }
 
+// for difference
+.case-difference-wrapper {
+  position: absolute;
+  bottom: -6px;
+  right: -5px;
+  padding: 1px 8px;
+  background-color: #20b45a;
+  color: white;
+  border-radius: 5px;
+
+  .case-difference {
+    font-size: 14px;
+  }
+}
+
 .case-name a,
 .case-name span,
 .case-price {

@@ -118,6 +118,9 @@
                   </div>
                 </div>
                 <div class="col-md-4 price-wrapper" *ngIf="item.price != 0">
+                  <div class="case-difference-wrapper color-green" *ngIf="item.old_price > 0 && (item.price < item.old_price)">
+                    <span class="case-difference">- {{ item.old_price - item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
+                  </div>
                   <div class="case-price-wrapper color-green">
                     <span class="case-price">{{item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
                   </div>
