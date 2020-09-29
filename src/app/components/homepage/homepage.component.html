@@ -101,45 +101,48 @@
     </mat-form-field>
   </div>
   <div class="row">
-    <div class="col-md-4">
-      <mat-slide-toggle color="primary" (change)="sortBy($event, 'pr_rating')" title="Сортировка по лучшему рейтингу">
-        {{ 'Популярнее' | translate }}
+    <div class="col-4">
+      <mat-slide-toggle color="primary" (change)="sortBy($event, 'pr_rating')"
+        title="{{ 'FILTER.POPULAR_TITLE' | translate }}">
+        {{ 'FILTER.POPULAR' | translate }}
       </mat-slide-toggle>
     </div>
-    <div class="col-md-4 text-center">
-      <mat-slide-toggle color="primary" (change)="sortBy($event, 'pr_price')" title="Сортировка по лучшей цене">
-        {{ 'Дешевле' | translate }}
+    <div class="col-4 text-center">
+      <mat-slide-toggle color="primary" (change)="sortBy($event, 'pr_price')"
+        title="{{ 'FILTER.CHEAPER_TITLE' | translate }}">
+        {{ 'FILTER.CHEAPER' | translate }}
       </mat-slide-toggle>
     </div>
-    <div class="col-md-4 text-right">
-      <mat-slide-toggle color="primary" (change)="sortBy($event, 'pr_area')" title="Сортировка по ближайшим областям"
-        [disabled]="!isAuth">
-        {{ 'Ближе ко мне' | translate }}
+    <div class="col-4 text-right">
+      <mat-slide-toggle color="primary" (change)="sortBy($event, 'pr_area')"
+        title="{{ 'FILTER.CLOSED_TO_ME_TITLE' | translate }}" [disabled]="!isAuth">
+        {{ 'FILTER.CLOSED_TO_ME' | translate }}
       </mat-slide-toggle>
     </div>
   </div>
   <div class="row" style="margin-top: 30px;">
-    <div class="col-md-4">
-      <mat-form-field>
-        <input matInput type="text" placeholder="Цена от" [(ngModel)]="minValue" maxlength="6"
-          (input)="filterByPrice()">
+    <div class="col-sm-4">
+      <mat-form-field class="full-width-form">
+        <input matInput type="text" placeholder="{{ 'FILTER.PRICE_FROM' | translate }}" [(ngModel)]="minValue"
+          maxlength="6" (input)="filterByPrice()">
         <button mat-button *ngIf="minValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearValue('min')">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
     </div>
-    <div class="col-md-4">
-      <mat-form-field>
-        <input matInput type="text" placeholder="Цена до" [(ngModel)]="maxValue" maxlength="6"
-          (input)="filterByPrice()">
+    <div class="col-sm-4">
+      <mat-form-field class="full-width-form">
+        <input matInput type="text" placeholder="{{ 'FILTER.PRICE_TO' | translate }}" [(ngModel)]="maxValue"
+          maxlength="6" (input)="filterByPrice()">
         <button mat-button *ngIf="maxValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearValue('max')">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
     </div>
-    <div class="col-md-4">
-      <mat-form-field>
-        <mat-select placeholder="{{ 'MAIN.AREA' | translate }}" name="area" aria-label="Area" [(ngModel)]="selectedArea" (selectionChange)="filterByArea($event)">
+    <div class="col-sm-4">
+      <mat-form-field class="full-width-form">
+        <mat-select placeholder="{{ 'MAIN.AREA' | translate }}" name="area" aria-label="Area" [(ngModel)]="selectedArea"
+          (selectionChange)="filterByArea($event)">
           <mat-option *ngFor="let area of areas" [value]="area">{{area}}</mat-option>
         </mat-select>
       </mat-form-field>

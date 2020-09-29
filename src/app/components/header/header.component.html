@@ -1,7 +1,9 @@
 <div class="header-inner row">
   <div class="col-sm order-2 order-sm-1">
-    <button [title]="matTooltipText" mat-raised-button color="primary" [disabled]="!isAuth"
-      [routerLink]="['adding-ad']">{{ 'MAIN.ADD_SHOWCASE' | translate }}</button>
+    <button [title]="addingDisableTooltip" mat-raised-button color="primary"
+      [disabled]="!isAuth || (isAuth && showcase_count >= showcase_limit)" [routerLink]="['adding-ad']" matBadge="1"
+      matBadgePosition="before" matBadgeColor="accent"
+      [matBadgeHidden]="!this.draftShowcase.getDraftedShowcase()">{{ 'MAIN.ADD_SHOWCASE' | translate }}</button>
   </div>
   <div class="col-sm order-1 order-sm-2">
     <a routerLink="/">

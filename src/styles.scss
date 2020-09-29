@@ -16,8 +16,8 @@
   div {
     &.row {
       div {
-        padding-left: 5px;
-        padding-right: 5px;
+        padding-left: 0;
+        padding-right: 0;
       }
     }
   }
@@ -58,19 +58,19 @@ mat-dialog-actions {
 
 // Margins
 .marg-bott {
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
 }
 
 .marg-top {
-  margin-top: 20px;
+  margin-top: 20px !important;
 }
 
 .marg-left {
-  margin-left: 20px;
+  margin-left: 20px !important;
 }
 
 .marg-right {
-  margin-right: 20px;
+  margin-right: 20px !important;
 }
 
 // Widths
@@ -239,6 +239,7 @@ pre {
 .content-header {
   padding-left: 20px;
   overflow: hidden;
+  padding-right: 200px;
 
   h1 {
     color: #efa045;
@@ -246,6 +247,12 @@ pre {
 }
 
 .content-inner {
+  @media only screen and (max-width: 576px) {
+    background-color: inherit;
+    border: none;
+    padding: 0;
+  }
+
   background-color: #fcfcfc;
   padding: 20px;
   border-radius: 10px;
@@ -431,6 +438,7 @@ input.example-right-align {
   width: auto !important;
   height: auto !important;
   line-height: normal !important;
+  border-radius: 0 !important;
 }
 
 .hidden-el {
@@ -451,6 +459,7 @@ input.example-right-align {
   -moz-transition: all 3.6s cubic-bezier(0.0, 0.0, 0.2, 1);
   -o-transition: all 3.6s cubic-bezier(0.0, 0.0, 0.2, 1);
   transition: all 3.6s cubic-bezier(0.0, 0.0, 0.2, 1);
+
   &.show {
     opacity: 1;
     display: block;
@@ -477,6 +486,7 @@ input.example-right-align {
     &:hover {
       filter: saturate(1.1);
     }
+
     -webkit-transition: all .3s cubic-bezier(0.0, 0.0, 0.2, 1);
     -moz-transition: all .3s cubic-bezier(0.0, 0.0, 0.2, 1);
     -o-transition: all .3s cubic-bezier(0.0, 0.0, 0.2, 1);
@@ -536,7 +546,7 @@ img.showcase_photo {
   box-shadow: 0px 6px 20px 0px #f2f2f2;
   border-top: 1px solid #f9f9f9;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 10px 25px;
   margin: 10px 10px 60px;
   width: -webkit-fill-available;

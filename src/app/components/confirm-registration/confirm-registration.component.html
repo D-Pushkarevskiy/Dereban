@@ -12,7 +12,7 @@
         </mat-error>
         <mat-hint class="error-message" *ngIf="!form.get('user.password').invalid && form.get('user.password').touched">
           <span *ngIf="!form.get('user.password').errors">
-            {{password_error}}
+            {{password_error | translate}}
           </span>
         </mat-hint>
       </mat-form-field>

@@ -8,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { AppTitleService } from 'src/app/services/app-title.service';
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -19,7 +20,7 @@ import { AppComponent } from 'src/app/app.component';
 export class ConfirmRegistrationComponent implements OnInit {
     charsCount = 8;
     form: FormGroup;
-    contentHeader = 'Подтверждение пароля';
+    contentHeader = 'MAIN.PASSWORD_CONFIRMING';
     password_error = '';
     code_one_errors = '';
     API_URL = this.app.API_URL;
@@ -32,10 +33,12 @@ export class ConfirmRegistrationComponent implements OnInit {
         private activateRoute: ActivatedRoute,
         private router: Router,
         private titleService: Title,
-        private snackbar: SnackbarService
+        private snackbar: SnackbarService,
+        private appTitleService: AppTitleService
     ) {
         app.contentHeader = this.contentHeader;
         this.titleService.setTitle(this.contentHeader);
+        this.appTitleService.setAppTitle(this.contentHeader);
         this.regToken = activateRoute.snapshot.params['regToken'];
     }
 

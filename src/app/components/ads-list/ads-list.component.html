@@ -36,10 +36,10 @@
       </div>
 
       <div class="showcase-main-wrapper"
-        [ngClass]="{'inactive-case':item.active == 0, 'ad-detail':this.getAds.detailClass, 'disable-transform':this.app.overlay}">
+        [ngClass]="{'inactive-case':item.active == 0, 'ad-detail':this.getAds.detailClass, 'my-showcase':this.getAds.myShowcasesState, 'disable-transform':this.app.overlay}">
         <div class="showcase-wrapper" [ngClass]="{'ad-detail':this.getAds.detailClass}">
           <div *ngIf="item.active == 0" class="inactive-case-overlay"></div>
-          <div *ngIf="isAuth && item.user_id === user_id && !this.getAds.detailClass" class="showcase-user-actions">
+          <div *ngIf="isAuth && item.user_id === user_id" class="showcase-user-actions">
             <button *ngIf="item.active == 1" mat-icon-button color="primary" aria-label="Edit showcase"
               title="{{ 'MAIN.EDIT' | translate }}" routerLink="/edit-ad/{{item.id}}">
               <mat-icon>edit</mat-icon>
@@ -118,11 +118,13 @@
                   </div>
                 </div>
                 <div class="col-md-4 price-wrapper" *ngIf="item.price != 0">
-                  <div class="case-difference-wrapper color-green" *ngIf="item.old_price > 0 && (item.price < item.old_price)">
-                    <span class="case-difference">- {{ item.old_price - item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
-                  </div>
                   <div class="case-price-wrapper color-green">
                     <span class="case-price">{{item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
+                    <div class="case-difference-wrapper color-green"
+                      *ngIf="item.old_price > 0 && (item.price < item.old_price)">
+                      <span class="case-difference">-
+                        {{ item.old_price - item.price | currency:'UAH':"symbol-narrow":"1.0"}}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -130,7 +132,7 @@
                 <div class="col-sm">
                   <span title="{{ 'MAIN.ADDING_DATE' | translate }}">
                     <i class="material-icons">calendar_today</i>
-                    {{item.adding_time}}
+                    {{formatDate(item.adding_time)}}
                   </span>
                 </div>
                 <div class="col-sm case-area-wrapper">
@@ -205,7 +207,7 @@
                   (click)="searchByTag('wheel_size', item.wheel_size)">
                   {{item.wheel_size}}"
                 </mat-chip>
-                <mat-chip *ngIf="item.wheel_size == 27">
+                <mat-chip *ngIf="item.wheel_size == 27" (click)="searchByTag('wheel_size', item.wheel_size)">
                   {{item.wheel_size}}.5"
                 </mat-chip>
                 <mat-chip [ngSwitch]="item.velo_type" *ngIf="item.velo_type != 0"
@@ -237,16 +239,19 @@
               </mat-chip-list>
             </div>
           </div>
-          <div class="case-user-info row" [ngClass]="{'ad-detail':this.getAds.detailClass}">
+          <div class="case-user-info row" [ngClass]="{'ad-detail':this.getAds.detailClass}"
+            *ngIf="!this.getAds.myShowcasesState">
             <div *ngIf="!this.getAds.detailClass" class="col-sm-1 fix-for-desktop"></div>
             <div class="col-md-1 photo-rating-wrapper">
               <div class="img_wrapper img_contacts">
-                <img src="../assets/users_images/{{item.user_photo}}" class="user_contacts_img">
+                <img src="../assets/users_images/{{item.user_photo ? item.user_photo : user_image_default}}"
+                  class="user_contacts_img">
               </div>
               <div class="rating_wrapper">
                 <span class="cursor-default" title="{{ 'MAIN.RATING' | translate }}"
                   [ngClass]="this.getAds.GetShowClass(item.user_rating)">
-                  <span *ngIf="item.user_rating > 0">+</span>{{ item.user_rating | shortNumber }}
+                  <!-- <span *ngIf="item.user_rating > 0">+</span> -->
+                  {{ item.user_rating | shortNumber }}
                 </span>
                 <span *ngIf="!item.user_rating" class="color-gray cursor-default">0</span>
               </div>
@@ -261,10 +266,11 @@
                 {{ 'MAIN.ALL_SHOWCASES' | translate }}
               </button>
             </div>
-            <div class="col-sm user_contacts">
+            <div class="col-sm user_contacts"
+              *ngIf="item.user_phone || item.user_phone2 || item.user_telegram || item.user_vk || item.user_facebook || item.user_instagram">
               <div class="row">
-                <div class="col-sm-8">
-                  <div class="row">
+                <div class="col-sm">
+                  <div class="row contacts-phones-wrapper">
                     <div class="col-lg" *ngIf="item.user_phone" title="{{ 'CONTACTS.PHONE_NUMBER' | translate }}">
                       <i class="material-icons">phone</i>
                       <span class="contacts-phone">+380 {{item.user_phone}}</span>
@@ -276,7 +282,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm user_social"
+                  *ngIf="item.user_telegram || item.user_vk || item.user_facebook || item.user_instagram">
                   <div class="row">
                     <div *ngIf="item.user_telegram" title="TelegramID" class="telegramId col">
                       <a href="https://t.me/{{item.user_telegram}}" target="_blank">

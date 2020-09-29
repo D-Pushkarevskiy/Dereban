@@ -1,0 +1,16 @@
+{
+  "MAIN": {
+    "DEREBAN": "'Dereban.ua' купуй, катось, продай",
+    "ADD_SHOWCASE": "Додати оголошення",
+    "MY_SHOWCASES": "Мои объявы"
+  },
+  "MENU": {
+    "LOGIN": "Увійти",
+    "RATING": "Рейтинг",
+    "PROFILE": "Профіль",
+    "SHOWCASES": "Оголошення",
+    "FAVORITES": "Обрані",
+    "COMMENTS": "Коментарі",
+    "LOGOUT": "Вийти"
+  }
+}

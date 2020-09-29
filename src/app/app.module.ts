@@ -28,6 +28,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 
@@ -40,6 +41,9 @@ import { GetAdsService } from 'src/app/services/get-ads.service';
 import { LangService } from 'src/app/services/lang.service';
 import { CaseStorageService } from 'src/app/services/case-storage.service';
 import { SearchCasesService } from './services/search-cases.service';
+import { AppTitleService } from './services/app-title.service';
+import { DraftShowcaseService } from './services/draft-showcase.service';
+import { UserDataService } from './services/user-data.service';
 
 import { ShortNumberPipe } from 'src/app/pipes/short-number.pipe';
 import { SafeHtmlPipe } from './pipes/safehtml.pipe';
@@ -132,6 +136,7 @@ export function createTranslateLoader(http: HttpClient) {
     MatSlideToggleModule,
     MatPaginatorModule,
     MatSliderModule,
+    MatBadgeModule,
     RecaptchaModule,
     RecaptchaFormsModule
   ],
@@ -146,6 +151,9 @@ export function createTranslateLoader(http: HttpClient) {
     AdsListComponent,
     CaseStorageService,
     SearchCasesService,
+    AppTitleService,
+    DraftShowcaseService,
+    UserDataService,
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {

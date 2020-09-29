@@ -8,6 +8,7 @@ import { AdInfoService } from 'src/app/services/ad-info.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service'
 import { CaseStorageService } from './case-storage.service';
+import { UserDataService } from './user-data.service';
 
 import { AppComponent } from 'src/app/app.component';
 import { ConfirmationDialogComponent } from '../components/shared/confirmation-dialog/confirmation-dialog.component';
@@ -19,6 +20,7 @@ export class GetAdsService {
   public tmp;
   public allCases;
   public detailClass: Boolean = false;
+  public myShowcasesState: Boolean = false;
   public minValue;
   public maxValue;
 
@@ -36,7 +38,8 @@ export class GetAdsService {
     private authService: AuthService,
     private snackbar: SnackbarService,
     public dialog: MatDialog,
-    public caseStorage: CaseStorageService
+    public caseStorage: CaseStorageService,
+    private userDataService: UserDataService
   ) {
     this.subscription = this.authService.getState().subscribe(state => {
       this.isAuth = state.value;
@@ -107,6 +110,7 @@ export class GetAdsService {
         ).subscribe(response => {
           this.snackbar.show_message(response['text']);
           this.GetShowCases('', false);
+          this.userDataService.getUserData();
         });
       }
     });

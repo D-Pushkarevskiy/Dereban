@@ -8,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AreasService } from 'src/app/services/areas.service';
+import { AppTitleService } from 'src/app/services/app-title.service';
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -18,7 +19,7 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class ProfileComponent implements OnInit {
 
-    contentHeader = 'Профиль';
+    contentHeader = 'MAIN.PROFILE';
     form: FormGroup;
     areas: string[] = this.areasService.getAreas();
     API_URL = this.app.API_URL;
@@ -45,10 +46,12 @@ export class ProfileComponent implements OnInit {
         private snackbar: SnackbarService,
         private profileService: ProfileService,
         private titleService: Title,
-        private areasService: AreasService
+        private areasService: AreasService,
+        private appTitleService: AppTitleService
     ) {
         app.contentHeader = this.contentHeader;
         this.titleService.setTitle(this.contentHeader);
+        this.appTitleService.setAppTitle(this.contentHeader);
     }
 
     ngOnInit() {
@@ -132,6 +135,7 @@ export class ProfileComponent implements OnInit {
             } else if (tmp['code'] == 1) {
                 // Выводим ошибку
                 this.code_one_errors = tmp['text'];
+                console.log(this.code_one_errors);
                 this.snackbar.show_message(this.code_one_errors);
             }
         });
@@ -143,7 +147,7 @@ export class ProfileComponent implements OnInit {
             var tmp;
             tmp = response;
 
-            this.photoName = tmp['photo'];
+            this.photoName = tmp['photo'] ? tmp['photo'] : this.photoName;
             this.form.controls.user.setValue({ 'name': tmp['name'], 'surname': tmp['surname'] });
             this.form.controls.contacts.setValue({ 'phone': tmp['phone'], 'phone2': tmp['phone2'], 'area': tmp['area'] });
             this.form.controls.social.setValue({ 'telegram': tmp['telegram'], 'vk': tmp['vk'], 'facebook': tmp['facebook'], 'instagram': tmp['instagram'] });

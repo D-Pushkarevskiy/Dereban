@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { Subscription } from 'rxjs';
 
@@ -19,13 +20,15 @@ export class AdsListComponent implements OnInit {
     subscription_id: Subscription;
     subscription: Subscription;
     user_id: number;
+    private user_image_default: string = 'user_profile_image_default.jpg';
 
     constructor(
         private app: AppComponent,
         public getAds: GetAdsService,
         private authService: AuthService,
         private profileService: ProfileService,
-        public searchService: SearchCasesService
+        public searchService: SearchCasesService,
+        private translateService: TranslateService
     ) {
         this.subscription = this.authService.getState().subscribe(state => {
             this.isAuth = state.value;
@@ -47,8 +50,8 @@ export class AdsListComponent implements OnInit {
         setTimeout(function () {
             event.target.classList.toggle('zoomed-img');
             setTimeout(function () {
-              event.target.classList.toggle('allow-transition');
-              event.target.classList.toggle('opacity-img');
+                event.target.classList.toggle('allow-transition');
+                event.target.classList.toggle('opacity-img');
             }, 25);
         }, 25);
     }
@@ -59,6 +62,14 @@ export class AdsListComponent implements OnInit {
         }
 
         return true;
+    }
+
+    public formatDate(date) {
+        if (typeof date === 'object') {
+            return this.translateService.instant(date.alias) + ' ' + date.time;
+        }
+
+        return date;
     }
 
     searchByTag(tag, value) {

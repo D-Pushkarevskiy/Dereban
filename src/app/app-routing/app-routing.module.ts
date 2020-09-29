@@ -16,13 +16,14 @@ import { AuthGuard } from '../guards/auth.guard';
 import { HomeGuard } from '../guards/home.guard';
 import { NotAuthGuard } from '../guards/not-auth.guard';
 import { IsOwnerGuard } from '../guards/is-owner.guard';
+import { CaseLimit } from '../guards/case-limit.guard';
 
 const appRoutes: Routes = [
     { path: '', component: HomepageComponent, canActivate: [HomeGuard] },
     { path: 'confirm-registration/:regToken', component: ConfirmRegistrationComponent, canActivate: [NotAuthGuard] },
     { path: 'refresh-password/:token', component: RefreshPasswordComponent, canActivate: [NotAuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-    { path: 'adding-ad', component: AddingAdComponent, canActivate: [AuthGuard] },
+    { path: 'adding-ad', component: AddingAdComponent, canActivate: [AuthGuard, CaseLimit] },
     { path: 'edit-ad/:id', component: AddingAdComponent, canActivate: [AuthGuard, IsOwnerGuard] },
     { path: 'ad/:id', component: AdDetailComponent, canActivate: [HomeGuard] },
     { path: 'allads/:id', component: UserAdsComponent, canActivate: [HomeGuard] },

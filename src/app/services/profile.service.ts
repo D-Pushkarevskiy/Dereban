@@ -9,28 +9,37 @@ export class ProfileService {
     private name = new Subject<any>();
     private id = new Subject<any>();
     private area = new Subject<any>();
+    private caseCount = new Subject<any>();
 
-    setName(uName) {
+    public setName(uName) {
         this.name.next({ value: uName });
     }
 
-    getName(): Observable<any> {
+    public getName(): Observable<any> {
         return this.name.asObservable();
     }
-    
-    setId(uId) {
+
+    public setId(uId) {
         this.id.next({ value: uId });
     }
 
-    getId(): Observable<any> {
+    public getId(): Observable<any> {
         return this.id.asObservable();
     }
 
-    setArea(uArea) {
+    public setArea(uArea) {
         this.area.next({ value: uArea });
     }
 
-    getArea(): Observable<any> {
+    public getArea(): Observable<any> {
         return this.area.asObservable();
+    }
+
+    public setShowcasesCount(uCaseCount, uCaseLimit) {
+        this.caseCount.next({ value: uCaseCount, limit: uCaseLimit });
+    }
+
+    public getShowcasesCount(): Observable<any> {
+        return this.caseCount.asObservable();
     }
 }

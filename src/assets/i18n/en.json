@@ -1,0 +1,16 @@
+{
+  "MAIN": {
+    "DEREBAN": "'Dereban.ua' buy, ride, sell",
+    "ADD_SHOWCASE": "Add showcase",
+    "MY_SHOWCASES": "My showcases"
+  },
+  "MENU": {
+    "LOGIN": "Login",
+    "RATING": "Rating",
+    "PROFILE": "Profile",
+    "SHOWCASES": "Showcases",
+    "FAVORITES": "Favorites",
+    "COMMENTS": "Comments",
+    "LOGOUT": "Logout"
+  }
+}

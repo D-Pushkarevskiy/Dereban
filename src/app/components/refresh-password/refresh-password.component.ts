@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppComponent } from 'src/app/app.component';
 
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { AppTitleService } from 'src/app/services/app-title.service';
 
 @Component({
   selector: 'app-refresh-password',
@@ -14,7 +15,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   styleUrls: ['./refresh-password.component.css']
 })
 export class RefreshPasswordComponent implements OnInit {
-  contentHeader = 'Сброс пароля';
+  contentHeader = 'MAIN.RESET_PASSWORD';
   API_URL = this.app.API_URL;
   token: string;
   form: FormGroup;
@@ -27,10 +28,12 @@ export class RefreshPasswordComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private titleService: Title,
     private router: Router,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private appTitleService: AppTitleService
   ) {
     app.contentHeader = this.contentHeader;
     this.titleService.setTitle(this.contentHeader);
+    this.appTitleService.setAppTitle(this.contentHeader);
     this.token = activateRoute.snapshot.params['token'];
   }
 

@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Title} from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+
+import { AppTitleService } from 'src/app/services/app-title.service';
 
 @Component({
     selector: 'app-not-found',
@@ -7,13 +9,15 @@ import {Title} from '@angular/platform-browser';
     styleUrls: ['./not-found.component.css']
 })
 export class NotFoundComponent implements OnInit {
-    
-    contentHeader = '404 страница не найдена';
+
+    contentHeader = 'MAIN.404';
 
     constructor(
-        private titleService: Title
+        private titleService: Title,
+        private appTitleService: AppTitleService
     ) {
         this.titleService.setTitle(this.contentHeader);
+        this.appTitleService.setAppTitle(this.contentHeader);
     }
 
     ngOnInit() {

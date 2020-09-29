@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 import { MatChipInputEvent } from '@angular/material';
 
@@ -9,6 +10,7 @@ import { CaseStorageService } from 'src/app/services/case-storage.service';
 import { SearchCasesService } from 'src/app/services/search-cases.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AreasService } from 'src/app/services/areas.service';
+import { AppTitleService } from 'src/app/services/app-title.service';
 
 import { AppComponent } from 'src/app/app.component';
 import { AdsListComponent } from 'src/app/components/ads-list/ads-list.component';
@@ -53,10 +55,15 @@ export class HomepageComponent implements OnInit, OnDestroy {
         public caseStorage: CaseStorageService,
         public searchService: SearchCasesService,
         private authService: AuthService,
-        private areasService: AreasService
+        private areasService: AreasService,
+        private appTitleService: AppTitleService,
+        private translateService: TranslateService
     ) {
+        // Cear content Title/Header name
         this.app.contentHeader = ' ';
-        this.titleService.setTitle('"Dereban.ua" купи, продай, катай');
+        // Set default page title
+        this.titleService.setTitle(this.translateService.instant('MAIN.DEREBAN'));
+        this.appTitleService.setAppTitle('MAIN.DEREBAN');
         this.subscription = this.authService.getState().subscribe(state => {
             this.isAuth = state.value;
         });
@@ -92,6 +99,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.adsList.getAds.GetShowCases('', false);
         this.getAds.detailClass = false;
+        this.getAds.myShowcasesState = false;
     }
 
     add(event: MatChipInputEvent): void {

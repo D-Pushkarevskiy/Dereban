@@ -1,3 +1,11 @@
 mat-slider {
   width: 100%;
 }
+
+.mat-slide-toggle {
+  height: auto;
+
+  .mat-slide-toggle-label {
+    flex-direction: column;
+  }
+}

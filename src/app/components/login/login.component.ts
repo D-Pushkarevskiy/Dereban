@@ -74,6 +74,7 @@ export class LoginComponent implements OnInit {
             } else if (tmp['code'] === 3) {
                 //Вывести текст с ошибкой корректности пароля
                 this.password_error = tmp['text'];
+                this.snackbar.show_message(tmp['text']);
             } else if (tmp['code'] === 4) {
                 // Вывести рекапчу, неудачных попыток входа было 5
                 this.passwordWrong = true;

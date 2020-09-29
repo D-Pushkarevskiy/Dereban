@@ -10,9 +10,10 @@
       <div class="img_wrapper img_showcase" [ngClass]="{'adding_showcase': !id}">
         <img src="{{img_showcase_main}}" class="user_profile_img">
       </div>
-      <input type="file" name="photo" formControlName="photo" (change)="fileChange($event)"
-        placeholder="{{ 'INFO.ADDING_UPLOAD_PHOTO' | translate }}" accept=".jpg" hidden="" id="input_file_photo"
-        #input_file_photo required="">
+      <input type="text" hidden formControlName="photo">
+      <input type="file" name="photo" (change)="fileChange($event)"
+        placeholder="{{ 'INFO.ADDING_UPLOAD_PHOTO' | translate }}" accept="image/jpeg,image/png,image/jpg" hidden=""
+        id="input_file_photo" #input_file_photo required="">
       <div *ngIf="!img_name" class="text-center marg-top">
         <a class="like-a-link">{{ 'INFO.ADDING_UPLOAD_PHOTO' | translate }} *</a><br>
         <span class="spn-descr">{{ 'INFO.DESIRED_RESOLUTION' | translate }}
@@ -25,7 +26,7 @@
     </div>
     <div class="col-sm-6">
       <mat-form-field>
-        <input matInput #caseName placeholder="{{ 'MAIN.TITLE' | translate }}" value="" required="" name="name"
+        <input matInput #caseName placeholder="{{ 'MAIN.TITLE' | translate }}" required="" name="name"
           formControlName="name" maxlength="130">
         <mat-hint align="end">{{caseName.value.length}} / 130</mat-hint>
       </mat-form-field>
@@ -42,105 +43,66 @@
 
   <div class="div_wrapper" formGroupName="options">
 
-    <div class="content-block">
+    <div class="content-block" *ngIf="case_types.length > 0">
       <h4>{{ 'SHOWCASE.TYPE' | translate }}</h4>
       <mat-button-toggle-group name="typeOfAds" aria-label="Ads_type" formControlName="type"
-        (change)="ChangeDescText($event.value)">
-        <mat-button-toggle value="1">{{ 'SHOWCASE.ASSEMBLED' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="2">{{ 'SHOWCASE.DEREBAN' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="3">{{ 'SHOWCASE.COMPONENT.NAME' | translate }}</mat-button-toggle>
+        (change)="changeDescText($event.value)">
+        <mat-button-toggle *ngFor="let type of case_types" [value]="type.value">{{type.name | translate}}
+        </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-    <div class="content-block" [class.hidden-el]="isHiddenFull">
+    <div class="content-block" [class.hidden-el]="isHiddenFull"
+      *ngIf="case_types.length > 0 && case_full_types.length > 0">
       <mat-button-toggle-group name="typeOfFull" aria-label="Full_type" formControlName="fullType"
-        (change)="ChangeFullDescText($event.value)">
-        <mat-button-toggle value="1">{{ 'SHOWCASE.COMPLETE' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="2">{{ 'SHOWCASE.CUSTOM' | translate }}</mat-button-toggle>
+        (change)="changeFullDescText($event.value)">
+        <mat-button-toggle *ngFor="let full_type of case_full_types" [value]="full_type.value">
+          {{full_type.name | translate}}
+        </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-    <div class="content-block adding-detail" [class.hidden-el]="isHiddenDetail">
+    <div class="content-block adding-detail" [class.hidden-el]="isHiddenDetail" *ngIf="parts.length > 0">
       <mat-form-field style="width: auto;">
         <mat-select placeholder="{{ 'SHOWCASE.COMPONENT.TYPE.NAME' | translate }}" name="typeOfDetail"
           aria-label="Detail_type" formControlName="detailType">
-          <mat-option value="1">{{ 'SHOWCASE.COMPONENT.TYPE.FRAME' | translate }}</mat-option>
-          <mat-option value="2">{{ 'SHOWCASE.COMPONENT.TYPE.FORK' | translate }}</mat-option>
-          <mat-option value="3">{{ 'SHOWCASE.COMPONENT.TYPE.SHOCK' | translate }}</mat-option>
-          <mat-option value="4">{{ 'SHOWCASE.COMPONENT.TYPE.BRAKES' | translate }}</mat-option>
-          <mat-option value="5">{{ 'SHOWCASE.COMPONENT.TYPE.BAR' | translate }}</mat-option>
-          <mat-option value="6">{{ 'SHOWCASE.COMPONENT.TYPE.STEM' | translate }}</mat-option>
-          <mat-option value="7">{{ 'SHOWCASE.COMPONENT.TYPE.PEDALS' | translate }}</mat-option>
-          <mat-option value="8">{{ 'SHOWCASE.COMPONENT.TYPE.HUB' | translate }}</mat-option>
-          <mat-option value="9">{{ 'SHOWCASE.COMPONENT.TYPE.GRIPS' | translate }}</mat-option>
-          <mat-option value="10">{{ 'SHOWCASE.COMPONENT.TYPE.TUBE' | translate }}</mat-option>
-          <mat-option value="11">{{ 'SHOWCASE.COMPONENT.TYPE.BOTTOM_BRACKET' | translate }}</mat-option>
-          <mat-option value="12">{{ 'SHOWCASE.COMPONENT.TYPE.CASSET' | translate }}</mat-option>
-          <mat-option value="13">{{ 'SHOWCASE.COMPONENT.TYPE.WHEEL' | translate }}</mat-option>
-          <mat-option value="14">{{ 'SHOWCASE.COMPONENT.TYPE.BRAKE_PADS' | translate }}</mat-option>
-          <mat-option value="15">{{ 'SHOWCASE.COMPONENT.TYPE.GEAR_SHIFTER' | translate }}</mat-option>
-          <mat-option value="16">{{ 'SHOWCASE.COMPONENT.TYPE.RIM' | translate }}</mat-option>
-          <mat-option value="17">{{ 'SHOWCASE.COMPONENT.TYPE.DERAILLEURS' | translate }}</mat-option>
-          <mat-option value="18">{{ 'SHOWCASE.COMPONENT.TYPE.SEATPOST' | translate }}</mat-option>
-          <mat-option value="19">{{ 'SHOWCASE.COMPONENT.TYPE.TYRE' | translate }}</mat-option>
-          <mat-option value="20">{{ 'SHOWCASE.COMPONENT.TYPE.BRAKE_SPARES' | translate }}</mat-option>
-          <mat-option value="21">{{ 'SHOWCASE.COMPONENT.TYPE.HEADSET' | translate }}</mat-option>
-          <mat-option value="22">{{ 'SHOWCASE.COMPONENT.TYPE.SADDLE' | translate }}</mat-option>
-          <mat-option value="23">{{ 'SHOWCASE.COMPONENT.TYPE.SPOKES' | translate }}</mat-option>
-          <mat-option value="24">{{ 'SHOWCASE.COMPONENT.TYPE.CHAIN' | translate }}</mat-option>
-          <mat-option value="25">{{ 'SHOWCASE.COMPONENT.TYPE.CRANKS' | translate }}</mat-option>
-          <mat-option value="26">{{ 'SHOWCASE.COMPONENT.TYPE.OTHER' | translate }}</mat-option>
+          <mat-option *ngFor="let part of parts" [value]="part.value">{{part.name | translate}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <div class="content-block">
+    <div class="content-block" *ngIf="case_states.length > 0">
       <h4>{{ 'SHOWCASE.CONDITION.NAME' | translate }}</h4>
       <mat-button-toggle-group name="state" aria-label="State" formControlName="state">
-        <mat-button-toggle value="1">{{ 'SHOWCASE.CONDITION.NEW' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="2">{{ 'SHOWCASE.CONDITION.USED' | translate }}</mat-button-toggle>
+        <mat-button-toggle *ngFor="let state of case_states" [value]="state.value">
+          {{state.name | translate}}
+        </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
 
-    <div class="content-block">
+    <div class="content-block" *ngIf="wheelSizes.length > 0">
       <h4>{{ 'SHOWCASE.WHEEL_SIZE' | translate }}</h4>
       <mat-button-toggle-group name="wheelSize" aria-label="Wheel size" formControlName="wheelSize">
-        <mat-button-toggle value="20">20"</mat-button-toggle>
-        <mat-button-toggle value="24">24"</mat-button-toggle>
-        <mat-button-toggle value="26">26"</mat-button-toggle>
-        <mat-button-toggle value="27">27.5"</mat-button-toggle>
-        <mat-button-toggle value="28">28"</mat-button-toggle>
-        <mat-button-toggle value="29">29"</mat-button-toggle>
+        <mat-button-toggle *ngFor="let size of wheelSizes" [value]="size.value">
+          {{size.name | translate}}"
+        </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
 
-    <div class="content-block adding_types">
+    <div class="content-block adding_types" *ngIf="bike_types.length > 0">
       <h4>{{ 'SHOWCASE.BIKE.TYPE.NAME' | translate }}</h4>
       <mat-button-toggle-group name="veloType" aria-label="Velo type" formControlName="veloType">
-        <mat-button-toggle value="1">{{ 'SHOWCASE.BIKE.TYPE.ROAD' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="2">{{ 'SHOWCASE.BIKE.TYPE.SITY' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="3">{{ 'SHOWCASE.BIKE.TYPE.MOUNTAIN' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="4">{{ 'SHOWCASE.BIKE.TYPE.RACING' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="5">{{ 'SHOWCASE.BIKE.TYPE.TOURING' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="6">{{ 'SHOWCASE.BIKE.TYPE.HYBRID' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="7">{{ 'SHOWCASE.BIKE.TYPE.EXTREME' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="8">{{ 'SHOWCASE.BIKE.TYPE.OTHER' | translate }}</mat-button-toggle>
+        <mat-button-toggle *ngFor="let bike_type of bike_types" [value]="bike_type.value">
+          {{bike_type.name | translate}}
+        </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
 
-    <div class="content-block adding_types">
+    <div class="content-block adding_types" *ngIf="bike_directions.length > 0">
       <h4>{{ 'SHOWCASE.BIKE.DIRECTION.NAME' | translate }}</h4>
       <mat-button-toggle-group name="direction" aria-label="Velo style" formControlName="direction">
-        <mat-button-toggle value="1">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.XC' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="2">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.TRIAL' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="3">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.DH' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="4">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.FREERIDE' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="5">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.ENDURO' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="6">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.TRAIL' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="7">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.TRACK' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="8">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.FIX' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="9">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.STREET' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="10">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.PARK' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="11">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.DIRT' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="12">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.4X' | translate }}</mat-button-toggle>
+        <mat-button-toggle *ngFor="let bike_direction of bike_directions" [value]="bike_direction.value">
+          {{bike_direction.name | translate}}
+        </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
 
@@ -148,12 +110,12 @@
 
   <hr>
   <div class="div_wrapper" formGroupName="description">
-    <mat-slide-toggle color="primary" (change)="ToggleDescTeplate($event)">
+    <button type="button" mat-raised-button color="primary" (click)="showDescTeplate()" class="marg-bott">
       {{ 'SHOWCASE.BIKE.DESCRIPTION.TEMPLATE.USE_DESCRIPTION_TEMPLATE' | translate }}
-    </mat-slide-toggle>
+    </button>
     <mat-form-field>
       <textarea matInput placeholder="{{ 'SHOWCASE.BIKE.DESCRIPTION.NAME' | translate }}" class="textarea-height"
-        name="description" formControlName="description" value="{{desc_template}}"></textarea>
+        name="description" formControlName="description" [value]="desc_template"></textarea>
     </mat-form-field>
   </div>
 

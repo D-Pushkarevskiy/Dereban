@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 import { LangService } from './services/lang.service';
+import { AppTitleService } from './services/app-title.service';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +16,13 @@ import { LangService } from './services/lang.service';
 export class AppComponent implements OnInit {
   contentHeader = '';
   overlay = false;
-  public API_URL = 'http://derebanapi/';
+  public API_URL = 'http://localhost:8888/dereban_api/';
 
   constructor(
     public translate: TranslateService,
     public langService: LangService,
+    public titleService: Title,
+    public appTitleService: AppTitleService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     // this language will be used as a fallback when a translation isn't found in the current language
@@ -26,6 +30,11 @@ export class AppComponent implements OnInit {
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
     translate.use(langService.getTranslateLang() ? langService.getTranslateLang() : 'ua');
+
+    // Translating app title dynamically
+    translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      titleService.setTitle(translate.instant(this.appTitleService.getAppTitle() || 'MAIN.DEREBAN'));
+    });
   }
 
   ngOnInit() { }
