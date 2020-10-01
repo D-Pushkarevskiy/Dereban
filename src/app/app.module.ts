@@ -48,6 +48,8 @@ import { UserDataService } from './services/user-data.service';
 import { ShortNumberPipe } from 'src/app/pipes/short-number.pipe';
 import { SafeHtmlPipe } from './pipes/safehtml.pipe';
 
+import { FileValueAccessorDirective } from './directives/file-value-accessor.directive';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
@@ -96,7 +98,8 @@ export function createTranslateLoader(http: HttpClient) {
     RefreshPasswordComponent,
     ConfirmationDialogComponent,
     SafeHtmlPipe,
-    RoundPipe
+    RoundPipe,
+    FileValueAccessorDirective
   ],
   entryComponents: [LoginComponent, RefreshPasswordModalComponent, ConfirmationDialogComponent],
   imports: [
@@ -159,7 +162,8 @@ export function createTranslateLoader(http: HttpClient) {
       useValue: {
         siteKey: '6Lc_Y7MUAAAAAAKQrWf5LKuZZgES09bpZGQqA2rI',
       } as RecaptchaSettings,
-    }
+    },
+    FileValueAccessorDirective
   ],
   bootstrap: [AppComponent]
 })

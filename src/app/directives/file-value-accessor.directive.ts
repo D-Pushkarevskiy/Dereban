@@ -1,6 +1,9 @@
-import { Directive, ElementRef, HostBinding, HostListener, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Renderer2, Injectable } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import 'rxjs/add/operator/debounceTime';
+
+@Injectable({
+    providedIn: 'root',
+})
 
 @Directive({
     selector: 'input[type=file]',

@@ -8,20 +8,20 @@
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <mat-chip color="primary" selected (removed)="remove('type')" [ngSwitch]="searchItem.type"
-          *ngIf="searchItem.type && searchItem.type != 0">
+          *ngIf="searchItem.type && searchItem.type != '0'">
           <span *ngSwitchCase="1">{{ 'SHOWCASE.ASSEMBLED' | translate }}</span>
           <span *ngSwitchCase="2">{{ 'SHOWCASE.DEREBAN' | translate }}</span>
           <span *ngSwitchCase="3">{{ 'SHOWCASE.COMPONENT.NAME' | translate }}</span>
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <mat-chip color="primary" selected (removed)="remove('full_type')" [ngSwitch]="searchItem.full_type"
-          *ngIf="searchItem.full_type && searchItem.full_type != 0">
+          *ngIf="searchItem.full_type && searchItem.full_type != '0'">
           <span *ngSwitchCase="1">{{ 'SHOWCASE.COMPLETE' | translate }}</span>
           <span *ngSwitchCase="2">{{ 'SHOWCASE.CUSTOM' | translate }}</span>
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <mat-chip color="primary" selected (removed)="remove('detail_type')" [ngSwitch]="searchItem.detail_type"
-          *ngIf="searchItem.detail_type && searchItem.detail_type != 0">
+          *ngIf="searchItem.detail_type && searchItem.detail_type != '0'">
           <span *ngSwitchCase="1">{{ 'SHOWCASE.COMPONENT.TYPE.FRAME' | translate }}</span>
           <span *ngSwitchCase="2">{{ 'SHOWCASE.COMPONENT.TYPE.FORK' | translate }}</span>
           <span *ngSwitchCase="3">{{ 'SHOWCASE.COMPONENT.TYPE.SHOCK' | translate }}</span>
@@ -51,23 +51,23 @@
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <mat-chip color="primary" selected (removed)="remove('state')" [ngSwitch]="searchItem.state"
-          *ngIf="searchItem.state && searchItem.state != 0">
+          *ngIf="searchItem.state && searchItem.state != '0'">
           <span *ngSwitchCase="1">{{ 'SHOWCASE.CONDITION.NEW' | translate }}</span>
           <span *ngSwitchCase="2">{{ 'SHOWCASE.CONDITION.USED' | translate }}</span>
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <mat-chip color="primary" selected (removed)="remove('wheel_size')"
-          *ngIf="searchItem.wheel_size && searchItem.wheel_size != 0 && searchItem.wheel_size != 27">
+          *ngIf="searchItem.wheel_size && searchItem.wheel_size != '0' && searchItem.wheel_size != '27'">
           {{searchItem.wheel_size}}"
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <mat-chip color="primary" selected (removed)="remove('wheel_size')"
-          *ngIf="searchItem.wheel_size && searchItem.wheel_size == 27">
+          *ngIf="searchItem.wheel_size && searchItem.wheel_size == '27'">
           {{searchItem.wheel_size}}.5"
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <mat-chip color="primary" selected (removed)="remove('velo_type')" [ngSwitch]="searchItem.velo_type"
-          *ngIf="searchItem.velo_type && searchItem.velo_type != 0">
+          *ngIf="searchItem.velo_type && searchItem.velo_type != '0'">
           <span *ngSwitchCase="1">{{ 'SHOWCASE.BIKE.TYPE.ROAD' | translate }}</span>
           <span *ngSwitchCase="2">{{ 'SHOWCASE.BIKE.TYPE.SITY' | translate }}</span>
           <span *ngSwitchCase="3">{{ 'SHOWCASE.BIKE.TYPE.MOUNTAIN' | translate }}</span>
@@ -79,7 +79,7 @@
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <mat-chip color="primary" selected (removed)="remove('direction')" [ngSwitch]="searchItem.direction"
-          *ngIf="searchItem.direction && searchItem.direction != 0">
+          *ngIf="searchItem.direction && searchItem.direction != '0'">
           <span *ngSwitchCase="1">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.XC' | translate }}</span>
           <span *ngSwitchCase="2">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.TRIAL' | translate }}</span>
           <span *ngSwitchCase="3">{{ 'SHOWCASE.BIKE.DIRECTION.TYPE.DH' | translate }}</span>
@@ -142,7 +142,7 @@
     <div class="col-sm-4">
       <mat-form-field class="full-width-form">
         <mat-select placeholder="{{ 'MAIN.AREA' | translate }}" name="area" aria-label="Area" [(ngModel)]="selectedArea"
-          (selectionChange)="filterByArea($event)">
+          (selectionChange)="filterByArea()">
           <mat-option *ngFor="let area of areas" [value]="area">{{area}}</mat-option>
         </mat-select>
       </mat-form-field>

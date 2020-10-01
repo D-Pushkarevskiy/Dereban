@@ -23,17 +23,17 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class AddingAdComponent implements OnInit, OnDestroy {
 
-  private form: FormGroup;
+  public form: FormGroup;
   private subscription: Subscription;
   private subscription_id: Subscription;
-  private id: number = 0;
+  public id: number = 0;
   private case: any;
-  private desc_template: string = '';
+  public desc_template: string = '';
   private desc_num: Number;
   private desc_full_num: Number;
   private files: any;
-  private img_showcase_main: string = '../assets/users_images/user_ads_image_default.jpg';
-  private img_name: string = '';
+  public img_showcase_main: string = '../assets/users_images/user_ads_image_default.jpg';
+  public img_name: string = '';
 
   private templateFullComplete: string;
   private templateFullСustom: string;
@@ -49,13 +49,13 @@ export class AddingAdComponent implements OnInit, OnDestroy {
   private success_adding = '';
   private file_path = '';
 
-  private case_types = [];
-  private case_full_types = [];
-  private parts = [];
-  private case_states = [];
-  private wheelSizes = [];
-  private bike_types = [];
-  private bike_directions = [];
+  public case_types = [];
+  public case_full_types = [];
+  public parts = [];
+  public case_states = [];
+  public wheelSizes = [];
+  public bike_types = [];
+  public bike_directions = [];
 
   constructor(
     private app: AppComponent,
@@ -64,7 +64,7 @@ export class AddingAdComponent implements OnInit, OnDestroy {
     private snackbar: SnackbarService,
     private router: Router,
     private translate: TranslateService,
-    private activateRoute: ActivatedRoute,
+    public activateRoute: ActivatedRoute,
     public getAds: GetAdsService,
     private appTitleService: AppTitleService,
     private draftShowcaseService: DraftShowcaseService
@@ -226,19 +226,19 @@ export class AddingAdComponent implements OnInit, OnDestroy {
   //   }
   // }
 
-  private UploadPhoto() {
+  public UploadPhoto() {
     this.form.get('main.photo').enable();
     document.getElementById('input_file_photo').click();
   }
 
-  private fileChange(event) {
+  public fileChange(event) {
     let target = event.target || event.srcElement;
     this.img_name = target.value;
     this.files = target.files;
     this.form.get('main.photo').setValue(this.img_name);
   }
 
-  private AddShowCase() {
+  public AddShowCase() {
     let finalData;
 
     if (this.files) {
@@ -322,7 +322,7 @@ export class AddingAdComponent implements OnInit, OnDestroy {
     });
   }
 
-  private showDescTeplate() {
+  public showDescTeplate() {
     if (this.desc_num == 1) {
       this.desc_template = this.templateFullСustom + this.descr_addition;
     } else if (this.desc_num == 2) {

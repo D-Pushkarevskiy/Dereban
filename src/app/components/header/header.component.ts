@@ -53,12 +53,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private profileService: ProfileService,
         private http: HttpClient,
         public getAds: GetAdsService,
+        public draftShowcase: DraftShowcaseService,
         private snackbar: SnackbarService,
         private router: Router,
         private translate: TranslateService,
         private langService: LangService,
         private loaderService: LoaderService,
-        private draftShowcase: DraftShowcaseService,
         private userDataService: UserDataService
     ) {
         // Значения по умолчанию
