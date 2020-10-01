@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Subscription, Subject, Observable } from 'rxjs';
 
 import { AdInfoService } from 'src/app/services/ad-info.service';
@@ -39,7 +41,8 @@ export class GetAdsService {
     private snackbar: SnackbarService,
     public dialog: MatDialog,
     public caseStorage: CaseStorageService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private translateService: TranslateService
   ) {
     this.subscription = this.authService.getState().subscribe(state => {
       this.isAuth = state.value;
@@ -102,7 +105,7 @@ export class GetAdsService {
   public DeleteShowCase(case_id: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '450px',
-      data: "Ваш <b>рейтинг</b> зависит от рейтинга Ваших объявлений. <br>Вы действительно хотите удалить объявление?"
+      data: this.translateService.instant('INFO.DELETING_SHOWCASE_TEXT')
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

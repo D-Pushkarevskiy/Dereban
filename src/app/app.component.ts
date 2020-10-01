@@ -16,7 +16,7 @@ import { AppTitleService } from './services/app-title.service';
 export class AppComponent implements OnInit {
   contentHeader = '';
   overlay = false;
-  public API_URL = 'http://localhost:8888/dereban_api/';
+  public API_URL = 'https://dereban.000webhostapp.com';
 
   constructor(
     public translate: TranslateService,

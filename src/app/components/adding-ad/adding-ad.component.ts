@@ -122,7 +122,7 @@ export class AddingAdComponent implements OnInit, OnDestroy {
               addPhotosLink: this.case.additionalPhotos
             }
           });
-          this.img_showcase_main = this.case.photo_url;
+          this.img_showcase_main = 'https://dereban.000webhostapp.com/assets/images/users_images/showcase_photos/' + this.case.photo_url;
           this.img_name = this.case.photo_url;
           // Заполнить шаблоны описания нужными значениями, отобразить полный тип или деталь
           // Порядок вызова важен
@@ -255,6 +255,29 @@ export class AddingAdComponent implements OnInit, OnDestroy {
       finalData = JSON.stringify(this.form.getRawValue());
     }
 
+    let formData = {
+      main: {
+        photo: this.form.get('main.photo').value,
+        name: this.form.get('main.name').value,
+        price: this.form.get('main.price').value,
+      },
+      options: {
+        type: this.form.get('options.type').value,
+        fullType: this.form.get('options.fullType').value,
+        detailType: this.form.get('options.detailType').value,
+        state: this.form.get('options.state').value,
+        wheelSize: this.form.get('options.wheelSize').value,
+        veloType: this.form.get('options.veloType').value,
+        direction: this.form.get('options.direction').value,
+      },
+      description: {
+        description: this.form.get('description.description').value,
+      },
+      additionalPhotos: {
+        addPhotosLink: this.form.get('additionalPhotos.addPhotosLink').value,
+      }
+    }
+
     this.http.post(this.API_URL + '?func=save_showcase_photo', finalData
     ).subscribe(response => {
       var tmp;
@@ -264,10 +287,14 @@ export class AddingAdComponent implements OnInit, OnDestroy {
 
       if (tmp['code'] == 0) {
         //Все ок
-        this.file_path = tmp['text'] !== '' ? tmp['text'] : this.case.photo_url.replace('../assets/users_images/showcase_photos/', '');
+        this.file_path = tmp['text'] !== '' ? tmp['text'] : this.case.photo_url.replace('https://dereban.000webhostapp.com/assets/images/users_images/showcase_photos/', '');
 
-        const update_params = this.id ? '&edit=true&id=' + this.id : '';
-        this.http.post(this.API_URL + '?func=save_showcase&file_path=' + this.file_path + update_params, this.form.getRawValue()
+        const update_params = this.id ? '&edit=true&id=' + this.id : '&edit=false';
+        this.http.get(this.API_URL + '?func=save_showcase&file_path=' + this.file_path + update_params
+          + '&main=' + JSON.stringify(formData.main)
+          + '&options=' + JSON.stringify(formData.options)
+          + '&description=' + JSON.stringify(formData.description)
+          + '&additionalPhotos=' + JSON.stringify(formData.additionalPhotos)
         ).subscribe(response => {
           var tmp;
           tmp = response;

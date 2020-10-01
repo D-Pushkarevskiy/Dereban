@@ -3,7 +3,7 @@
   <div class="row div_wrapper" formGroupName="user">
     <div class="col-sm-4 change_photo text-center" (click)="UploadPhoto()">
       <div class="img_wrapper img_profie">
-        <img src="../assets/users_images/{{photoName}}" class="user_profile_img">
+        <img src="https://dereban.000webhostapp.com/assets/images/users_images/{{photoName}}" class="user_profile_img">
       </div>
       <input type="file" name="photo" (change)="fileChange($event)"
         placeholder="{{ 'INFO.UPLOAD_YOUR_PHOTO' | translate }}" accept=".jpg" hidden="" id="input_file_photo"

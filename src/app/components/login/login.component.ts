@@ -70,7 +70,8 @@ export class LoginComponent implements OnInit {
             } else if (tmp['code'] === 2) {
                 //Все хорошо, уведомить пользователя о удачной регистрации и письме, закрыть модалку
                 this.headerRef.close();
-                this.snackbar.show_message(tmp['text']);
+                this.router.navigate(['/confirm-registration/' + tmp['text']]);
+                // this.snackbar.show_message(tmp['text']);
             } else if (tmp['code'] === 3) {
                 //Вывести текст с ошибкой корректности пароля
                 this.password_error = tmp['text'];

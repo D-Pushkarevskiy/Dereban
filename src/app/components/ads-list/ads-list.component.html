@@ -106,7 +106,8 @@
             </div>
             <div class="col-sm showcase-photo-wrapper"
               [ngClass]="{'col-sm-11 col-xl-11 col-md-11': this.getAds.detailClass}">
-              <img [src]="item.photo_url" class="showcase_photo allow-transition" (click)="ZoomImage($event)">
+              <img src="https://dereban.000webhostapp.com/assets/images/users_images/showcase_photos/{{item.photo_url}}"
+                class="showcase_photo allow-transition" (click)="ZoomImage($event)">
             </div>
             <div class="col-sm" [ngClass]="{'col-sm-12 col-xl-12 col-md-12': this.getAds.detailClass}">
               <div class="row showcase-name-price-wrapper">
@@ -244,7 +245,7 @@
             <div *ngIf="!this.getAds.detailClass" class="col-sm-1 fix-for-desktop"></div>
             <div class="col-md-1 photo-rating-wrapper">
               <div class="img_wrapper img_contacts">
-                <img src="../assets/users_images/{{item.user_photo ? item.user_photo : user_image_default}}"
+                <img src="https://dereban.000webhostapp.com/assets/images/users_images/{{item.user_photo ? item.user_photo : user_image_default}}"
                   class="user_contacts_img">
               </div>
               <div class="rating_wrapper">

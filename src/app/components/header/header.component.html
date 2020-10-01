@@ -22,7 +22,8 @@
       <button mat-icon-button [matMenuTriggerFor]="menu" class="user_menu_button" style="position: relative;">
         <div class="wrapper-for-spinner">
           <div class="img_wrapper img_header">
-            <img src="../assets/users_images/{{user_photo}}" class="user_profile_img">
+            <img src="https://dereban.000webhostapp.com/assets/images/users_images/{{user_photo}}"
+              class="user_profile_img">
           </div>
           <mat-spinner class="spinner-circle" [class.loader-hidden]="!show" *ngIf="show"></mat-spinner>
         </div>

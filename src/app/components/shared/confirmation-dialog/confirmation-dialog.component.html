@@ -1,6 +1,6 @@
 <div mat-dialog-content [innerHtml]="message | safeHtml">
 </div>
 <div mat-dialog-actions class="text-center">
-  <button mat-raised-button color="warn" [mat-dialog-close]="true">Да, я уверен!</button>
-  <button mat-button (click)="onNoClick()" cdkFocusInitial>Нет, спасибо</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true">{{ 'MAIN.YES_I_SURE' | translate }}</button>
+  <button mat-button (click)="onNoClick()" cdkFocusInitial>{{ 'MAIN.NO_THANKS' | translate }}</button>
 </div>

@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 
 export class AuthService {
-    API_URL: String = 'http://localhost:8888/dereban_api/';
+    API_URL: String = 'https://dereban.000webhostapp.com';
 
     constructor(
         private http: HttpClient,

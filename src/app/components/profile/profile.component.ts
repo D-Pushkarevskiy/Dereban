@@ -119,7 +119,28 @@ export class ProfileComponent implements OnInit {
     }
 
     SaveUserInfo() {
-        this.http.post(this.API_URL + '?func=add_user_info', this.form.getRawValue()
+        let formData = {
+            user: {
+                name: this.form.get('user.name').value,
+                surname: this.form.get('user.surname').value
+            },
+            contacts: {
+                phone: this.form.get('contacts.phone').value,
+                phone2: this.form.get('contacts.phone2').value,
+                area: this.form.get('contacts.area').value
+            },
+            social: {
+                telegram: this.form.get('social.telegram').value,
+                vk: this.form.get('social.vk').value,
+                facebook: this.form.get('social.facebook').value,
+                instagram: this.form.get('social.instagram').value
+            }
+        }
+
+        this.http.get(this.API_URL + '?func=add_user_info'
+            + '&user=' + JSON.stringify(formData.user)
+            + '&contacts=' + JSON.stringify(formData.contacts)
+            + '&social=' + JSON.stringify(formData.social)
         ).subscribe(response => {
             var tmp;
             tmp = response;

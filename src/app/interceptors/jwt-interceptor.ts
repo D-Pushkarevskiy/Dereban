@@ -13,9 +13,12 @@ export class JwtInterceptor implements HttpInterceptor {
         let authToken = this.AuthService.getAuthToken();
         if (authToken && authToken !== '') {
             request = request.clone({
-                setHeaders: { 
-                    Authorization: `Bearer ${authToken}`
+                setParams: {
+                    token: authToken
                 }
+                // setHeaders: {
+                //     Authorization: `Bearer ${authToken}`
+                // }
             });
         }
 

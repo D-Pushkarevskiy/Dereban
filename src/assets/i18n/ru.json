@@ -30,7 +30,9 @@
     "PASSWORD_CONFIRMING": "Подтверждение пароля",
     "FAVORITES_SHOWCASES": "Избранные объявления",
     "PROFILE": "Профиль",
-    "RESET_PASSWORD": "Сброс пароля"
+    "RESET_PASSWORD": "Сброс пароля",
+    "YES_I_SURE": "Да, я уверен",
+    "NO_THANKS": "Нет, спасибо"
   },
   "SHOWCASE": {
     "TYPE": "Тип объявления",
@@ -159,7 +161,8 @@
     "PHONE_LENGTH_SYMBOL": "-ти символов",
     "FORGOT_PASSWORD": "Забыли пароль?",
     "CURRENT_PASSWORD": "Текущий пароль",
-    "NEW_PASSWORD": "Новый пароль"
+    "NEW_PASSWORD": "Новый пароль",
+    "DELETING_SHOWCASE_TEXT": "Ваш <b>рейтинг</b> зависит от рейтинга Ваших объявлений. <br>Вы действительно хотите удалить объявление?"
   },
   "SEARCH": {
     "NAME": "Поиск"
