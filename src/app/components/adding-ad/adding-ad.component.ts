@@ -32,7 +32,7 @@ export class AddingAdComponent implements OnInit, OnDestroy {
   private desc_num: Number;
   private desc_full_num: Number;
   private files: any;
-  public img_showcase_main: string = '../assets/users_images/user_ads_image_default.jpg';
+  public img_showcase_main: string = './assets/users_images/user_ads_image_default.jpg';
   public img_name: string = '';
 
   private templateFullComplete: string;
